@@ -4,6 +4,11 @@ Ansible configurations for distributed MultiScanner installations (WORK IN PROGR
 ## Purpose
 This project exists to facilitate configuring the [MultiScanner](https://github.com/MITRECND/multiscanner) file analysis framework in a distributed setting. It defines [Ansible](https://www.ansible.com/get-started) configurations to enable automated configuration management of machines in a MultiScanner setup. 
 
+## Prerequisites 
+You need:
+ * Familiarity with [MultiScanner](https://github.com/MITRECND/multiscanner)
+ * Some familiarity with [Ansible](https://www.ansible.com/get-started)
+
 ## MultiScanner Distributed Setup
 TODO - describe nodes: workers, messaging servers (Rabbit), web server, Elasticsearch, Distributed File System, etc. Provide breakdown of what each node does and what services/applications are installed
 

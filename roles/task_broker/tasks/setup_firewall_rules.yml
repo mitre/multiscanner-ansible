@@ -1,0 +1,7 @@
+---
+
+- name: allow RabbitMQ basic operation
+  firewalld: port={{ item }} permanent=true zone={{ rabbit_mq_firewall_zone }} state=enabled immediate=true
+  with_items: "{{ rabbit_mq_ports }}"
+  become: yes
+  become_user: root

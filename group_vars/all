@@ -1,0 +1,9 @@
+# Global Variables
+
+# MultiScanner service account
+ms_user: multiscanner
+
+# To generate the password, use:
+# python -c 'python -c 'import crypt; print crypt.crypt("Mult1Sc4nn3r1337", "mscanFTW")'
+# Replace password and salt with your own values, and update the variable below
+ms_password: mscCKySlct48Y

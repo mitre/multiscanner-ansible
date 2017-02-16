@@ -1,0 +1,25 @@
+# UI and ReST services. 
+[webserver]
+webserver.yourdomain.com
+
+# RabbitMQ message server for queueing/distributing tasks
+[task_broker]
+task-broker.yourdomain.com
+
+# Elasticsearch cluster
+[elasticsearch]
+elastic-1.yourdomain.com
+elastic-2.yourdomain.com
+elastic-3.yourdomain.com
+
+# PostgreSQL DB for storing task info
+[task_db]
+taskdb.yourdomain.com
+
+# MultiScanner distributed workers
+[ms_worker]
+mscan-worker-1.yourdomain.com
+mscan-worker-2.yourdomain.com
+mscan-worker-3.yourdomain.com
+
+

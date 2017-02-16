@@ -1,0 +1,28 @@
+###################################################
+# RABBITMQ INSTALLATION
+###################################################
+# RabbitMQ RPM and signing key on ansible controller:
+rabbit_mq_local_rpm: files/rabbitmq-server-3.6.6-1.el7.noarch.rpm
+rabbit_mq_local_gpg_key: files/rabbitmq-release-signing-key.asc
+
+# Destination to copy RabbitMQ RPM to on target host:
+rabbit_mq_remote_rpm: /tmp/rabbitmq-server-3.6.6-1.el7.noarch.rpm
+rabbit_mq_remote_gpg_key: /tmp/rabbitmq-release-signing-key.asc
+
+# RabbitMQ User
+ms_rabbit_user: ms_rabbit
+ms_rabbit_password: CHANGE_THIS_PASSWORD
+
+# Task queue vhost
+rabbit_task_primary_vhost: ms_task
+
+###################################################
+# FIREWALL
+###################################################
+rabbit_mq_ports:
+  - 5671-5672/tcp 
+  - 25672/tcp
+  - 15672/tcp
+  - 4369/tcp
+
+rabbit_mq_firewall_zone: public

@@ -1,0 +1,8 @@
+---
+
+# create the MultiScanner service account user on all hosts
+- name: add MultiScanner user
+  action: user name={{ ms_user }} password={{ ms_password }} shell=/bin/bash home=/home/{{ ms_user}}
+  become: yes
+  become_user: root
+

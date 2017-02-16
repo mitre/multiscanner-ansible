@@ -1,0 +1,67 @@
+---
+# This file handles the installation and customization of RabbitMQ
+
+# Set up RabbitMQ prerequisites
+- name: copy local rabbitmq RPM
+  copy:
+    src: "{{rabbit_mq_local_rpm}}"
+    dest: "{{rabbit_mq_remote_rpm}}"
+
+- name: copy local rabbitmq signing key
+  copy:
+    src: "{{rabbit_mq_local_gpg_key}}"
+    dest: "{{rabbit_mq_remote_gpg_key}}"
+
+- name: install erlang
+  yum:
+    name: erlang
+    state: present
+  become: yes
+  become_user: root
+ 
+ 
+- name: add rabbitmq trusted key
+  rpm_key:
+    state: present
+    key: "{{rabbit_mq_remote_gpg_key}}"
+    #key: https://www.rabbitmq.com/rabbitmq-release-signing-key.asc    
+  become: yes
+  become_user: root
+    
+- name: install the locally-copied rabbitmq RPM
+  yum:
+    name: "{{rabbit_mq_remote_rpm}}"
+    state: present
+  become: yes
+  become_user: root
+
+- name: enable RabbitMQ server to start on boot (RHEL/CentOS 7)  
+  systemd:
+    state: started
+    enabled: yes
+    name: rabbitmq-server
+  become: yes
+  become_user: root
+
+- name: enable rabbitmq plugins
+  rabbitmq_plugin: names=rabbitmq_management,rabbitmq_tracing,rabbitmq_federation state=enabled
+  become: yes
+  become_user: root
+  notify:
+  - restart rabbitmq
+
+- name: add rabbitmq user
+  rabbitmq_user: user={{ms_rabbit_user}} password={{ms_rabbit_password}} tags=administrator,{{ms_rabbit_user}} vhost=/ configure_priv=.* write_priv=.* read_priv=.* state=present
+  become: yes
+  become_user: root
+
+- name: remove default guest user
+  rabbitmq_user: user=guest state=absent
+  become: yes
+  become_user: root
+  
+- name: ensure vhost /{{rabbit_task_primary_vhost}} is present
+  rabbitmq_vhost: name=/{{rabbit_task_primary_vhost}} state=present  
+  become: yes
+  become_user: root
+  

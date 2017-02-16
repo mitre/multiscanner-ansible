@@ -1,0 +1,29 @@
+---
+
+#- hosts: all
+#  roles:
+#  - role: common
+
+- hosts: all
+  roles:
+  - role: common
+
+- hosts: task_broker
+  roles:
+  - role: task_broker
+
+- hosts: elasticsearch
+  roles:
+  - role: elasticsearch
+
+- hosts: task_db
+  roles:
+  - role: task_db
+
+- hosts: ms_worker
+  roles:
+  - role: ms_worker
+
+- hosts: webserver
+  roles:
+  - role: webserver

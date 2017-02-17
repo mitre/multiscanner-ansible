@@ -1,0 +1,14 @@
+---
+# Copy and import Elastic Co's signing key
+
+- name: copy Elastic Co signing key
+  copy:
+    src: "{{local_resource_prefix}}/{{elasticco_gpg_key}}"
+    dest: "{{remote_resource_prefix}}/{{elasticco_gpg_key}}"
+
+- name: add Elastic Co key
+  rpm_key:
+    state: present
+    key: "{{remote_resource_prefix}}/{{elasticco_gpg_key}}"
+  become: yes
+  become_user: root

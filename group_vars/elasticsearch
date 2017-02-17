@@ -1,0 +1,17 @@
+###################################################
+# ELASTICSEARCH / KIBANA INSTALLATION
+###################################################
+# RPMs and signing key:
+elasticsearch_rpm: elasticsearch-5.2.1.rpm
+kibana_rpm: kibana-5.2.1-x86_64.rpm
+
+###################################################
+# FIREWALL
+###################################################
+elasticsearch_ports:
+  - 9100-9300/tcp 
+
+kibana_ports:
+  - 5601/tcp
+  
+elasticsearch_firewall_zone: public

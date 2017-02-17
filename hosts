@@ -10,7 +10,10 @@ task-broker.yourdomain.com
 [elasticsearch]
 elastic-1.yourdomain.com
 elastic-2.yourdomain.com
-elastic-3.yourdomain.com
+
+# Kibana 
+[kibana]
+kibana.yourdomain.com
 
 # PostgreSQL DB for storing task info
 [task_db]

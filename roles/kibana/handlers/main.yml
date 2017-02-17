@@ -1,0 +1,4 @@
+---
+
+- name: restart Kibana
+  service: name=kibana state=restarted

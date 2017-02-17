@@ -1,0 +1,7 @@
+---
+
+- name: add firewall exceptions for kibana
+  firewalld: port={{ item }} permanent=true zone={{ elasticsearch_firewall_zone }} state=enabled immediate=true
+  with_items: "{{ kibana_ports }}"
+  become: yes
+  become_user: root

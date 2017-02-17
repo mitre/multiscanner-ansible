@@ -1,9 +1,5 @@
 ---
 
-#- hosts: all
-#  roles:
-#  - role: common
-
 - hosts: all
   roles:
   - role: common
@@ -15,7 +11,11 @@
 - hosts: elasticsearch
   roles:
   - role: elasticsearch
-
+  
+- hosts: kibana
+  roles:
+  - role: kibana
+  
 - hosts: task_db
   roles:
   - role: task_db

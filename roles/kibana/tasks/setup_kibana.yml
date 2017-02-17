@@ -1,0 +1,31 @@
+---
+
+- name: copy Kibana RPM
+  copy:
+    src: "../../{{local_resource_prefix}}/{{kibana_rpm}}"
+    dest: "{{remote_resource_prefix}}/{{kibana_rpm}}"
+
+- name: install the copied Kibana RPM
+  yum:
+    name: "{{remote_resource_prefix}}/{{kibana_rpm}}"
+    state: present
+  become: yes
+  become_user: root
+
+- name: copy Kibana configuration
+  template: src=kibana.yml.j2 dest=/etc/kibana/kibana.yml mode=755 owner=root group=root
+  become: yes
+  become_user: root
+
+- name: create kibana log dir
+  file: path=/var/log/kibana state=directory owner=root group=kibana mode=0775
+  become: yes
+  become_user: root
+  
+- name: enable Kibana to start on boot (RHEL/CentOS 7)  
+  systemd:
+    state: started
+    enabled: yes
+    name: kibana
+  become: yes
+  become_user: root

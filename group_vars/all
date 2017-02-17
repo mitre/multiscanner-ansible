@@ -1,5 +1,3 @@
-# Global Variables
-
 # MultiScanner service account
 ms_user: multiscanner
 
@@ -7,3 +5,13 @@ ms_user: multiscanner
 # python -c 'python -c 'import crypt; print crypt.crypt("Mult1Sc4nn3r1337", "mscanFTW")'
 # Replace password and salt with your own values, and update the variable below
 ms_password: mscCKySlct48Y
+
+# File transfer
+local_resource_prefix: resources
+remote_resource_prefix: /tmp
+
+#---------------------------------------------
+# ELK-related
+#---------------------------------------------
+elasticco_gpg_key: GPG-KEY-elasticsearch
+elasticsearch_cluster: multiscanner_es_cluster

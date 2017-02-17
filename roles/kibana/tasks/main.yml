@@ -6,6 +6,6 @@
   become: yes
   become_user: root
 
-- include: import_elastic_gpg_key.yml
-- include: setup_elasticsearch.yml
+- include: ../../elasticsearch/tasks/import_elastic_gpg_key.yml
+- include: setup_kibana.yml
 - include: setup_firewall_rules.yml

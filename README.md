@@ -35,6 +35,15 @@ This section describes the Ansible roles. Each role has its own folder under **r
  * Installs and configures an instance of Elasticsearch
  * Joins Elasticsearch instance to a cluster
 
+### kibana
+**Applies to host category**: kibana<br/>
+**Expected number of hosts in category**: 1<br/>
+**Purpose**:
+ * Installs and configures an instance of Kibana
+ * Points Kibana to the first host defined in the elasticsearch group
+
+*NOTE:* You can install Kibana on one of the hosts in the elasticsearch group. This role also only exists as a helper feature; it is not required for the operation of MultiScanner and so if you do not want it, simply remove the kibana section from site.yml.
+
 ### task_broker
 **Applies to host category**: task_broker<br/>
 **Expected number of hosts in category**: 1<br/> 

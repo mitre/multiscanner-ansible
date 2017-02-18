@@ -4,13 +4,13 @@
 # Set up RabbitMQ prerequisites
 - name: copy local rabbitmq RPM
   copy:
-    src: "{{rabbit_mq_local_rpm}}"
-    dest: "{{rabbit_mq_remote_rpm}}"
+    src: "../../{{local_resource_prefix}}/{{rabbit_mq_rpm}}"
+    dest: "{{remote_resource_prefix}}/{{rabbit_mq_rpm}}"
 
 - name: copy local rabbitmq signing key
   copy:
-    src: "{{rabbit_mq_local_gpg_key}}"
-    dest: "{{rabbit_mq_remote_gpg_key}}"
+    src: "../../{{local_resource_prefix}}/{{rabbit_mq_gpg_key}}"
+    dest: "{{remote_resource_prefix}}/{{rabbit_mq_gpg_key}}"
 
 - name: install erlang
   yum:
@@ -23,14 +23,13 @@
 - name: add rabbitmq trusted key
   rpm_key:
     state: present
-    key: "{{rabbit_mq_remote_gpg_key}}"
-    #key: https://www.rabbitmq.com/rabbitmq-release-signing-key.asc    
+    key: "{{remote_resource_prefix}}/{{rabbit_mq_gpg_key}}"
   become: yes
   become_user: root
     
 - name: install the locally-copied rabbitmq RPM
   yum:
-    name: "{{rabbit_mq_remote_rpm}}"
+    name: "{{remote_resource_prefix}}/{{rabbit_mq_rpm}}"
     state: present
   become: yes
   become_user: root

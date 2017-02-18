@@ -2,12 +2,8 @@
 # RABBITMQ INSTALLATION
 ###################################################
 # RabbitMQ RPM and signing key on ansible controller:
-rabbit_mq_local_rpm: files/rabbitmq-server-3.6.6-1.el7.noarch.rpm
-rabbit_mq_local_gpg_key: files/rabbitmq-release-signing-key.asc
-
-# Destination to copy RabbitMQ RPM to on target host:
-rabbit_mq_remote_rpm: /tmp/rabbitmq-server-3.6.6-1.el7.noarch.rpm
-rabbit_mq_remote_gpg_key: /tmp/rabbitmq-release-signing-key.asc
+rabbit_mq_rpm: rabbitmq-server-3.6.6-1.el7.noarch.rpm
+rabbit_mq_gpg_key: rabbitmq-release-signing-key.asc
 
 # RabbitMQ User
 ms_rabbit_user: ms_rabbit

@@ -12,11 +12,6 @@
   become: yes
   become_user: root
 
-- name: copy Kibana configuration
-  template: src=kibana.yml.j2 dest=/etc/kibana/kibana.yml mode=755 owner=root group=root
-  become: yes
-  become_user: root
-
 - name: create kibana log dir
   file: path=/var/log/kibana state=directory owner=root group=kibana mode=0775
   become: yes
@@ -29,3 +24,10 @@
     name: kibana
   become: yes
   become_user: root
+
+- name: copy Kibana configuration
+  template: src=kibana.yml.j2 dest=/etc/kibana/kibana.yml mode=755 owner=root group=root
+  become: yes
+  become_user: root
+  notify:
+  - restart Kibana

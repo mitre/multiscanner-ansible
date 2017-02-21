@@ -1,0 +1,15 @@
+###################################################
+# POSTGRES
+###################################################
+
+task_db_name: task_db
+
+data_dir: /var/lib/pgsql/data
+
+postgres_user: multiscanner
+postgres_user_password: CHANGE_THIS_PASSWORD
+
+postgres_ports:
+  - 5432/tcp 
+
+postgres_firewall_zone: public

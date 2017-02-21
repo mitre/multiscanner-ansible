@@ -1,1 +1,4 @@
 ---
+
+- include: setup_taskdb.yml
+- include: setup_firewall_rules.yml

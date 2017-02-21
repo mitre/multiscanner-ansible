@@ -1,0 +1,7 @@
+---
+
+- name: add firewall exceptions for postgres
+  firewalld: port={{ item }} permanent=true zone={{ postgres_firewall_zone }} state=enabled immediate=true
+  with_items: "{{ postgres_ports }}"
+  become: yes
+  become_user: root

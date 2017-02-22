@@ -1,0 +1,53 @@
+---
+- name: copy liquibase archive
+  copy:
+    src: "../../{{local_resource_prefix}}/liquibase-{{ liquibase_version }}-bin.tar.gz"
+    dest: "{{remote_resource_prefix}}/liquibase-{{ liquibase_version }}-bin.tar.gz"
+    
+- name: create liquibase directory
+  file: name=/opt/liquibase state=directory mode=0755 owner=root group=root
+  become: yes
+  become_user: root
+  
+- name: install liquibase
+  unarchive:
+    src: "{{remote_resource_prefix}}/liquibase-{{ liquibase_version }}-bin.tar.gz"
+    dest: /opt/liquibase
+    copy: no
+    owner: root
+    group: root
+    mode: 0755
+    creates: /opt/liquibase/liquibase
+  become: yes
+  become_user: root
+
+- name: create task DB resource directory
+  file: name={{ db_script_dir }} state=directory mode=0755 owner=root group=root
+  become: yes
+  become_user: root
+  
+- name: copy JDBC driver
+  copy:
+    src: "../../{{local_resource_prefix}}/{{pgsql_jdbc_driver}}"
+    dest: "{{ db_script_dir }}/{{pgsql_jdbc_driver}}"
+  become: yes
+  become_user: root
+  
+- name: copy liquibase properties
+  template: src=liquibase/liquibase.properties.j2 dest={{ db_script_dir }}/liquibase.properties mode=755 owner=root group=root
+  become: yes
+  become_user: root
+
+- name: copy DB table creation scripts
+  template: src=liquibase/master.xml.j2 dest={{ db_script_dir }}/master.xml mode=755 owner=root group=root
+  become: yes
+  become_user: root
+  
+- name: create DB tables
+  command: java -jar /opt/liquibase/liquibase.jar update  
+  args:
+    chdir: "{{ db_script_dir }}"
+  become: yes
+  become_user: root
+  
+  

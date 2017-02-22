@@ -35,8 +35,10 @@
   template: src=pg_hba.conf.j2 dest={{ data_dir }}/pg_hba.conf mode=600 owner=postgres group=postgres
   become: yes
   become_user: root
-  notify:
-  - restart postgresql
+  notify: restart postgresql
+
+# Force handler to be called
+- meta: flush_handlers
   
 - name: create task database
   postgresql_db: 
@@ -71,4 +73,4 @@
     role: "{{ postgres_user }}"
     db: "{{ task_db_name }}" 
   become: yes
-  become_user: postgres    
+  become_user: postgres

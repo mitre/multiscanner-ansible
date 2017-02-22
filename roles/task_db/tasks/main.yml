@@ -1,4 +1,11 @@
 ---
-
-- include: setup_taskdb.yml
+- name: install Java
+  yum:
+    name: java
+    state: present
+  become: yes
+  become_user: root
+  
+- include: install_postgres.yml
 - include: setup_firewall_rules.yml
+- include: setup_database_tables.yml

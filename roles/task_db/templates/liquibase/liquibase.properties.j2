@@ -1,0 +1,6 @@
+driver=org.postgresql.Driver
+classpath={{ pgsql_jdbc_driver }}
+url=jdbc:postgresql://localhost:5432/{{ task_db_name }}
+username={{ postgres_user }}
+password={{ postgres_user_password }}
+changeLogFile={{ db_script_dir }}/master.xml

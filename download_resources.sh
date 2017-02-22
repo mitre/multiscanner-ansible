@@ -38,3 +38,10 @@ RABBITMQ_RPM=rabbitmq-server-3.6.6-1.el7.noarch.rpm
 
 wget "http://www.rabbitmq.com/releases/rabbitmq-server/$RABBITMQ_VERSION/$RABBITMQ_RPM" --directory-prefix=$RESOURCE_DIR
 wget "https://www.rabbitmq.com/$RABBITMQ_GPG_KEY" --directory-prefix=$RESOURCE_DIR
+
+#----------------------- LIQUIBASE ----------------------
+PGSQL_JDBC_DRIVER=postgresql-42.0.0.jar
+LIQUIBASE_VERSION=3.5.3
+
+wget https://jdbc.postgresql.org/download/$PGSQL_JDBC_DRIVER --directory-prefix=$RESOURCE_DIR
+wget https://github.com/liquibase/liquibase/releases/download/liquibase-parent-$LIQUIBASE_VERSION/liquibase-$LIQUIBASE_VERSION-bin.tar.gz --directory-prefix=$RESOURCE_DIR

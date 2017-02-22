@@ -7,7 +7,12 @@ task_db_name: task_db
 data_dir: /var/lib/pgsql/data
 
 postgres_user: multiscanner
-postgres_user_password: CHANGE_THIS_PASSWORD
+postgres_user_password: CHANGEME
+
+db_script_dir: /usr/share/task_db_resources
+
+pgsql_jdbc_driver: postgresql-42.0.0.jar
+liquibase_version: 3.5.3
 
 postgres_ports:
   - 5432/tcp 

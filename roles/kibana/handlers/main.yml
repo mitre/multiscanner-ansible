@@ -1,4 +1,6 @@
 ---
 
 - name: restart Kibana
-  service: name=kibana state=restarted
+  systemd: state=restarted name=kibana
+  become: yes
+  become_user: root

@@ -1,4 +1,6 @@
 ---
 
 - name: restart Elasticsearch
-  service: name=elasticsearch state=restarted
+  systemd: state=restarted name=elasticsearch
+  become: yes
+  become_user: root

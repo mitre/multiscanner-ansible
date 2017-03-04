@@ -19,14 +19,14 @@ server.host: "0.0.0.0"
 
 # The URL of the Elasticsearch instance to use for all your queries.
 #elasticsearch.url: "http://localhost:9200"
-{# Get the IP of the first host in the elasticsearch group. 
+{# Get the IP of the first host in the elasticsearch group.
  NOTE that this requires that at least one play talks to the
  elasticsearch group. We currently list the elasticsearch role above
  the kibana role in site.yml so as long as that order is maintained, this will
  work...#}
-elasticsearch.url: "{{ hostvars[groups['elasticsearch'][0]]['ansible_eth0']['ipv4']['address'] }}:9200"
+elasticsearch.url: "http://{{ hostvars[groups['elasticsearch'][0]]['ansible_eth0']['ipv4']['address'] }}:9200"
 
-# When this setting’s value is true Kibana uses the hostname specified in the server.host
+# When this setting's value is true Kibana uses the hostname specified in the server.host
 # setting. When the value of this setting is false, Kibana uses the hostname of the host
 # that connects to this Kibana instance.
 #elasticsearch.preserveHost: true

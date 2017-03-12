@@ -3,7 +3,7 @@
 - name: install required packages
   yum:
     name: "{{ item }}"
-    state: present  
+    state: present
   with_items:
     - python-psycopg2
     - postgresql-server
@@ -19,11 +19,11 @@
 
 - name: init db if data directory is not empty
   command: postgresql-setup initdb
-  when: dir_files.matched|int == 0  
+  when: dir_files.matched|int == 0
   become: yes
   become_user: root
-  
-- name: enable postgres to start on boot (RHEL/CentOS 7)  
+
+- name: enable postgres to start on boot (RHEL/CentOS 7)
   systemd:
     state: started
     enabled: yes
@@ -37,23 +37,32 @@
   become_user: root
   notify: restart postgresql
 
+- name: set postgres to listen on all interfaces
+  lineinfile:
+    dest: "{{ data_dir }}/postgresql.conf"
+    regexp: '^listen_addresses ='
+    line: "listen_addresses = '*'"
+  become: yes
+  become_user: root
+  notify: restart postgresql
+
 # Force handler to be called
 - meta: flush_handlers
-  
+
 - name: create task database
-  postgresql_db: 
+  postgresql_db:
     name: "{{ task_db_name }}"
-    state: present    
+    state: present
     port: 5432
   become: yes
   become_user: postgres
-    
-- name: create database user 
+
+- name: create database user
   postgresql_user:
     db: "{{ task_db_name }}"
     name: "{{ postgres_user }}"
     password: "{{ postgres_user_password }}"
-    priv: ALL    
+    priv: ALL
     state: present
   become: yes
   become_user: postgres
@@ -66,11 +75,11 @@
   become_user: postgres
 
 - name: grant schema privs to DB user
-  postgresql_privs: 
+  postgresql_privs:
     privs: ALL
     type: schema
     objs: public
     role: "{{ postgres_user }}"
-    db: "{{ task_db_name }}" 
+    db: "{{ task_db_name }}"
   become: yes
   become_user: postgres

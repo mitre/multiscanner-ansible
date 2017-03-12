@@ -20,10 +20,19 @@
   roles:
   - role: task_db
 
+- hosts: dfs_server
+  roles:
+  - role: dfs_server
+  - role: dfs_client
+
 - hosts: ms_worker
   roles:
   - role: ms_worker
+  - role: dfs_client
 
 - hosts: webserver
   roles:
   - role: webserver
+  - role: dfs_client
+
+

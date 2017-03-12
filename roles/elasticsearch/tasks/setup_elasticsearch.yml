@@ -13,14 +13,14 @@
   become: yes
   become_user: root
 
-- name: enable Elasticsearch to start on boot (RHEL/CentOS 7)  
+- name: enable Elasticsearch to start on boot (RHEL/CentOS 7)
   systemd:
     state: started
     enabled: yes
     name: elasticsearch
   become: yes
   become_user: root
-  
+
 - name: copy Elasticsearch configuration
   template: src=elasticsearch.yml.j2 dest=/etc/elasticsearch/elasticsearch.yml mode=750 owner=root group=elasticsearch
   become: yes

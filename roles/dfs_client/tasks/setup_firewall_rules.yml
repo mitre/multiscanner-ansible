@@ -1,0 +1,7 @@
+---
+
+- name: add firewall exceptions for the dfs
+  firewalld: port={{ item }} permanent=true zone={{ dfs_firewall_zone }} state=enabled immediate=true
+  with_items: "{{ dfs_ports }}"
+  become: yes
+  become_user: root

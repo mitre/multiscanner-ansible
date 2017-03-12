@@ -15,3 +15,18 @@ remote_resource_prefix: /tmp
 #---------------------------------------------
 elasticco_gpg_key: GPG-KEY-elasticsearch
 elasticsearch_cluster: multiscanner_es_cluster
+
+#---------------------------------------------
+# DFS related
+#---------------------------------------------
+gluster_version: 3.10.0
+dfs_gluster_centos_sig_version: 310
+dfs_mount_dir: /usr/share/ms_samples
+dfs_gluster_brick_name: ms_samples
+
+dfs_firewall_zone: public
+dfs_ports:
+  - 111/tcp
+  - 24007-24011/tcp
+  - 49152-49153/tcp
+  - 111/udp

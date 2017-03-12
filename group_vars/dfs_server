@@ -1,0 +1,6 @@
+############################################
+# GLUSTER SETTINGS
+############################################
+gluster_brick_dir: /gsrv/ms_sample_brick
+dfs_replica_count: 2
+

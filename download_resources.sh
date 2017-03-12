@@ -45,3 +45,16 @@ LIQUIBASE_VERSION=3.5.3
 
 wget https://jdbc.postgresql.org/download/$PGSQL_JDBC_DRIVER --directory-prefix=$RESOURCE_DIR
 wget https://github.com/liquibase/liquibase/releases/download/liquibase-parent-$LIQUIBASE_VERSION/liquibase-$LIQUIBASE_VERSION-bin.tar.gz --directory-prefix=$RESOURCE_DIR
+
+
+#----------------------- GLUSTER ----------------------
+# ANSIBLE VARIABLE: gluster_version ANSIBLE FILE: group_vars/all
+GLUSTER_VERSION=3.10.0
+mkdir gluster_server
+yumdownloader glusterfs-server-$GLUSTER_VERSION --resolve --destdir gluster_server
+
+mkdir gluster_client
+yumdownloader glusterfs-client --resolve --destdir gluster_client
+
+
+

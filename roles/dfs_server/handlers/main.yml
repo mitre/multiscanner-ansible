@@ -1,0 +1,6 @@
+---
+
+- name: restart smb
+  systemd: state=restarted name=smb
+  become: yes
+  become_user: root

@@ -1,0 +1,5 @@
+---
+
+- include: install_dfs_client.yml
+- include: setup_firewall_rules.yml
+- include: connect_to_dfs.yml

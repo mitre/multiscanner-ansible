@@ -1,0 +1,36 @@
+---
+
+- name: copy gluster server RPMs
+  copy:
+    src: "../../{{local_resource_prefix}}/gluster_server"
+    dest: "{{remote_resource_prefix}}"
+
+
+- name: install gluster server
+  yum:
+    name: "{{remote_resource_prefix}}/gluster_server/{{ item}}"
+    state: present
+  with_items:
+    - glusterfs-{{ gluster_version }}-1.el7.x86_64.rpm
+    - glusterfs-api-{{ gluster_version }}-1.el7.x86_64.rpm
+    - glusterfs-cli-{{ gluster_version }}-1.el7.x86_64.rpm
+    - glusterfs-client-xlators-{{ gluster_version }}-1.el7.x86_64.rpm
+    - glusterfs-fuse-{{ gluster_version }}-1.el7.x86_64.rpm
+    - glusterfs-libs-{{ gluster_version }}-1.el7.x86_64.rpm
+    - glusterfs-server-{{ gluster_version }}-1.el7.x86_64.rpm
+  become: yes
+  become_user: root
+
+
+
+# If you're not in an airgapped environment, comment out the two blocks above, and uncomment the two blocks below:
+#- name: install gluster prereqs
+#  yum: name=centos-release-gluster{{ dfs_gluster_centos_sig_version }}  state=present
+#  become: yes
+#  become_user: root
+
+#- name: install gluster
+#  yum: name=glusterfs-server  state=present
+#  become: yes
+#  become_user: root
+

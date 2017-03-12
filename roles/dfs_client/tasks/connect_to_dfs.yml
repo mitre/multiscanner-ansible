@@ -1,0 +1,17 @@
+---
+
+- name: create gluster brick and mount directory
+  file: "path={{ dfs_mount_dir }} state=directory mode=0775 owner={{ ms_user }} recurse=yes"
+  become: yes
+  become_user: root
+
+# Mounts the Gluster shared volume
+- name: mount gluster volume
+  mount:
+    name: "{{ dfs_mount_dir }}"
+    src: "{{ groups.dfs_server[0] }}:/{{ dfs_gluster_brick_name }}"
+    fstype: glusterfs
+    opts: "defaults,_netdev"
+    state: mounted
+  become: yes
+  become_user: root

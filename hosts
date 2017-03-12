@@ -1,28 +1,32 @@
-# UI and ReST services. 
+# UI and ReST services. There should only be 1 host
 [webserver]
 webserver.yourdomain.com
 
-# RabbitMQ message server for queueing/distributing tasks
+# RabbitMQ message server for queueing/distributing tasks. There should only be 1 host
 [task_broker]
 task-broker.yourdomain.com
 
-# Elasticsearch cluster
+# Elasticsearch cluster. At least 1 host, more is preferred
 [elasticsearch]
 elastic-1.yourdomain.com
 elastic-2.yourdomain.com
 
-# Kibana 
+# Kibana. Optional. If implemeted, specify one or more hosts. 
 [kibana]
 kibana.yourdomain.com
 
-# PostgreSQL DB for storing task info
+# PostgreSQL DB for storing task info. There should only be 1 host
 [task_db]
 taskdb.yourdomain.com
 
-# MultiScanner distributed workers
+# MultiScanner distributed workers. At least 1 host, more is preferred
 [ms_worker]
 mscan-worker-1.yourdomain.com
 mscan-worker-2.yourdomain.com
 mscan-worker-3.yourdomain.com
 
+# DFS host. You need at least 2 hosts here
+[dfs_server]
+gluster-dfs1.yourdomain.com
+gluster-dfs2.yourdomain.com
 

@@ -1,0 +1,94 @@
+---
+
+- name: groupinstall development tools
+  yum:  name="@Development tools" state=latest
+  become: yes
+  become_user: root
+
+- name: install prereqs
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - zlib-devel
+    - bzip2-devel
+    - openssl-devel
+    - ncurses-devel
+    - sqlite-devel
+    - readline-devel
+    - tk-devel
+    - gdbm-devel
+    - db4-devel
+    - libpcap-devel
+    - xz-devel
+  become: yes
+  become_user: root
+
+# Copy Python 3 tarball and unzip
+- name: copy python3 tarball
+  copy:
+    src: "../../{{local_resource_prefix}}/Python-{{ python_version }}.tgz"
+    dest: "{{remote_resource_prefix}}"
+
+- unarchive:
+    src: "{{remote_resource_prefix}}/Python-{{ python_version }}.tgz"
+    dest: "{{remote_resource_prefix}}"
+    remote_src: True
+    creates: "{{remote_resource_prefix}}/Python-{{ python_version }}"
+
+- name: copy pip setup script
+  copy:
+    src: "../../{{local_resource_prefix}}/get-pip.py"
+    dest: "{{remote_resource_prefix}}"
+
+# Configure, build & install Python 3
+- name: configure python 3 for installation
+  shell: ./configure --prefix={{ python_install_prefix }} --enable-unicode=ucs4 --enable-shared LDFLAGS="-Wl,-rpath {{ python_install_prefix }}/lib"
+  args:
+    chdir: "{{remote_resource_prefix}}/Python-{{ python_version }}/"
+    creates: "{{remote_resource_prefix}}/Python-{{ python_version }}/Makefile"
+
+- name: install python 3
+  shell: make && make altinstall
+  args:
+    chdir: "{{remote_resource_prefix}}/Python-{{ python_version }}/"
+    creates: "{{ python_install_prefix }}/bin/python{{ python_version_major_minor }}"
+  become: yes
+  become_user: root
+
+- name: install pip
+  shell: python{{ python_version_major_minor }} get-pip.py
+  args:
+    chdir: "{{remote_resource_prefix}}"
+    creates: "{{ python_install_prefix }}/bin/pip{{ python_version_major_minor }}"
+  become: yes
+  become_user: root
+
+- name: set python 3 to be default python
+  file:
+    src: "{{ python_install_prefix }}/bin/python{{ python_version_major_minor }}"
+    dest: "{{ python_install_prefix }}/bin/python"
+    owner: root
+    group: root
+    state: link
+    mode: "u+rwx,g+rwx,o+rwx"
+  become: yes
+  become_user: root
+
+- name: set pip 3 to be default pip
+  file:
+    src: "{{ python_install_prefix }}/bin/pip{{ python_version_major_minor }}"
+    dest: "{{ python_install_prefix }}/bin/pip"
+    owner: root
+    group: root
+    state: link
+    mode: "u+rwx,g+rwx,o+rwx"
+  become: yes
+  become_user: root
+
+- name: install virtualenv
+  pip:
+    name: virtualenv
+    state: latest
+  become: yes
+  become_user: root

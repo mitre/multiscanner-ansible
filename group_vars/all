@@ -1,3 +1,6 @@
+#---------------------------------------------
+# General
+#---------------------------------------------
 # MultiScanner service account
 ms_user: multiscanner
 
@@ -9,6 +12,11 @@ ms_password: mscCKySlct48Y
 # File transfer
 local_resource_prefix: resources
 remote_resource_prefix: /tmp
+
+# Python 3
+python_version: 3.6.0
+python_version_major_minor: 3.6
+python_install_prefix: /usr/local
 
 #---------------------------------------------
 # ELK-related

@@ -11,11 +11,11 @@
 - hosts: elasticsearch
   roles:
   - role: elasticsearch
-  
+
 - hosts: kibana
   roles:
   - role: kibana
-  
+
 - hosts: task_db
   roles:
   - role: task_db
@@ -27,11 +27,13 @@
 
 - hosts: ms_worker
   roles:
+  - role: python3
   - role: ms_worker
   - role: dfs_client
 
 - hosts: webserver
   roles:
+  - role: python3
   - role: webserver
   - role: dfs_client
 

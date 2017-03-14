@@ -55,3 +55,11 @@ yumdownloader glusterfs-server-$GLUSTER_VERSION --resolve --destdir gluster_serv
 
 mkdir $RESOURCE_DIR/gluster_client
 yumdownloader glusterfs-client --resolve --destdir gluster_client
+
+#---------------------- PYTHON 3----------------------
+# ANSIBLE VARIABLE: python_version ANSIBLE FILE: group_vars/all
+PYTHON_VERSION=3.6.0
+
+wget https://www.python.org/ftp/python/$PYTHON_VERSION/Python-$PYTHON_VERSION.tgz --directory-prefix=$RESOURCE_DIR
+
+wget https://bootstrap.pypa.io/get-pip.py --directory-prefix=$RESOURCE_DIR

@@ -18,6 +18,9 @@ python_version: 3.6.0
 python_version_major_minor: 3.6
 python_install_prefix: /usr/local
 
+# Directory under which to unzip multiscanner
+multiscanner_install_prefix: /usr/share
+
 #---------------------------------------------
 # ELK-related
 #---------------------------------------------

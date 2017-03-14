@@ -1,0 +1,47 @@
+---
+
+- name: install epel-release repo
+  yum:
+    name: epel-release
+    state: present
+  become: yes
+  become_user: root
+
+- name: install multiscanner system dependencies
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - autoconf
+    - automake
+    - curl
+    - gcc
+    - libffi-devel
+    - libtool
+    - make
+    - python-devel
+    - python-pip
+    - ssdeep-devel
+    - tar
+    - git
+  become: yes
+  become_user: root
+
+- name: copy multiscanner source
+  copy:
+    src: "../../{{local_resource_prefix}}/multiscanner.tgz"
+    dest: "{{ multiscanner_install_prefix }}"
+  become: yes
+  become_user: root
+
+- name: unzip multiscanner source
+  unarchive:
+    src: "{{ multiscanner_install_prefix }}/multiscanner.tgz"
+    dest: "{{ multiscanner_install_prefix }}"
+    remote_src: yes
+    creates: "{{ multiscanner_install_prefix }}/multiscanner"
+    owner: "{{ ms_user }}"
+    group: root
+  become: yes
+  become_user: root
+

@@ -33,7 +33,7 @@
 - unarchive:
     src: "{{remote_resource_prefix}}/Python-{{ python_version }}.tgz"
     dest: "{{remote_resource_prefix}}"
-    remote_src: True
+    remote_src: yes
     creates: "{{remote_resource_prefix}}/Python-{{ python_version }}"
 
 - name: copy pip setup script

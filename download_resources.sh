@@ -51,10 +51,12 @@ wget https://github.com/liquibase/liquibase/releases/download/liquibase-parent-$
 # ANSIBLE VARIABLE: gluster_version ANSIBLE FILE: group_vars/all
 GLUSTER_VERSION=3.10.0
 mkdir $RESOURCE_DIR/gluster_server
-yumdownloader glusterfs-server-$GLUSTER_VERSION --resolve --destdir gluster_server
+yumdownloader glusterfs-server-$GLUSTER_VERSION --resolve --destdir $RESOURCE_DIR/gluster_server
+tar -cvzf $RESOURCE_DIR/gluster_server.tgz -C $RESOURCE_DIR gluster_server
 
 mkdir $RESOURCE_DIR/gluster_client
-yumdownloader glusterfs-client --resolve --destdir gluster_client
+yumdownloader glusterfs-client --resolve --destdir $RESOURCE_DIR/gluster_client
+tar -cvzf $RESOURCE_DIR/gluster_client.tgz -C $RESOURCE_DIR gluster_client
 
 #---------------------- PYTHON 3----------------------
 # ANSIBLE VARIABLE: python_version ANSIBLE FILE: group_vars/all

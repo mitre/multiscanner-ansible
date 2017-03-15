@@ -1,10 +1,16 @@
 ---
 
-- name: copy gluster server RPMs
+- name: copy gluster client RPMs
   copy:
-    src: "../../{{local_resource_prefix}}/gluster_client"
+    src: "../../{{local_resource_prefix}}/gluster_client.tgz"
     dest: "{{remote_resource_prefix}}"
 
+- name: unzip gluster client RPMs
+  unarchive:
+    src: "{{ remote_resource_prefix }}/gluster_client.tgz"
+    dest: "{{ remote_resource_prefix }}"
+    remote_src: yes
+    creates: "{{ remote_resource_prefix }}/gluster_client"
 
 - name: install gluster client
   yum:

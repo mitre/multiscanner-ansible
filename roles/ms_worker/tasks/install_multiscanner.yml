@@ -45,3 +45,17 @@
   become: yes
   become_user: root
 
+- name: create multiscanner virtualenv directory and set permissions
+  file: "path={{ multiscanner_venv }} state=directory mode=0700 owner={{ ms_user }} recurse=yes"
+  become: yes
+  become_user: root
+
+- name: install multiscanner python dependencies
+  pip:
+    requirements: "{{ multiscanner_install_prefix }}/multiscanner/requirements3.txt"
+    virtualenv: "{{ multiscanner_venv }}"
+    virtualenv_python: "{{ python_install_prefix }}/bin/python"
+    virtualenv_site_packages: yes
+  become: yes
+  become_user: "{{ ms_user }}"
+

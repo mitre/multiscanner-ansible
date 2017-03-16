@@ -35,7 +35,8 @@ elasticsearch_cluster: multiscanner_es_cluster
 #---------------------------------------------
 gluster_version: 3.10.0
 dfs_gluster_centos_sig_version: 310
-dfs_mount_dir: /usr/share/ms_samples
+dfs_mount_dir: /mnt/samples
+gluster_brick_dir: /gsrv/ms_sample_brick
 dfs_gluster_brick_name: ms_samples
 
 dfs_firewall_zone: public

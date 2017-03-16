@@ -23,18 +23,19 @@
 - hosts: dfs_server
   roles:
   - role: dfs_server
-  - role: dfs_client
 
 - hosts: ms_worker
   roles:
+  - role: dfs_client
   - role: python3
   - role: ms_worker
-  - role: dfs_client
+
 
 - hosts: webserver
   roles:
+  - role: dfs_client
   - role: python3
   - role: webserver
-  - role: dfs_client
+
 
 

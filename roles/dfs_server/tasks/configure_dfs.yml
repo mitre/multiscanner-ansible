@@ -1,20 +1,19 @@
 ---
 
+# Set up a Gluster server
+# Referenced https://www.jeffgeerling.com/blog/simple-glusterfs-setup-ansible heavily for this
+- name: create gluster brick and mount directory
+  file: "path={{ item }} state=directory mode=0775 owner={{ ms_user }} recurse=yes"
+  with_items:
+    - "{{ gluster_brick_dir }}"
+  become: yes
+  become_user: root
+
 - name: enable glusterfs to start on boot (RHEL/CentOS 7)
   systemd:
     state: started
     enabled: yes
     name: glusterd
-  become: yes
-  become_user: root
-
-# Set up a Gluster server
-# Referenced https://www.jeffgeerling.com/blog/simple-glusterfs-setup-ansible heavily for this
-- name: create gluster brick and mount directory
-  file: "path={{ item }} state=directory mode=0775"
-  with_items:
-    - "{{ gluster_brick_dir }}"
-    - "{{ dfs_mount_dir }}"
   become: yes
   become_user: root
 

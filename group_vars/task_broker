@@ -5,18 +5,11 @@
 rabbit_mq_rpm: rabbitmq-server-3.6.6-1.el7.noarch.rpm
 rabbit_mq_gpg_key: rabbitmq-release-signing-key.asc
 
-# RabbitMQ User
-ms_rabbit_user: ms_rabbit
-ms_rabbit_password: CHANGE_THIS_PASSWORD
-
-# Task queue vhost
-rabbit_task_primary_vhost: ms_task
-
 ###################################################
 # FIREWALL
 ###################################################
 rabbit_mq_ports:
-  - 5671-5672/tcp 
+  - 5671-5672/tcp
   - 25672/tcp
   - 15672/tcp
   - 4369/tcp

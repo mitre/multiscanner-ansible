@@ -1,0 +1,22 @@
+[ElasticSearchStorage]
+ENABLED = False
+host = {{ groups.elasticsearch[0] }}
+port = 9200
+index = multiscanner_reports
+doc_type = reports
+
+[File]
+ENABLED = True
+path = report.json
+gzip = False
+files-per-line = 1
+
+[MongoStorage]
+ENABLED = False
+host = localhost
+port = 27017
+database = multiscanner_reports
+collection = reports
+
+[Storage]
+ENABLED = False

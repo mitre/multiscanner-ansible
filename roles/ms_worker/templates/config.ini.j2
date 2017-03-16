@@ -1,0 +1,125 @@
+[AVGScan]
+path = C:\Program Files\AVG\AVG2014\avgscanx.exe
+key = {{ multiscanner_install_prefix }}/multiscanner/etc/id_rsa
+cmdline = ['/A', '/H', '/PRIORITY=High']
+host = ('MultiScanner', 22, 'User')
+replacement path = X:\
+ENABLED = True
+
+[ClamAVScan]
+ENABLED = True
+
+[KasperskyScan]
+path = C:\Program Files\Kaspersky Lab\Kaspersky Anti-Virus 15.0.0\avp.exe
+key = {{ multiscanner_install_prefix }}/multiscanner/etc/id_rsa
+cmdline = ['scan', '/i0', '/fa']
+host = ('MultiScanner', 22, 'User')
+replacement path = X:\
+ENABLED = True
+
+[MSEScan]
+path = C:\Program Files\Microsoft Security Client\MpCmdRun.exe
+key = {{ multiscanner_install_prefix }}/multiscanner/etc/id_rsa
+cmdline = ['-Scan', '-ScanType', '3', '-DisableRemediation', '-File']
+host = ('MultiScanner', 22, 'User')
+replacement path = X:\
+ENABLED = True
+
+[McAfeeScan]
+path = C:\vscl-w32-604-e\scan.exe
+key = {{ multiscanner_install_prefix }}/multiscanner/etc/id_rsa
+cmdline = ['/ALL']
+host = ('MultiScanner', 22, 'User')
+replacement path = X:\
+ENABLED = True
+
+[Metadefender]
+ENABLED = False
+API URL = http://metadefender:8008/
+timeout = 60
+running timeout = 30
+fetch delay seconds = 5
+poll interval seconds = 5
+user agent = user_agent
+API key =
+
+[vtsearch]
+apikey = None
+ENABLED = True
+
+[Cuckoo]
+ENABLED = False
+API URL = http://cuckoo:8090/
+timeout = 360
+running timeout = 120
+delete tasks = False
+
+[FireeyeAPI]
+API URL = https://fireeye/wsapis/v1.1.0
+fireeye images = ['win7-sp1', 'win7x64-sp1', 'winxp-sp3']
+username = api_analyst
+password = Password123
+info level = normal
+timeout = 500
+force = False
+analysis type = 0
+application id = 0
+ENABLED = False
+
+[FireeyeScan]
+fireeye images = ['win7-sp1', 'win7x64-sp1', 'winxp-sp2', 'winxp-sp3']
+ENABLED = False
+good path = good
+base path = /mnt/fireeyeshare/
+bad path = bad
+src path = src
+
+[VxStream]
+ENABLED = False
+API URL = http://localhost/api/
+API key =
+API secret =
+Environment ID = 1
+Verify = False
+timeout = 360
+running timeout = 120
+
+[ExifToolsScan]
+cmdline = ['-t']
+path = C:\exiftool.exe
+key = {{ multiscanner_install_prefix }}/multiscanner/etc/id_rsa
+host = ('MultiScanner', 22, 'User')
+replacement path = X:\
+remove-entry = ['ExifTool Version Number', 'File Name', 'Directory', 'File Modification Date/Time', 'File Creation Date/Time', 'File Access Date/Time', 'File Permissions']
+ENABLED = True
+
+[PEFile]
+ENABLED = True
+
+[TrID]
+path = C:\TrID\trid.exe
+ENABLED = True
+key = {{ multiscanner_install_prefix }}/multiscanner/etc/id_rsa
+cmdline = ['-r:3']
+host = ('MultiScanner', 22, 'User')
+replacement path = X:\
+
+[libmagic]
+magicfile = None
+ENABLED = True
+
+[pdfinfo]
+ENABLED = True
+fast = False
+
+[YaraScan]
+ruledir = {{ multiscanner_install_prefix }}/multiscanner/etc/yarasigs
+fileextensions = ['.yar', '.yara', '.sig']
+ignore-tags = ['TLPRED']
+ENABLED = True
+
+[main]
+copyfilesto = False
+group-types = ['Antivirus']
+storage-config = {{ multiscanner_install_prefix }}/multiscanner/storage.ini
+api-config = {{ multiscanner_install_prefix }}/multiscanner/api_config.ini

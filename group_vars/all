@@ -45,3 +45,20 @@ dfs_ports:
   - 24007-24011/tcp
   - 49152-49153/tcp
   - 111/udp
+
+#---------------------------------------------
+# Task DB related
+#---------------------------------------------
+task_db_name: task_db
+postgres_user: multiscanner
+postgres_user_password: CHANGEME
+
+#---------------------------------------------
+# Task Broker related
+#---------------------------------------------
+# RabbitMQ User
+ms_rabbit_user: ms_rabbit
+ms_rabbit_password: CHANGE_THIS_PASSWORD
+
+# Task queue vhost
+rabbit_task_primary_vhost: ms_task

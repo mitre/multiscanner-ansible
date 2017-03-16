@@ -1,0 +1,14 @@
+[Unit]
+Description=multiscanner worker Service
+After=network.target
+
+[Service]
+Type=simple
+User={{ ms_user }}
+ExecStart={{ multiscanner_venv }}/bin/python utils/celery_worker.py worker
+WorkingDirectory={{ multiscanner_install_prefix }}/multiscanner
+Restart=on-abort
+
+
+[Install]
+WantedBy=multi-user.target

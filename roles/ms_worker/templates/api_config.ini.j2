@@ -1,0 +1,18 @@
+[Database]
+username = {{ postgres_user }}
+password = {{ postgres_user_password }}
+db_type = postgresql
+db_name = {{ task_db_name }}
+host_string ={{ groups.task_db[0] }}
+
+[api]
+host = 0.0.0.0
+port = 8080
+upload_folder = {{ dfs_mount_dir }}
+
+[celery]
+protocol = pyamqp
+host = {{ groups.task_broker[0] }}
+user = {{ ms_rabbit_user }}
+password = {{ ms_rabbit_password }}
+vhost = {{ rabbit_task_primary_vhost }}

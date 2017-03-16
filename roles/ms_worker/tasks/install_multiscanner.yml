@@ -83,7 +83,7 @@
 
 # Service setup
 - name: copy multiscanner systemd config
-  template: src=mscan-worker.service.j2.j2 dest=/etc/systemd/system/mscan-worker.service mode=755 owner=multiscanner group=root
+  template: src=mscan-worker.service.j2 dest=/etc/systemd/system/mscan-worker.service mode=755 owner=multiscanner group=root
   register: restart_ms_celery
   become: yes
   become_user: root

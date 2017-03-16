@@ -1,4 +1,3 @@
 ---
 
 - include: install_multiscanner.yml
-- include: configure_multiscanner.yml

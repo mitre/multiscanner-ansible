@@ -18,15 +18,15 @@
     state: present
   become: yes
   become_user: root
- 
- 
+
+
 - name: add rabbitmq trusted key
   rpm_key:
     state: present
     key: "{{remote_resource_prefix}}/{{rabbit_mq_gpg_key}}"
   become: yes
   become_user: root
-    
+
 - name: install the locally-copied rabbitmq RPM
   yum:
     name: "{{remote_resource_prefix}}/{{rabbit_mq_rpm}}"
@@ -34,7 +34,7 @@
   become: yes
   become_user: root
 
-- name: enable RabbitMQ server to start on boot (RHEL/CentOS 7)  
+- name: enable RabbitMQ server to start on boot (RHEL/CentOS 7)
   systemd:
     state: started
     enabled: yes
@@ -49,18 +49,32 @@
   notify:
   - restart rabbitmq
 
-- name: add rabbitmq user
-  rabbitmq_user: user={{ms_rabbit_user}} password={{ms_rabbit_password}} tags=administrator,{{ms_rabbit_user}} vhost=/ configure_priv=.* write_priv=.* read_priv=.* state=present
+- name: ensure vhost {{rabbit_task_primary_vhost}} is present
+  rabbitmq_vhost: name={{rabbit_task_primary_vhost}} state=present
   become: yes
   become_user: root
+
+- name: add rabbitmq user
+  rabbitmq_user:
+    user: "{{ms_rabbit_user}}"
+    password: "{{ms_rabbit_password}}"
+    tags: administrator,{{ms_rabbit_user}}
+    vhost: "{{rabbit_task_primary_vhost}}"
+    configure_priv: .*
+    write_priv: .*
+    read_priv: .*
+    state: present
+  become: yes
+  become_user: root
+  notify:
+  - restart rabbitmq
 
 - name: remove default guest user
   rabbitmq_user: user=guest state=absent
   become: yes
   become_user: root
-  
-- name: ensure vhost /{{rabbit_task_primary_vhost}} is present
-  rabbitmq_vhost: name=/{{rabbit_task_primary_vhost}} state=present  
-  become: yes
-  become_user: root
-  
+  notify:
+  - restart rabbitmq
+
+
+

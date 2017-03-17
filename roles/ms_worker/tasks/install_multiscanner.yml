@@ -61,21 +61,21 @@
 
 # Copy configs
 - name: copy multiscanner main config
-  template: src=config.ini.j2 dest={{ multiscanner_install_prefix }}/config.ini mode=755 owner=multiscanner group=root
+  template: src=config.ini.j2 dest={{ multiscanner_install_prefix }}/multiscanner/config.ini mode=755 owner=multiscanner group=root
   register: restart_ms_celery
   become: yes
   become_user: root
 
 
 - name: copy multiscanner api config
-  template: src=api_config.ini.j2 dest={{ multiscanner_install_prefix }}/api_config.ini mode=755 owner=multiscanner group=root
+  template: src=api_config.ini.j2 dest={{ multiscanner_install_prefix }}/multiscanner/api_config.ini mode=755 owner=multiscanner group=root
   register: restart_ms_celery
   become: yes
   become_user: root
 
 
 - name: copy multiscanner storage config
-  template: src=storage.ini.j2 dest={{ multiscanner_install_prefix }}/storage.ini mode=755 owner=multiscanner group=root
+  template: src=storage.ini.j2 dest={{ multiscanner_install_prefix }}/multiscanner/storage.ini mode=755 owner=multiscanner group=root
   register: restart_ms_celery
   become: yes
   become_user: root

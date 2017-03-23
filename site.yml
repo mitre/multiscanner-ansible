@@ -31,6 +31,12 @@
   - role: ms_common
   - role: ms_worker
 
+- hosts: restserver
+  roles:
+  - role: dfs_client
+  - role: python3
+  - role: ms_common
+  - role: ms_restserver
 
 - hosts: webserver
   roles:
@@ -38,6 +44,3 @@
   - role: python3
   - role: ms_common
   - role: ms_webserver
-
-
-

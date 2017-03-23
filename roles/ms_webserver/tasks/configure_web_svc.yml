@@ -1,4 +1,26 @@
 ---
+
+# Overwrite default Flask config
+- name: copy multiscanner api config
+  template: src=app_config.py.j2 dest={{ multiscanner_install_prefix }}/multiscanner/web/config.py mode=755 owner=multiscanner group=root
+  register: restart_ms_svc
+  become: yes
+  become_user: root
+
+- name: do not use proxy on localhost cnxn to REST server (1)
+  lineinfile:
+    dest: "/home/multiscanner/.bashrc"
+    line: "export no_proxy=\"127.0.0.1,localhost\""
+  become: yes
+  become_user: multiscanner
+
+- name: do not use proxy on localhost cnxn to REST server (2)
+  lineinfile:
+    dest: "/home/multiscanner/.bashrc"
+    line: "export NO_PROXY=\"127.0.0.1,localhost\""
+  become: yes
+  become_user: multiscanner
+
 # Service setup
 - name: copy multiscanner web svc systemd config
   template: src=mscan-web.service.j2 dest=/etc/systemd/system/mscan-web.service mode=755 owner=multiscanner group=root

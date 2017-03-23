@@ -1,4 +1,4 @@
 ---
 
-- include: configure_web_svc.yml
+- include: configure_rest_svc.yml
 - include: setup_firewall_rules.yml

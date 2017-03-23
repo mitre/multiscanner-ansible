@@ -1,6 +1,10 @@
-# UI and ReST services. There should only be 1 host
+# UI. There should only be 1 host
 [webserver]
 webserver.yourdomain.com
+
+# ReST service. There should only be 1 host, and it can be the same as the webserver
+[restserver]
+restserver.yourdomain.com
 
 # RabbitMQ message server for queueing/distributing tasks. There should only be 1 host
 [task_broker]
@@ -11,7 +15,7 @@ task-broker.yourdomain.com
 elastic-1.yourdomain.com
 elastic-2.yourdomain.com
 
-# Kibana. Optional. If implemeted, specify one or more hosts. 
+# Kibana. Optional. If implemeted, specify one or more hosts.
 [kibana]
 kibana.yourdomain.com
 

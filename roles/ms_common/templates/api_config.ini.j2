@@ -6,8 +6,8 @@ db_name = {{ task_db_name }}
 host_string ={{ groups.task_db[0] }}
 
 [api]
-host = 0.0.0.0
-port = 8080
+host = {{ ms_rest_host }}
+port = {{ ms_rest_port }}
 upload_folder = {{ dfs_mount_dir }}
 
 [celery]

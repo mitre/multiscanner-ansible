@@ -28,6 +28,7 @@
   roles:
   - role: dfs_client
   - role: python3
+  - role: ms_common
   - role: ms_worker
 
 
@@ -35,7 +36,8 @@
   roles:
   - role: dfs_client
   - role: python3
-  - role: webserver
+  - role: ms_common
+  - role: ms_webserver
 
 
 

@@ -1,0 +1,14 @@
+[Unit]
+Description=multiscanner Web Service
+After=network.target
+
+[Service]
+Type=simple
+User={{ ms_user }}
+ExecStart={{ multiscanner_venv }}/bin/python web/app.py
+WorkingDirectory={{ multiscanner_install_prefix }}/multiscanner
+Restart=on-abort
+
+
+[Install]
+WantedBy=multi-user.target

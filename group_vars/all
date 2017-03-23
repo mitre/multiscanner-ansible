@@ -62,3 +62,13 @@ ms_rabbit_password: CHANGE_THIS_PASSWORD
 
 # Task queue vhost
 rabbit_task_primary_vhost: ms_task
+
+#---------------------------------------------
+# API related
+#---------------------------------------------
+ms_firewall_zone: public
+ms_rest_port: 8080
+ms_rest_host: 0.0.0.0
+
+ms_web_port: 8000
+ms_web_host: 0.0.0.0

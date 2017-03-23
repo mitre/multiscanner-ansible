@@ -67,5 +67,6 @@ wget https://www.python.org/ftp/python/$PYTHON_VERSION/Python-$PYTHON_VERSION.tg
 wget https://bootstrap.pypa.io/get-pip.py --directory-prefix=$RESOURCE_DIR
 
 #---------------------- MULTISCANNER ----------------------
-git clone https://github.com/jfeild1337/multiscanner.git $RESOURCE_DIR/multiscanner
+##git clone https://github.com/jfeild1337/multiscanner.git $RESOURCE_DIR/multiscanner
+git clone -b all_feature_integration https://github.com/jfeild1337/multiscanner.git $RESOURCE_DIR/multiscanner
 tar -cvzf $RESOURCE_DIR/multiscanner.tgz -C $RESOURCE_DIR multiscanner

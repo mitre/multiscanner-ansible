@@ -5,8 +5,8 @@ After=network.target
 [Service]
 Type=simple
 User={{ ms_user }}
-ExecStart={{ multiscanner_venv }}/bin/python utils/celery_worker.py worker
-WorkingDirectory={{ multiscanner_install_prefix }}/multiscanner
+ExecStart={{ multiscanner_venv }}/bin/celery -A celery_worker worker
+WorkingDirectory={{ multiscanner_install_prefix }}/multiscanner/utils
 Restart=on-abort
 
 

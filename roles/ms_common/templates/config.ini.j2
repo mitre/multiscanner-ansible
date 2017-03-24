@@ -4,10 +4,10 @@ key = {{ multiscanner_install_prefix }}/multiscanner/etc/id_rsa
 cmdline = ['/A', '/H', '/PRIORITY=High']
 host = ('MultiScanner', 22, 'User')
 replacement path = X:\
-ENABLED = True
+ENABLED = False
 
 [ClamAVScan]
-ENABLED = True
+ENABLED = False
 
 [KasperskyScan]
 path = C:\Program Files\Kaspersky Lab\Kaspersky Anti-Virus 15.0.0\avp.exe
@@ -15,7 +15,7 @@ key = {{ multiscanner_install_prefix }}/multiscanner/etc/id_rsa
 cmdline = ['scan', '/i0', '/fa']
 host = ('MultiScanner', 22, 'User')
 replacement path = X:\
-ENABLED = True
+ENABLED = False
 
 [MSEScan]
 path = C:\Program Files\Microsoft Security Client\MpCmdRun.exe
@@ -23,7 +23,7 @@ key = {{ multiscanner_install_prefix }}/multiscanner/etc/id_rsa
 cmdline = ['-Scan', '-ScanType', '3', '-DisableRemediation', '-File']
 host = ('MultiScanner', 22, 'User')
 replacement path = X:\
-ENABLED = True
+ENABLED = False
 
 [McAfeeScan]
 path = C:\vscl-w32-604-e\scan.exe
@@ -31,7 +31,7 @@ key = {{ multiscanner_install_prefix }}/multiscanner/etc/id_rsa
 cmdline = ['/ALL']
 host = ('MultiScanner', 22, 'User')
 replacement path = X:\
-ENABLED = True
+ENABLED = False
 
 [Metadefender]
 ENABLED = False
@@ -45,7 +45,7 @@ API key =
 
 [vtsearch]
 apikey = None
-ENABLED = True
+ENABLED = False
 
 [Cuckoo]
 ENABLED = False
@@ -91,14 +91,14 @@ key = {{ multiscanner_install_prefix }}/multiscanner/etc/id_rsa
 host = ('MultiScanner', 22, 'User')
 replacement path = X:\
 remove-entry = ['ExifTool Version Number', 'File Name', 'Directory', 'File Modification Date/Time', 'File Creation Date/Time', 'File Access Date/Time', 'File Permissions']
-ENABLED = True
+ENABLED = False
 
 [PEFile]
 ENABLED = True
 
 [TrID]
 path = C:\TrID\trid.exe
-ENABLED = True
+ENABLED = False
 key = {{ multiscanner_install_prefix }}/multiscanner/etc/id_rsa
 cmdline = ['-r:3']
 host = ('MultiScanner', 22, 'User')
@@ -116,7 +116,7 @@ fast = False
 ruledir = {{ multiscanner_install_prefix }}/multiscanner/etc/yarasigs
 fileextensions = ['.yar', '.yara', '.sig']
 ignore-tags = ['TLPRED']
-ENABLED = True
+ENABLED = False
 
 [main]
 copyfilesto = False

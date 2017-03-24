@@ -6,9 +6,6 @@ data_dir: /var/lib/pgsql/data
 
 db_script_dir: /usr/share/task_db_resources
 
-pgsql_jdbc_driver: postgresql-42.0.0.jar
-liquibase_version: 3.5.3
-
 postgres_ports:
   - 5432/tcp
 

@@ -1,6 +1,6 @@
 ---
 
 - name: restart multiscanner-celery
-  systemd: state=restarted name=multiscanner_celery
+  systemd: state=restarted name=mscan-worker
   become: yes
   become_user: root

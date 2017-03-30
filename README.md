@@ -9,53 +9,108 @@ Distributed MultiScanner (as you would expect) makes use of applications running
 
 
 ## Roles
-This section describes the Ansible roles. Each role has its own folder under **roles/**, and defines tasks to be executed for all hosts in the category(ies) associated with that role. The host categories are established in the **hosts** file, and the association of host categories to roles is established in **site.yml**. 
+This section describes the Ansible roles. Each role has its own folder under **roles/**, and defines tasks to be executed for all hosts in the category(ies) associated with that role.  
 
 ### common
 **Applies to host category**: all<br/>
-**Purpose**: Establishes settings common to all machines in the setup, such as setting up the "multiscanner" user that will be used to run various tasks and services.
+**Purpose**: 
+ * Establishes settings common to all machines in the setup, such as setting up the "multiscanner" user that will be used to run various tasks and services.
 
-### webserver
+### ms_common
+**Applies to host category**: ms_worker, restserver, webserver<br/>
+**Purpose**:
+ * Installs and configures an instance of MultiScanner
+ 
+### ms_webserver
 **Applies to host category**: webserver<br/>
-**Expected number of hosts in category**: 1<br/>
 **Purpose**:
  * Installs and configures the web server for hosting the MultiScanner UI
- * Installs and configures the central instance of MultiScanner, which will use Celery to distribute tasks to MultiScanner instances on the worker nodes. 
+ 
+### ms_restserver
+**Applies to host category**: restserver<br/>
+**Expected number of hosts in category**: 1<br/>
+**Purpose**:
+ * Installs and configures the Multiscanner REST server 
 
 ### ms_worker
 **Applies to host category**: ms_worker<br/>
-**Expected number of hosts in category**: 1 - many<br/>
 **Purpose**:
- * Installs and configures an instance of MultiScanner 
+ * Installs and configures the MultiScanner Celery Worker service
  
 ### elasticsearch
 **Applies to host category**: elasticsearch<br/>
-**Expected number of hosts in category**: 1 - many<br/>
 **Purpose**:
  * Installs and configures an instance of Elasticsearch
  * Joins Elasticsearch instance to a cluster
 
 ### kibana
 **Applies to host category**: kibana<br/>
-**Expected number of hosts in category**: 1<br/>
 **Purpose**:
  * Installs and configures an instance of Kibana
  * Points Kibana to the first host defined in the elasticsearch group
 
-*NOTE:* You can install Kibana on one of the hosts in the elasticsearch group. This role also only exists as a helper feature; it is not required for the operation of MultiScanner and so if you do not want it, simply remove the kibana section from site.yml.
-
 ### task_broker
 **Applies to host category**: task_broker<br/>
-**Expected number of hosts in category**: 1<br/> 
 **Purpose**:
  * Installs and configures RabbitMQ Server, including the management plugin
  
 ### task_db
 **Applies to host category**: task_db<br/>
-**Expected number of hosts in category**: 1<br/>
 **Purpose**:
  * Installs and configures a PostgreSQL database
  
+### dfs_server
+**Applies to host category**: dfs_server<br/>
+**Purpose**:
+ * Installs Gluster FS
+ * Creates a Gluster shared volume
+ 
+### dfs_client
+**Applies to host category**: ms_worker, webserver, restserver<br/>
+**Purpose**:
+ * Mounts the shared Gluster FS volume
+
+### python3
+**Applies to host category**: ms_worker, webserver, restserver<br/>
+**Purpose**:
+ * Installs Python 3 from source
+ * Installs pip and virtualenv
+ * Sets Python 3 and its associated pip and virtualenv as the system defaults
+
+## Host Categories
+This section describes the host categories. The host categories are defined and mapped to actual hostnames/IPs in the **hosts** file, and the association of host categories to roles is defined in **site.yml**.
+
+### webserver
+**Required number of hosts in category**: 1<br/>
+Hosts the Multiscanner web service.
+
+### restserver
+**Required number of hosts in category**: 1<br/>
+Hosts the Multiscanner REST service. The host assigned to this category can be the same as the host assigned to the **webserver** category.
+
+### task_broker
+**Required number of hosts in category**: 1<br/>
+Hosts the RabbitMQ message server for queueing/distributing tasks.
+
+### elasticsearch
+**Required number of hosts in category**: 1 - many<br/>
+These hosts define the Elasticsearch cluster for storing reports. We recommend specifying at least 2 hosts.
+
+### kibana
+**Required number of hosts in category**: 0 - many<br/>
+Hosts an instance of Kibana. This is optional; if you don't want to install Kibana, remove this section from the **hosts** file and remove the **kibana** section from **site.yml**. It is perfectly acceptable to assign one or more of the hosts from the **elasticsearch** category to this category.
+
+### task_db
+**Required number of hosts in category**: 1<br/>
+Hosts the PostgreSQL database for storing task information.
+
+### ms_worker
+**Required number of hosts in category**: 1 - many<br/>
+Hosts the Multiscanner Celery Worker service. To achieve the maximum benefit of using MultiScanner's distributed feature, we recommend adding at least 2 hosts to this category.
+
+### dfs_server
+**Required number of hosts in category**: 2 - many<br/>
+Hosts the Gluster shared volume for submitted file storage. Note that a minimum of 2 hosts is required; add more hosts for better redundancy.
 
 
 ## Setup
@@ -65,7 +120,7 @@ Currently, these scripts exclusively support CentOS/RHEL 7 for the managed hosts
 ### Hosts
 In order to use these Ansible scripts, you need to set up the appropriate machines. You will, of course, need the management machine from which to run Ansible, and then machines for fulfilling the various roles. It is possible to assign multiple roles to one machine; for example, the ReST server and Web UI server roles can be run from one machine, and you would probably want to run Kibana from one of the Elasticsearch hosts. We would recommend that you do not combine any other roles to machines assigned to the ms_worker role or the elasticsearch role (other than adding Kibana to an Elasticsearch host).
 
-In order to allow the management host to communicate with the managed hosts, we recommend creating an Ansible service account on all of the machines, and setting up SSH keys to allow Ansible to communicate without passwords. A guide to setting up SSH keys can be found [here](https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys--2). The service account user will need root access on the managed VMs, and you may want to set up the user to be able to gain root access without a password (otherwise, you will be typing in a password at an obnoxious frequency).
+In order to allow the management host to communicate with the managed hosts, we recommend creating an Ansible service account on all of the machines, and setting up SSH keys to allow Ansible to communicate without passwords. A guide to setting up SSH keys can be found [here](https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys--2). The service account user will need root access on the managed VMs, and you may want to set up the user to be able to gain root access without a password (otherwise, you will be typing in a password at an obnoxious frequency). *If you want step-by-step instructions for performing the initial setup of the mahcines, refer to the **detailed_setup.md** file.*
 
 When the mahcines are set up, edit the **hosts** file to assign the machines to the appropriate category(ies). Refer to **site.yml** to see which roles apply to which host categories.
 
@@ -80,5 +135,5 @@ To run the plays, simply run the command:<br/>
 from the root folder of the project.
 
 ## Scaling
-To increase performance/throughput, you might want to add additional hosts (typically worker or Elasticsearch hosts). To do this, simply set up the additional hosts with the appropriate user and SSH keys as described above, and then add their hostnames/IPs to the **hosts** file under the appropriate category.
+To increase performance/throughput, you might want to add additional hosts (workers, elasticsearch hosts, or Gluster hosts). To do this, simply set up the additional hosts with the appropriate user and SSH keys as described above, and then add their hostnames or IPs to the **hosts** file under the appropriate category.
 

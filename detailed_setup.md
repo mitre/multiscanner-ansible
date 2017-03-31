@@ -6,10 +6,49 @@ This document describes the recommended steps for performing the initial configu
 2. Set the machines' hostnames
 3. Perform any IP address or other network configurations necessary (will depend on your operating environment)
 
-*NOTE:* if you are using virtual machines, we recommend automating the VM creation process as much as possible. As a simplisting example, you could create a template with a script that will set the hostname and perform other mandatory configurations. Then just clone this template for each Managed System and run the script.
+*NOTE:* if you are using virtual machines, we recommend automating the VM creation process as much as possible. As a simplistic example, you could create a template with a script that will set the hostname and perform other mandatory configurations. Then just clone this template for each Managed System and run the script.
 
 ## Create Ansible User
-TODO
+you should have a dedicated Ansible user on the Ansible Controller and the Managed Systems. The username and password should be the same on all machines. The best way to achieve this is to put all the machines on the same Active Directory domain and create the user at the domain level. If this is not an option, then manually add the user by following these steps:<br/>
+***On ALL MACHINES (Ansible Controller and all Managed Systems):***
+1. Log in to the machine using an account that can gain root access
+2. Acquire root access: ```sudo su -```
+3. Enter the following commands:
+    * ```useradd ansible```
+    * ```(printf "THE_NEW_PASSWORD\nTHE_NEW_PASSWORD\n\n" && cat) | passwd ansible```<br/>
+    NOTE: if you use special characters in the password, be sure to escape them with a ```\``` (i.e., to include the ```$``` character, write it as ```\$```)
+    * Press [Enter] 
+
+## Give Ansible user root access
+Once the Ansible user has been added to all machines, it needs to be able to acquire root privileges without a password on the Managed Systems.<br/>
+***On each Managed System:***
+1. Log in to the machine using an account that can gain root access
+2. Acquire root access: ```sudo su -```
+3. Open the sudoers file: ```visudo```
+4. Enter Edit mode: ```i```
+5. Add the following line at the end of the file: ```ansible ALL=(ALL) NOPASSWD: ALL```
+6. Save and close the file: ```[Esc]wq```
 
 ## Copy SSH Keys
-TODO
+The Ansible Controller needs to be able to log in to the Managed Systems without a password, so it is necessary to create SSH keys and copy them to all the Managed Systems.
+***On the Ansible Controller:***
+1. Generate SSH keys: ```ssh-keygen -t rsa```
+2. For each Managed System, run the ssh-copy-id command: ```ssh-copy-id ansible@MANAGED_SYSTEM```<br/>
+where MANAGED_SYSTEM is the IP or hostname of the Managed System
+
+ALTERNATIVELY, you can create a script to perform Step 2 above:
+1. Create a new file: ```vi copy_keys.sh```
+2. Enter insert mode: ```i```
+3. Type or paste the following code into the file: (NOTE: Replace the contents of the ```tgt_hosts``` array with the actual hostnames or IPs of all the Managed Systems)
+```
+#!/bin/bash
+
+user_=ansible
+tgt_hosts=(managed-system1.mscan.dev managed-system2.mscan.dev managed-system3.mscan.dev)
+
+for h_ in ${tgt_hosts[@]}; do    
+    ssh-copy-id ansible@${h_}  
+done
+``` 
+4. Save and close the file: ```[Esc]wq```
+5. Run the script: ```sh copy_keys.sh```

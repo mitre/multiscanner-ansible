@@ -21,7 +21,7 @@ You should have a dedicated Ansible user on the Ansible Controller and the Manag
 
 ## Give Ansible User Root Access
 Once the Ansible user has been added to all machines, it needs to be able to acquire root privileges without a password on the Managed Hosts.<br/>
-***On each Managed System:***
+***On each Managed Host:***
 1. Log in to the machine using an account that can gain root access
 2. Acquire root access: ```sudo su -```
 3. Open the sudoers file: ```visudo```
@@ -33,8 +33,8 @@ Once the Ansible user has been added to all machines, it needs to be able to acq
 The Ansible Controller needs to be able to log in to the Managed Hosts without a password, so it is necessary to create SSH keys and copy them to all the Managed Hosts.<br/>
 ***On the Ansible Controller:***
 1. Generate SSH keys: ```ssh-keygen -t rsa```
-2. For each Managed System, run the ssh-copy-id command: ```ssh-copy-id ansible@MANAGED_SYSTEM```<br/>
-where MANAGED_SYSTEM is the IP or hostname of the Managed System
+2. For each Managed Host, run the ssh-copy-id command: ```ssh-copy-id ansible@MANAGED_HOST```<br/>
+where MANAGED_HOST is the IP or hostname of the Managed Host
 
 ALTERNATIVELY, you can create a script to perform Step 2 above:
 1. Create a new file: ```vi copy_keys.sh```
@@ -44,7 +44,7 @@ ALTERNATIVELY, you can create a script to perform Step 2 above:
 #!/bin/bash
 
 user_=ansible
-tgt_hosts=(managed-system1.mscan.dev managed-system2.mscan.dev managed-system3.mscan.dev)
+tgt_hosts=(managed-host1.mscan.dev managed-host2.mscan.dev managed-host3.mscan.dev)
 
 for h_ in ${tgt_hosts[@]}; do    
     ssh-copy-id ansible@${h_}  

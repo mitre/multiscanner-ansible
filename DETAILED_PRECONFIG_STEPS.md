@@ -30,7 +30,7 @@ Once the Ansible user has been added to all machines, it needs to be able to acq
 6. Save and close the file: ```[Esc]wq```
 
 ## Copy SSH Keys
-The Ansible Controller needs to be able to log in to the Managed Hosts without a password, so it is necessary to create SSH keys and copy them to all the Managed Hosts.
+The Ansible Controller needs to be able to log in to the Managed Hosts without a password, so it is necessary to create SSH keys and copy them to all the Managed Hosts.<br/>
 ***On the Ansible Controller:***
 1. Generate SSH keys: ```ssh-keygen -t rsa```
 2. For each Managed System, run the ssh-copy-id command: ```ssh-copy-id ansible@MANAGED_SYSTEM```<br/>

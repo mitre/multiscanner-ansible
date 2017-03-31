@@ -9,7 +9,7 @@ This document describes the recommended steps for performing the initial configu
 *NOTE:* if you are using virtual machines, we recommend automating the VM creation process as much as possible. As a simplistic example, you could create a template with a script that will set the hostname and perform other mandatory configurations. Then just clone this template for each Managed System and run the script.
 
 ## Create Ansible User
-you should have a dedicated Ansible user on the Ansible Controller and the Managed Systems. The username and password should be the same on all machines. The best way to achieve this is to put all the machines on the same Active Directory domain and create the user at the domain level. If this is not an option, then manually add the user by following these steps:<br/>
+You should have a dedicated Ansible user on the Ansible Controller and the Managed Systems. The username and password should be the same on all machines. The best way to achieve this is to put all the machines on the same Active Directory domain and create the user at the domain level. If this is not an option, then manually add the user by following these steps:<br/>
 ***On ALL MACHINES (Ansible Controller and all Managed Systems):***
 1. Log in to the machine using an account that can gain root access
 2. Acquire root access: ```sudo su -```

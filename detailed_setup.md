@@ -19,7 +19,7 @@ You should have a dedicated Ansible user on the Ansible Controller and the Manag
     NOTE: if you use special characters in the password, be sure to escape them with a ```\``` (i.e., to include the ```$``` character, write it as ```\$```)
     * Press [Enter] 
 
-## Give Ansible user root access
+## Give Ansible User Root Access
 Once the Ansible user has been added to all machines, it needs to be able to acquire root privileges without a password on the Managed Systems.<br/>
 ***On each Managed System:***
 1. Log in to the machine using an account that can gain root access

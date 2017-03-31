@@ -4,6 +4,11 @@ Ansible configurations for distributed MultiScanner installations.
 ## Purpose
 This project exists to facilitate configuring the [MultiScanner](https://github.com/MITRECND/multiscanner) file analysis framework in a distributed setting. It defines [Ansible](https://www.ansible.com/get-started) configurations to enable automated configuration management of machines in a MultiScanner setup. 
 
+## Prerequisites 
+You need:
+ * Familiarity with [MultiScanner](https://github.com/MITRECND/multiscanner)
+ * Some familiarity with [Ansible](https://www.ansible.com/get-started)
+
 ## MultiScanner Distributed Setup
 Distributed MultiScanner (as you would expect) makes use of applications running on several machines. There is a web server (role: webserver) that hosts the web UI and ReSTful services to provide a single point for user interaction. As files are submitted through the web UI or ReST services, they are stored to a distributed file system (DFS) and tasks are created. The tasks are logged to a database (role: task_db) for tracking purposes, and then sent via Celery through a RabbitMQ message broker (role: task_broker) to worker nodes. The worker nodes (role: ms_worker) fetch the file(s) specified in the task from the DFS and process them in MultiScanner. When processing completes, the worker nodes post the analysis results to the Elasticsearch data store (role: elasticsearch) and update the task status in the task tracker database. Then the user can access the reports from the data store. 
 

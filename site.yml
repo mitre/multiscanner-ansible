@@ -36,6 +36,7 @@
   - role: dfs_client
   - role: python3
   - role: ms_common
+  - role: apache
   - role: ms_restserver
 
 - hosts: webserver
@@ -43,4 +44,5 @@
   - role: dfs_client
   - role: python3
   - role: ms_common
+  - role: apache
   - role: ms_webserver

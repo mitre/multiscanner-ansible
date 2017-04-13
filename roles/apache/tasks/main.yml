@@ -1,0 +1,50 @@
+---
+
+- name: install apache
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - httpd
+    - httpd-devel
+  become: yes
+  become_user: root
+
+- name: install mod_wsgi
+  pip:
+    name: mod_wsgi
+    state: latest
+  become: yes
+  become_user: root
+
+- name: load mod_wsgi module
+  command: mod_wsgi-express install-module
+  become: yes
+  become_user: root
+# TODO - figure out how to only restart apache if mod_wsgi was NOT
+# loaded. This command will ALWAYS execute and we don't want to
+# be continuously restarting apache
+#  notify:
+#  - restart apache
+
+# create the apache web service configuration directories
+- name: create apache web service configuration directory
+  file: "path={{ item }} state=directory mode=0775 owner={{ apache }} recurse=yes"
+  with_items:
+    - "{{ apache_sites_available_dir }}"
+  become: yes
+  become_user: root
+
+# create enabled sites directory that links to available sites directory
+- name: setup nginx sites-available symlink
+  file: "path={{ apache_sites_enabled_dir }}  src={{ apache_sites_available_dir }} state=link force=yes mode=0775 owner={{ apache }}"
+  become: yes
+  become_user: root
+
+- name: enable apache to start on boot (RHEL/CentOS 7)
+  systemd:
+    state: started
+    enabled: yes
+    name: httpd
+  become: yes
+  become_user: root

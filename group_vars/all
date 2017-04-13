@@ -18,11 +18,12 @@ remote_resource_prefix: /tmp
 #---------------------------------------------
 python_version: 3.6.0
 python_version_major_minor: 3.6
+python_mod_wsgi_version: 36
 python_install_prefix: /usr/local
 
 # Directory under which to unzip multiscanner
-multiscanner_install_prefix: /usr/share
-multiscanner_venv: /usr/share/venv_multiscanner
+multiscanner_install_prefix: /opt
+multiscanner_venv: /opt/venv_multiscanner
 
 #---------------------------------------------
 # ELK-related
@@ -70,3 +71,7 @@ ms_firewall_zone: public
 # This is the IP to which the REST service will bind
 ms_rest_host: 0.0.0.0
 ms_rest_port: 8080
+
+apache_sites_available_dir: /etc/httpd/sites-available
+apache_sites_enabled_dir: /etc/httpd/sites-enabled
+apache_user: apache

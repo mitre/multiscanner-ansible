@@ -1,0 +1,26 @@
+<VirtualHost *:80>
+    ServerName {{ ms_web_host }}
+
+    LoadModule wsgi_module /etc/httpd/modules/mod_wsgi-py36.cpython-36m-x86_64-linux-gnu.so
+    WSGIDaemonProcess mscan_web user=multiscanner group=root threads=5
+    WSGIScriptAlias /mscanweb {{ multiscanner_install_prefix }}/multiscanner/web/mscan_web.wsgi
+
+    <Directory {{ multiscanner_install_prefix }}/multiscanner>
+        WSGIProcessGroup mscan_web
+        WSGIScriptReloading On
+        WSGIApplicationGroup %{GLOBAL}
+        Order deny,allow
+        Allow from all
+        Require all granted
+    </Directory>
+
+    Alias /static/ {{ multiscanner_install_prefix }}/multiscanner/web/static/
+    <Directory {{ multiscanner_install_prefix }}/multiscanner/web/static>
+            Order allow,deny
+            Allow from all
+            Require all granted
+    </Directory>
+    ErrorLog /var/log/mscanweb/error.log
+    LogLevel debug
+    CustomLog /var/log/mscanweb/access.log combined
+</VirtualHost>

@@ -14,6 +14,7 @@
   pip:
     name: mod_wsgi
     state: latest
+    executable: pip{{ python_version_major_minor }}
   become: yes
   become_user: root
 
@@ -29,7 +30,7 @@
 
 # create the apache web service configuration directories
 - name: create apache web service configuration directory
-  file: "path={{ item }} state=directory mode=0775 owner={{ apache }} recurse=yes"
+  file: "path={{ item }} state=directory mode=0775 owner={{ apache_user }} recurse=yes"
   with_items:
     - "{{ apache_sites_available_dir }}"
   become: yes
@@ -37,7 +38,7 @@
 
 # create enabled sites directory that links to available sites directory
 - name: setup nginx sites-available symlink
-  file: "path={{ apache_sites_enabled_dir }}  src={{ apache_sites_available_dir }} state=link force=yes mode=0775 owner={{ apache }}"
+  file: "path={{ apache_sites_enabled_dir }}  src={{ apache_sites_available_dir }} state=link force=yes mode=0775 owner={{ apache_user }}"
   become: yes
   become_user: root
 
@@ -48,3 +49,13 @@
     name: httpd
   become: yes
   become_user: root
+
+
+- name: tell apache to use sites-enabled directory
+  lineinfile:
+    dest: "/etc/httpd/conf/httpd.conf"
+    line: "IncludeOptional sites-enabled/*.conf"
+  become: yes
+  become_user: root
+  notify:
+  - restart apache

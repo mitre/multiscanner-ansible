@@ -1,5 +1,4 @@
 ---
 
 - include: configure_mscan_web.yml
-# - include: configure_web_svc.yml
 - include: setup_firewall_rules.yml

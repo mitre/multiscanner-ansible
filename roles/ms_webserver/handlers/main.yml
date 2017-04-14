@@ -1,1 +1,5 @@
 ---
+- name: restart apache
+  systemd: state=restarted name=httpd
+  become: yes
+  become_user: root

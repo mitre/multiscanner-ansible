@@ -1,4 +1,4 @@
-<VirtualHost *:80>
+<VirtualHost *:{{ ms_web_port }}>
     ServerName {{ ms_web_host }}
 
     LoadModule wsgi_module /etc/httpd/modules/mod_wsgi-py36.cpython-36m-x86_64-linux-gnu.so
@@ -20,7 +20,7 @@
             Allow from all
             Require all granted
     </Directory>
-    ErrorLog /var/log/mscanweb/error.log
+    ErrorLog {{ mscan_web_log_dir }}/error.log
     LogLevel debug
-    CustomLog /var/log/mscanweb/access.log combined
+    CustomLog {{ mscan_web_log_dir }}/access.log combined
 </VirtualHost>

@@ -12,6 +12,12 @@
   notify:
     - restart apache
 
+- name: tell apache to listen to web port
+  lineinfile:
+    dest: /etc/httpd/conf/httpd.conf
+    line: "Listen {{ ms_web_port }}"
+  become: yes
+  become_user: root
 
 # Overwrite default Flask config
 - name: copy multiscanner api config

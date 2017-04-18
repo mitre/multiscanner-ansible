@@ -1,0 +1,19 @@
+<VirtualHost *:{{ ms_rest_port }}>
+    ServerName {{ ms_rest_host }}
+
+    LoadModule wsgi_module {{ mod_wsgi_system_module }}
+    WSGIDaemonProcess mscan_rest user={{ ms_user }} group=root threads=5
+    WSGIScriptAlias / {{ multiscanner_install_prefix }}/multiscanner/utils/mscan_rest.wsgi
+
+    <Directory {{ multiscanner_install_prefix }}/multiscanner/utils>
+        WSGIProcessGroup mscan_rest
+        WSGIScriptReloading On
+        WSGIApplicationGroup %{GLOBAL}
+        Order deny,allow
+        Allow from all
+        Require all granted
+    </Directory>
+    ErrorLog {{ mscan_rest_log_dir }}/error.log
+    LogLevel debug
+    CustomLog {{ mscan_rest_log_dir }}/access.log combined
+</VirtualHost>

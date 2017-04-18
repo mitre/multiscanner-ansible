@@ -17,6 +17,11 @@ This section describes the Ansible roles. Each role has its own folder under **r
 **Purpose**: 
  * Establishes settings common to all machines in the setup, such as setting up the "multiscanner" user that will be used to run various tasks and services.
 
+### apache
+**Applies to host category**: restserver, webserver<br/>
+**Purpose**:
+ * Installs and configures the Apache web server
+ 
 ### ms_common
 **Applies to host category**: ms_worker, restserver, webserver<br/>
 **Purpose**:
@@ -25,12 +30,14 @@ This section describes the Ansible roles. Each role has its own folder under **r
 ### ms_webserver
 **Applies to host category**: webserver<br/>
 **Purpose**:
- * Installs and configures the web server for hosting the MultiScanner UI
+ * Installs and configures the web server for hosting the MultiScanner UI. Note: requires the **ms_common** role to
+ be run first (make sure to place it AFTER the ms_common role in the playbook)
  
 ### ms_restserver
 **Applies to host category**: restserver<br/>
 **Purpose**:
- * Installs and configures the Multiscanner REST server 
+ * Installs and configures the Multiscanner REST server. * Installs and configures the web server for hosting the MultiScanner UI. Note: requires the **ms_common** role to
+ be run first (make sure to place it AFTER the ms_common role in the playbook) 
 
 ### ms_worker
 **Applies to host category**: ms_worker<br/>
@@ -82,7 +89,7 @@ This section describes the host categories. The host categories are defined and 
 
 ### webserver
 **Required number of hosts in category**: 1<br/>
-Hosts the Multiscanner web service.
+Hosts the Multiscanner web service.  
 
 ### restserver
 **Required number of hosts in category**: 1<br/>

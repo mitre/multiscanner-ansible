@@ -1,0 +1,38 @@
+---
+
+- name: create mscan REST log directory
+  file: "path={{ mscan_rest_log_dir }} state=directory mode=0775 owner={{ apache_user }} recurse=yes"
+  become: yes
+  become_user: root
+
+#- name: create emtpy init file for MS utils package
+#  copy:
+#    content: "# created by ansible"
+#    dest: "{{ multiscanner_install_prefix }}/multiscanner/utils/__init__.py"
+#    force: no
+#    group: root
+#    owner: "{{ ms_user }}"
+#    mode: 0755
+#  become: yes
+#  become_user: root
+
+- name: tell apache to listen to REST port
+  lineinfile:
+    dest: /etc/httpd/conf/httpd.conf
+    line: "Listen {{ ms_rest_port }}"
+  become: yes
+  become_user: root
+
+- name: copy multiscanner REST apache config
+  template: src=mscan_rest.conf.j2 dest={{ apache_sites_available_dir }}/mscan_rest.conf mode=755 owner={{ apache_user }} group=root
+  become: yes
+  become_user: root
+  notify:
+    - restart apache
+
+- name: copy multiscanner REST mod_wsgi
+  template: src=mscan_rest.wsgi.j2 dest={{ multiscanner_install_prefix }}/multiscanner/utils/mscan_rest.wsgi mode=755 owner={{ ms_user }} group=root
+  become: yes
+  become_user: root
+  notify:
+    - restart apache

@@ -1,8 +1,8 @@
 <VirtualHost *:{{ ms_web_port }}>
     ServerName {{ ms_web_host }}
 
-    LoadModule wsgi_module /etc/httpd/modules/mod_wsgi-py36.cpython-36m-x86_64-linux-gnu.so
-    WSGIDaemonProcess mscan_web user=multiscanner group=root threads=5
+    LoadModule wsgi_module {{ mod_wsgi_system_module }}
+    WSGIDaemonProcess mscan_web user={{ ms_user }} group=root threads=5
     WSGIScriptAlias /mscanweb {{ multiscanner_install_prefix }}/multiscanner/web/mscan_web.wsgi
 
     <Directory {{ multiscanner_install_prefix }}/multiscanner>

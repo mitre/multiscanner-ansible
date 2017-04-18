@@ -2,7 +2,7 @@
     ServerName {{ ms_web_host }}
 
     LoadModule wsgi_module {{ mod_wsgi_system_module }}
-    WSGIDaemonProcess mscan_web user={{ ms_user }} group=root threads=5
+    WSGIDaemonProcess mscan_web user={{ ms_user }} group=root threads=5 python-home={{ multiscanner_venv }}
     WSGIScriptAlias /mscanweb {{ multiscanner_install_prefix }}/multiscanner/web/mscan_web.wsgi
 
     <Directory {{ multiscanner_install_prefix }}/multiscanner>

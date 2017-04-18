@@ -1,0 +1,3 @@
+---
+dependencies:
+  - { role: mod_wsgi, mod_wsgi_venv: "{{ multiscanner_venv }}", mod_wsgi_user: "{{ ms_user }}" }

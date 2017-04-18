@@ -2,7 +2,7 @@
     ServerName {{ ms_rest_host }}
 
     LoadModule wsgi_module {{ mod_wsgi_system_module }}
-    WSGIDaemonProcess mscan_rest user={{ ms_user }} group=root threads=5
+    WSGIDaemonProcess mscan_rest user={{ ms_user }} group=root threads=5 python-home={{ multiscanner_venv }}
     WSGIScriptAlias / {{ multiscanner_install_prefix }}/multiscanner/utils/mscan_rest.wsgi
 
     <Directory {{ multiscanner_install_prefix }}/multiscanner/utils>

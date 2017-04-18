@@ -1,0 +1,14 @@
+---
+
+- name: install mod_wsgi
+  pip:
+    name: mod_wsgi
+    state: latest
+    virtualenv: "{{ mod_wsgi_venv }}"
+  become: yes
+  become_user: "{{ mod_wsgi_user }}"
+
+- name: load mod_wsgi module
+  command: mod_wsgi-express install-module
+  become: yes
+  become_user: root

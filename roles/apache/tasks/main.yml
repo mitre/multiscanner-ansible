@@ -10,25 +10,6 @@
   become: yes
   become_user: root
 
-- name: install mod_wsgi
-  pip:
-    name: mod_wsgi
-    state: latest
-    executable: pip{{ python_version_major_minor }}
-  become: yes
-  become_user: root
-
-- name: load mod_wsgi module
-  command: mod_wsgi-express install-module
-  become: yes
-  become_user: root
-# TODO - figure out how to only restart apache if mod_wsgi was NOT
-# loaded. This command will ALWAYS execute and we don't want to
-# be continuously restarting apache
-#  notify:
-#  - restart apache
-
-# create the apache web service configuration directories
 - name: create apache web service configuration directory
   file: "path={{ item }} state=directory mode=0775 owner={{ apache_user }} recurse=yes"
   with_items:

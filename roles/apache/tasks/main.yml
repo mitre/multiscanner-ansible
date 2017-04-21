@@ -11,7 +11,7 @@
   become_user: root
 
 - name: create apache web service configuration directory
-  file: "path={{ item }} state=directory mode=0775 owner={{ apache_user }} recurse=yes"
+  file: "path={{ item }} state=directory mode=0775 owner={{ ms_user }} recurse=yes"
   with_items:
     - "{{ apache_sites_available_dir }}"
   become: yes
@@ -19,7 +19,7 @@
 
 # create enabled sites directory that links to available sites directory
 - name: setup nginx sites-available symlink
-  file: "path={{ apache_sites_enabled_dir }}  src={{ apache_sites_available_dir }} state=link force=yes mode=0775 owner={{ apache_user }}"
+  file: "path={{ apache_sites_enabled_dir }}  src={{ apache_sites_available_dir }} state=link force=yes mode=0775 owner={{ ms_user }}"
   become: yes
   become_user: root
 
@@ -34,8 +34,28 @@
 
 - name: tell apache to use sites-enabled directory
   lineinfile:
-    dest: "/etc/httpd/conf/httpd.conf"
-    line: "IncludeOptional sites-enabled/*.conf"
+    dest: /etc/httpd/conf/httpd.conf
+    line: 'IncludeOptional sites-enabled/*.conf'
+  become: yes
+  become_user: root
+  notify:
+  - restart apache
+
+- name: run apache as ms_user (1)
+  lineinfile:
+    dest: /etc/httpd/conf/httpd.conf
+    regexp: '^User apache$'
+    line: 'User {{ ms_user }}'
+  become: yes
+  become_user: root
+  notify:
+  - restart apache
+
+- name: run apache as ms_user (2)
+  lineinfile:
+    dest: /etc/httpd/conf/httpd.conf
+    regexp: '^Group apache$'
+    line: 'Group root'
   become: yes
   become_user: root
   notify:

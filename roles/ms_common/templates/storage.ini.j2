@@ -1,12 +1,12 @@
 [ElasticSearchStorage]
-ENABLED = False
+ENABLED = True
 host = {{ groups.elasticsearch[0] }}
 port = 9200
 index = multiscanner_reports
 doc_type = reports
 
 [File]
-ENABLED = True
+ENABLED = False
 path = report.json
 gzip = False
 files-per-line = 1
@@ -19,4 +19,4 @@ database = multiscanner_reports
 collection = reports
 
 [Storage]
-ENABLED = False
+ENABLED = True

@@ -1,0 +1,34 @@
+module mscanrest_httpd 1.0;
+
+require {
+        type httpd_tmp_t;
+        type kernel_t;
+        type user_home_dir_t;
+        type admin_home_t;
+        type httpd_t;
+        type httpd_tmpfs_t;
+        type fusefs_t;
+        class dir { write add_name };
+        class system module_request;
+        class file { create execute open read write  };
+}
+
+#============= httpd_t ==============
+allow httpd_t admin_home_t:file read;
+allow httpd_t admin_home_t:file open;
+
+#!!!! This avc can be allowed using the boolean 'httpd_use_fusefs'
+allow httpd_t fusefs_t:dir write;
+allow httpd_t fusefs_t:dir add_name;
+allow httpd_t fusefs_t:file write;
+allow httpd_t fusefs_t:file create;
+allow httpd_t fusefs_t:file open;
+
+
+#!!!! This avc can be allowed using the boolean 'httpd_tmp_exec'
+allow httpd_t httpd_tmp_t:file execute;
+allow httpd_t httpd_tmpfs_t:file execute;
+
+#!!!! This avc can be allowed using the boolean 'domain_kernel_load_modules'
+allow httpd_t kernel_t:system module_request;
+allow httpd_t user_home_dir_t:dir write;

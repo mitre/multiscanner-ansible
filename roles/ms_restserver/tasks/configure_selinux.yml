@@ -1,0 +1,21 @@
+---
+
+- name: copy selinux TE file
+  template: src=mscanrest_httpd.te.j2 dest=/tmp/mscanrest_httpd.te mode=755 owner=root group=root
+  become: yes
+  become_user: root
+
+- name: install policycoreutils-python
+  yum:
+    name: policycoreutils-python
+    state: present
+  become: yes
+  become_user: root
+
+- name: create SELinux policy
+  semodule:
+    te_file: /tmp/mscanrest_httpd.te
+    module_name: mscanrest_httpd
+    module_version: 1.0
+  become: yes
+  become_user: root

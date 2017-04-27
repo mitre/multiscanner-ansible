@@ -27,6 +27,22 @@
   become: yes
   become_user: root
 
+- name: create multiscanner virtualenv directory and set permissions
+  file: "path={{ multiscanner_venv }} state=directory mode=0700 owner={{ ms_user }} recurse=yes"
+  become: yes
+  become_user: root
+
+- name: install python deps not covered by multiscanner requirements.txt
+  pip:
+    name: "{{ item }}"
+    virtualenv: "{{ multiscanner_venv }}"
+    virtualenv_python: "{{ python_install_prefix }}/bin/python"
+    virtualenv_site_packages: yes
+  with_items:
+    - psycopg2
+  become: yes
+  become_user: "{{ ms_user }}"
+
 - name: copy multiscanner source
   copy:
     src: "../../{{local_resource_prefix}}/multiscanner.tgz"
@@ -45,14 +61,9 @@
   become: yes
   become_user: root
 
-- name: create multiscanner virtualenv directory and set permissions
-  file: "path={{ multiscanner_venv }} state=directory mode=0700 owner={{ ms_user }} recurse=yes"
-  become: yes
-  become_user: root
-
-- name: install multiscanner python dependencies
+- name: install multiscanner python dependencies from requirements.txt
   pip:
-    requirements: "{{ multiscanner_install_prefix }}/multiscanner/requirements3.txt"
+    requirements: "{{ multiscanner_install_prefix }}/multiscanner/requirements.txt"
     virtualenv: "{{ multiscanner_venv }}"
     virtualenv_python: "{{ python_install_prefix }}/bin/python"
     virtualenv_site_packages: yes

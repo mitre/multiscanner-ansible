@@ -14,7 +14,7 @@
   become_user: root
 
 - name: create run directory for mod_wsgi
-  file: "path=/var/run/wsgi_mscan_rest state=directory mode=0775 owner={{ ms_user }} group=root recurse=yes"
+  file: "path=/var/run/wsgi state=directory mode=0775 owner={{ ms_user }} group=root recurse=yes"
   become: yes
   become_user: root
 

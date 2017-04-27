@@ -14,52 +14,18 @@
 #
 # Use a descriptive name for your cluster:
 cluster.name: {{ elasticsearch_cluster }}
-#
-# ------------------------------------ Node ------------------------------------
-#
-# Use a descriptive name for the node:
-#
-#node.name: node-1
-#
-# Add custom attributes to the node:
-#
-#node.attr.rack: r1
-#
-# ----------------------------------- Paths ------------------------------------
-#
-# Path to directory where to store the data (separate multiple locations by comma):
-#
-#path.data: /path/to/data
-#
-# Path to log files:
-#
-#path.logs: /path/to/logs
-#
-# ----------------------------------- Memory -----------------------------------
-#
-# Lock the memory on startup:
-#
-#bootstrap.memory_lock: true
-#
-# Make sure that the heap size is set to about half the memory available
-# on the system and that the owner of the process is allowed to use this
-# limit.
-#
-# Elasticsearch performs poorly when the system is swapping the memory.
-#
+
 # ---------------------------------- Network -----------------------------------
 #
 # Set the bind address to a specific IP (IPv4 or IPv6):
 #
-#Listen on all interfaces:
+# Listen on all interfaces:
 network.host: 0.0.0.0
 #
 # Set a custom port for HTTP:
 #
 http.port: 9200
-#
-# For more information, consult the network module documentation.
-#
+
 # --------------------------------- Discovery ----------------------------------
 #
 # Pass an initial list of hosts to perform discovery when new node is started:
@@ -68,7 +34,6 @@ http.port: 9200
 discovery.zen.ping.unicast.hosts: [{% for es_host in groups['elasticsearch'] %}"{{ es_host }}"{% if not loop.last %},{% endif %}{% endfor %}]
 
 
-#
 # Prevent the "split brain" by configuring the majority of nodes (total number of master-eligible nodes / 2 + 1):
 #
 #discovery.zen.minimum_master_nodes: 3
@@ -81,12 +46,17 @@ discovery.zen.ping.unicast.hosts: [{% for es_host in groups['elasticsearch'] %}"
 #
 #gateway.recover_after_nodes: 3
 #
-# For more information, consult the gateway module documentation.
-#
 # ---------------------------------- Various -----------------------------------
 #
 # Require explicit names when deleting indices:
 #
 #action.destructive_requires_name: true
+
 action.auto_create_index: true
 
+# Enable "dedot" functionality
+script.painless.regex.enabled: true
+
+# Allow MS web UI to interact with ES
+http.cors.enabled: true
+http.cors.allow-origin: http://{{ groups['webserver'][0] }}

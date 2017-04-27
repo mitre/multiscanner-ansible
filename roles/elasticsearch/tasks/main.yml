@@ -6,6 +6,14 @@
   become: yes
   become_user: root
 
+- name: create list of cross-origin hosts to access elasticsearch
+  set_fact:
+    es_cross_origin_hosts: "{{ groups['ms_worker'] }} + {{ groups['webserver'] }} + {{ groups['restserver'] }}"
+
+- name: DEBUG-list cross-origin hosts
+  debug: var=es_cross_origin_hosts
+
+
 - include: import_elastic_gpg_key.yml
 - include: setup_elasticsearch.yml
 - include: setup_firewall_rules.yml

@@ -60,3 +60,8 @@
   become_user: root
   notify:
   - restart apache
+
+- name: selinux-allow apache processes to connect to external services
+  command: "setsebool -P httpd_can_network_connect on"
+  become: yes
+  become_user: root

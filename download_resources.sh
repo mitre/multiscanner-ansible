@@ -39,14 +39,6 @@ RABBITMQ_RPM=rabbitmq-server-3.6.6-1.el7.noarch.rpm
 wget "http://www.rabbitmq.com/releases/rabbitmq-server/$RABBITMQ_VERSION/$RABBITMQ_RPM" --directory-prefix=$RESOURCE_DIR
 wget "https://www.rabbitmq.com/$RABBITMQ_GPG_KEY" --directory-prefix=$RESOURCE_DIR
 
-#----------------------- LIQUIBASE ----------------------
-PGSQL_JDBC_DRIVER=postgresql-42.0.0.jar
-LIQUIBASE_VERSION=3.5.3
-
-wget https://jdbc.postgresql.org/download/$PGSQL_JDBC_DRIVER --directory-prefix=$RESOURCE_DIR
-wget https://github.com/liquibase/liquibase/releases/download/liquibase-parent-$LIQUIBASE_VERSION/liquibase-$LIQUIBASE_VERSION-bin.tar.gz --directory-prefix=$RESOURCE_DIR
-
-
 #----------------------- GLUSTER ----------------------
 # ANSIBLE VARIABLE: gluster_version ANSIBLE FILE: group_vars/all
 GLUSTER_VERSION=3.10.0
@@ -67,6 +59,8 @@ wget https://www.python.org/ftp/python/$PYTHON_VERSION/Python-$PYTHON_VERSION.tg
 wget https://bootstrap.pypa.io/get-pip.py --directory-prefix=$RESOURCE_DIR
 
 #---------------------- MULTISCANNER ----------------------
-##git clone https://github.com/jfeild1337/multiscanner.git $RESOURCE_DIR/multiscanner
-git clone -b all_feature_integration https://github.com/jfeild1337/multiscanner.git $RESOURCE_DIR/multiscanner
+MULTISCANNER_URL="https://github.com/jfeild1337/multiscanner.git"
+MULTISCANNER_BRANCH="apache_support"
+
+git clone -b $MULTISCANNER_BRANCH $MULTISCANNER_URL $RESOURCE_DIR/multiscanner
 tar -cvzf $RESOURCE_DIR/multiscanner.tgz -C $RESOURCE_DIR multiscanner

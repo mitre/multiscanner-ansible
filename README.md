@@ -26,6 +26,11 @@ This section describes the Ansible roles. Each role has its own folder under **r
 **Applies to host category**: ms_worker, restserver, webserver<br/>
 **Purpose**:
  * Installs and configures an instance of MultiScanner
+
+### apache
+**Applies to host category**: restserver, webserver<br/>
+**Purpose**:
+ * Installs and configures an instance of Apache
  
 ### ms_webserver
 **Applies to host category**: webserver<br/>
@@ -153,8 +158,11 @@ You'll need to install Ansible on the Ansible Controller if it isn't already the
 Running the plays is easy!
 1. Log in to the Ansible Controller as the **ansible** user 
 2. Go to the root folder of the project: `cd <path>/multiscanner-ansible` (i.e., `cd /home/ansible/multiscanner-ansible`)
-3. Run the command: `ansible-playbook -i hosts site.yml`</br>
-(The process will take several minutes)
+3. Run the command: `ansible-playbook -i hosts site.yml --module-path custom_ansible_modules`</br>
+(The process will take several minutes)<br/>
+Note that the `--module-path custom_ansible_modules` flag is needed to tell Ansible to use the 
+custom module defined for this project (one that compiles and installs an SELinux policy), which
+is located in the `<project root>/custom_ansible_modules` directory. 
 
 
 ## Scaling

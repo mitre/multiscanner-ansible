@@ -17,11 +17,11 @@
     name: "{{remote_resource_prefix}}/gluster_client/{{ item}}"
     state: present
   with_items:
-    - glusterfs-{{ gluster_version }}-1.el7.x86_64.rpm
-    - glusterfs-api-{{ gluster_version }}-1.el7.x86_64.rpm
-    - glusterfs-client-xlators-{{ gluster_version }}-1.el7.x86_64.rpm
-    - glusterfs-fuse-{{ gluster_version }}-1.el7.x86_64.rpm
-    - glusterfs-libs-{{ gluster_version }}-1.el7.x86_64.rpm
+    - glusterfs-{{ gluster_version }}.rpm
+    - glusterfs-api-{{ gluster_version }}.rpm
+    - glusterfs-client-xlators-{{ gluster_version }}.rpm
+    - glusterfs-fuse-{{ gluster_version }}.rpm
+    - glusterfs-libs-{{ gluster_version }}.rpm
   become: yes
   become_user: root
 

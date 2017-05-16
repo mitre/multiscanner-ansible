@@ -24,7 +24,7 @@ server.host: "0.0.0.0"
  elasticsearch group. We currently list the elasticsearch role above
  the kibana role in site.yml so as long as that order is maintained, this will
  work...#}
-elasticsearch.url: "http://{{ hostvars[groups['elasticsearch'][0]]['ansible_eth0']['ipv4']['address'] }}:9200"
+elasticsearch.url: "http://{{ hostvars[groups['elasticsearch'][0]]['ansible_default_ipv4']['address'] }}:9200"
 
 # When this setting's value is true Kibana uses the hostname specified in the server.host
 # setting. When the value of this setting is false, Kibana uses the hostname of the host

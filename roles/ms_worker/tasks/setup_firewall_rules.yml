@@ -1,8 +1,0 @@
----
-
-- name: add firewall exceptions for multiscanner
-  firewalld: port={{ item }} permanent=true zone={{ ms_firewall_zone }} state=enabled immediate=true
-  with_items:
-    - "{{ ms_rest_port }}/tcp"
-  become: yes
-  become_user: root

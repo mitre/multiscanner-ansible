@@ -71,7 +71,7 @@
     owner: root
     group: root
     state: link
-    mode: "u+rwx,g+rwx,o+rwx"
+    mode: "u+rwx,g+rx,o+rx"
   become: yes
   become_user: root
 
@@ -82,7 +82,7 @@
     owner: root
     group: root
     state: link
-    mode: "u+rwx,g+rwx,o+rwx"
+    mode: "u+rwx,g+rx,o+rx"
   become: yes
   become_user: root
 

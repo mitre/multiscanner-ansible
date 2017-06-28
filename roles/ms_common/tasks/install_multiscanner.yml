@@ -32,17 +32,6 @@
   become: yes
   become_user: root
 
-- name: install python deps not covered by multiscanner requirements.txt
-  pip:
-    name: "{{ item }}"
-    virtualenv: "{{ multiscanner_venv }}"
-    virtualenv_python: "{{ python_install_prefix }}/bin/python"
-    virtualenv_site_packages: yes
-  with_items:
-    - psycopg2
-  become: yes
-  become_user: "{{ ms_user }}"
-
 - name: copy multiscanner source
   copy:
     src: "../../{{local_resource_prefix}}/multiscanner.tgz"

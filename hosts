@@ -1,3 +1,7 @@
+# Ansible controller
+[controller]
+ansible-controller.yourdomain.com
+
 # UI. There should only be 1 host
 [webserver]
 webserver.yourdomain.com

@@ -43,6 +43,9 @@ wget "https://www.rabbitmq.com/$RABBITMQ_GPG_KEY" --directory-prefix=$RESOURCE_D
 # ANSIBLE VARIABLE: gluster_version ANSIBLE FILE: group_vars/all
 ANSIBLE_VERSION_STR=NORMALIZED
 
+# Install the CentOS Storage repo to download the Gluster RPMs
+sudo yum install -y centos-release-gluster
+
 GLUSTER_VERSION=3.10.0
 GLUSTER_VERSION_MAJOR_MINOR=3.10
 mkdir $RESOURCE_DIR/gluster_server
@@ -50,6 +53,8 @@ yumdownloader glusterfs-server-$GLUSTER_VERSION --resolve --destdir $RESOURCE_DI
 
 mkdir $RESOURCE_DIR/gluster_client
 yumdownloader glusterfs-client --resolve --destdir $RESOURCE_DIR/gluster_client
+# Download the glusterfs-api package for the client
+yumdownloader glusterfs-api --resolve --destdir $RESOURCE_DIR/gluster_client
 
 # Rename all the RPMS so that they work with the Ansible installer. Some RPMs will have
 # slightly different update version (i.e., 3.10.0 and 3.10.1) but this is not consistent

@@ -43,6 +43,9 @@ wget "https://www.rabbitmq.com/$RABBITMQ_GPG_KEY" --directory-prefix=$RESOURCE_D
 # ANSIBLE VARIABLE: gluster_version ANSIBLE FILE: group_vars/all
 ANSIBLE_VERSION_STR=NORMALIZED
 
+# Install the CentOS Storage repo to download the Gluster RPMs
+sudo yum install -y centos-release-gluster
+
 GLUSTER_VERSION=3.10.0
 GLUSTER_VERSION_MAJOR_MINOR=3.10
 mkdir $RESOURCE_DIR/gluster_server

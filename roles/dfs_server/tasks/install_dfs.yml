@@ -1,5 +1,15 @@
 ---
 
+- name: delete gluster server tarball
+  file:
+    path: "{{ remote_resource_prefix }}/gluster_server.tgz"
+    state: absent
+
+- name: delete gluster server RPM directory
+  file:
+    path: "{{ remote_resource_prefix }}/gluster_server/"
+    state: absent
+
 - name: copy gluster server RPMs
   copy:
     src: "../../{{local_resource_prefix}}/gluster_server.tgz"

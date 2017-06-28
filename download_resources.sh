@@ -49,7 +49,7 @@ sudo yum install -y centos-release-gluster
 GLUSTER_VERSION=3.10.0
 GLUSTER_VERSION_MAJOR_MINOR=3.10
 mkdir $RESOURCE_DIR/gluster_server
-yumdownloader glusterfs-server-$GLUSTER_VERSION --resolve --destdir $RESOURCE_DIR/gluster_server
+yumdownloader glusterfs-server --resolve --destdir $RESOURCE_DIR/gluster_server
 
 mkdir $RESOURCE_DIR/gluster_client
 yumdownloader glusterfs-client --resolve --destdir $RESOURCE_DIR/gluster_client
@@ -67,7 +67,7 @@ for sr_ in ${SERVER_RPMS[@]}; do
     mv $RESOURCE_DIR/gluster_server/${sr_}*.rpm $RESOURCE_DIR/gluster_server/${sr_}$ANSIBLE_VERSION_STR.rpm      
 done
 # main gluster RPM is a special case
-mv $RESOURCE_DIR/gluster_server/glusterfs-$GLUSTER_VERSION*.rpm $RESOURCE_DIR/gluster_server/glusterfs-$ANSIBLE_VERSION_STR.rpm
+mv $RESOURCE_DIR/gluster_server/glusterfs-[0-9]*.rpm $RESOURCE_DIR/gluster_server/glusterfs-$ANSIBLE_VERSION_STR.rpm
 
 # CLIENT:
 CLIENT_RPMS=( glusterfs-api- glusterfs-client-xlators- \

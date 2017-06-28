@@ -122,7 +122,9 @@ Hosts the Multiscanner Celery Worker service. To achieve the maximum benefit of 
 
 ### dfs_server
 **Required number of hosts in category**: 2 - many<br/>
-Hosts the Gluster shared volume for submitted file storage. Note that a minimum of 2 hosts is required; add more hosts for better redundancy.
+Hosts the Gluster shared volume for submitted file storage. Note that a minimum of 2 hosts is required; add more hosts for better redundancy. 
+*The number of hosts must be a multiple of the number of replicas defined in the `dfs_replica_count` variable
+in **group_vars/dfs_server**!*
 
 
 ## Setup

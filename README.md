@@ -118,7 +118,10 @@ Hosts the PostgreSQL database for storing task information.
 
 ### ms_worker
 **Required number of hosts in category**: 1 - many<br/>
-Hosts the Multiscanner Celery Worker service. To achieve the maximum benefit of using MultiScanner's distributed feature, we recommend adding at least 2 hosts to this category.
+Hosts the Multiscanner Celery Worker service. To achieve the maximum benefit of using MultiScanner's distributed feature, 
+we recommend adding at least 2 hosts to this category. Furthermore, to maximize speed of file storage and
+retrieval, we recommend listing the hosts in this category in the dfs_server category as well (just be sure
+to adhere to the requirements for the number of hosts in the dfs_server category, see below).
 
 ### dfs_server
 **Required number of hosts in category**: 2 - many<br/>

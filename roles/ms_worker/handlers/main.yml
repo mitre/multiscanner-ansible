@@ -1,12 +1,6 @@
 ---
-
-- name: reload systemd
-  command: systemctl daemon-reload
-  become: yes
-  become_user: root
-
 - name: restart multiscanner-celery
-  systemd: state=restarted name=mscan-worker
+  systemd: state=restarted name=mscan-worker daemon_reload=yes
   become: yes
   become_user: root
 

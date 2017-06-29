@@ -61,7 +61,28 @@
   notify:
   - restart apache
 
+#----------- SE Linux Stuff ------------
 - name: selinux-allow apache processes to connect to external services
   command: "setsebool -P httpd_can_network_connect on"
+  become: yes
+  become_user: root
+
+- name: copy selinux TE file
+  template: src=mscan_httpd.te.j2 dest=/tmp/mscan_httpd.te mode=755 owner=root group=root
+  become: yes
+  become_user: root
+
+- name: install policycoreutils-python
+  yum:
+    name: policycoreutils-python
+    state: present
+  become: yes
+  become_user: root
+
+- name: create SELinux policy
+  semodule:
+    te_file: /tmp/mscan_httpd.te
+    module_name: mscan_httpd
+    module_version: 1.0
   become: yes
   become_user: root

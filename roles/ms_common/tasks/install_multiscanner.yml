@@ -26,6 +26,24 @@
     - git
   become: yes
   become_user: root
+  
+- name: Delete previous copies of multiscanner source
+  file:
+    path: "{{ multiscanner_install_prefix }}/multiscanner/"
+    state: absent
+  become: true
+
+- name: Delete previous copies of multiscanner vitrualenv
+  file:
+    path: "{{ multiscanner_venv }}/"
+    state: absent
+  become: true
+
+- name: Delete previous copies of multiscanner tarball
+  file:
+    path: "{{ multiscanner_install_prefix }}/multiscanner.tgz"
+    state: absent
+  become: true
 
 - name: create multiscanner virtualenv directory and set permissions
   file: "path={{ multiscanner_venv }} state=directory mode=0700 owner={{ ms_user }} recurse=yes"

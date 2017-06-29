@@ -1,5 +1,12 @@
 ---
 
+# Remove previous service file
+- name: Delete previous service file
+  file:
+    path: /etc/systemd/system/mscan-worker.service
+    state: absent
+  become: true
+
 # Service setup
 - name: copy multiscanner systemd config
   template: src=mscan-worker.service.j2 dest=/etc/systemd/system/mscan-worker.service mode=755 owner=multiscanner group=root

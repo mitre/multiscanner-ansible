@@ -8,6 +8,7 @@
 
 # ANSIBLE VARIABLE: local_resource_prefix ANSIBLE FILE: group_vars/all
 RESOURCE_DIR=resources
+rm -rf $RESOURCE_DIR/*
 
 #----------------------- ELASTICSEARCH -----------------------
 

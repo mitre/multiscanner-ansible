@@ -10,9 +10,11 @@ host = {{ ms_rest_host }}
 port = {{ ms_rest_port }}
 upload_folder = {{ dfs_mount_dir }}
 distributed = True
-cors = https?://{{ groups.webserver[0] }}(:\d+)?
+cors = "https?://{{ groups.webserver[0] }}(:d+)?"
 batch_size = 100
-batch_interval = 60
+batch_interval = 30
+wait_seconds = 60
+
 
 [celery]
 protocol = pyamqp

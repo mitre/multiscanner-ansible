@@ -90,7 +90,7 @@ wget https://www.python.org/ftp/python/$PYTHON_VERSION/Python-$PYTHON_VERSION.tg
 wget https://bootstrap.pypa.io/get-pip.py --directory-prefix=$RESOURCE_DIR
 
 #---------------------- MULTISCANNER ----------------------
-MULTISCANNER_URL="https://github.com/jfeild1337/multiscanner.git"
+MULTISCANNER_URL="https://github.com/awest1339/multiscanner.git"
 MULTISCANNER_BRANCH="apache_support"
 
 git clone -b $MULTISCANNER_BRANCH $MULTISCANNER_URL $RESOURCE_DIR/multiscanner

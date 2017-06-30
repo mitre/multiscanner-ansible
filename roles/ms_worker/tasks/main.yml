@@ -13,7 +13,6 @@
   become: yes
   become_user: root
   notify:
-    - reload systemd
     - restart multiscanner-celery
 
 - name: enable multiscanner worker to start on boot (RHEL/CentOS 7)

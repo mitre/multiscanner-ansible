@@ -159,7 +159,7 @@ To run the downloader script:
 ### Install Ansible
 You'll need to install Ansible on the Ansible Controller if it isn't already there:
 1. Run the command: `sudo pip install ansible`
-    - You may also need to `sudo yum install gcc` before this step
+    - You may also need to `sudo yum install gcc python-devel libxml2-devel libxslt-devel openssl-devel` before this step
 
 ### Running the Plays
 Running the plays is easy!

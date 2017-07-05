@@ -85,10 +85,3 @@
     mode: "u+rwx,g+rx,o+rx"
   become: yes
   become_user: root
-
-- name: install virtualenv
-  pip:
-    name: virtualenv
-    state: latest
-  become: yes
-  become_user: root

@@ -73,7 +73,7 @@
     requirements: "{{ multiscanner_install_prefix }}/multiscanner/requirements.txt"
     virtualenv: "{{ multiscanner_venv }}"
     virtualenv_command: "{{ python_install_prefix }}/bin/python -m venv"
-    virtualenv_site_packages: yes
+    virtualenv_site_packages: no
   become: yes
   become_user: "{{ ms_user }}"
 

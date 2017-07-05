@@ -86,3 +86,12 @@
     module_version: 1.0
   become: yes
   become_user: root
+
+- name: copy actiavte_this.py
+  template:
+    src: activate_this.py.j2
+    dest: "{{ multiscanner_venv }}/bin/activate_this.py"
+    mode: 0755
+    owner: "{{ ms_user }}"
+  become: yes
+  become_user: "{{ ms_user }}"

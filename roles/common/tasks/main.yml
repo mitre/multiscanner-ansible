@@ -6,3 +6,15 @@
   become: yes
   become_user: root
 
+- name: install firewalld
+  yum:
+    name: firewalld
+    state: latest
+  become: true
+
+- name: enable firewalld on boot
+  systemd:
+    state: started
+    enabled: yes
+    name: firewalld
+  become: true

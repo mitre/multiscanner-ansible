@@ -21,6 +21,7 @@
     - db4-devel
     - libpcap-devel
     - xz-devel
+    - libselinux-python
   become: yes
   become_user: root
 

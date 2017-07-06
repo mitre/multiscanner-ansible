@@ -3,7 +3,6 @@
 - hosts: all
   roles:
   - role: common
-  - role: python3
 
 - hosts: task_broker
   roles:
@@ -28,12 +27,14 @@
 - hosts: ms_worker
   roles:
   - role: dfs_client
+  - role: python3
   - role: ms_common
   - role: ms_worker
 
 - hosts: restserver
   roles:
   - role: dfs_client
+  - role: python3
   - role: ms_common
   - role: apache
   - role: ms_restserver
@@ -41,6 +42,7 @@
 - hosts: webserver
   roles:
   - role: dfs_client
+  - role: python3
   - role: ms_common
   - role: apache
   - role: ms_webserver

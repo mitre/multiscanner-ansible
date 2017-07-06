@@ -20,7 +20,11 @@
 
         RewriteEngine On
         RewriteCond %{REQUEST_METHOD} OPTIONS
-        RewriteRule ^(.*)$ $1 [R=200,L]
+        RewriteRule ^(.*)$ $1 [R=200,L,ENV=ISOPTIONS:true]
+        # Set the access-control-origin-allow only on OPTIONS requests; api.py adds the header to everything that gets
+        # past the OPTIONS step
+        Header always set Access-Control-Allow-Origin "http://{{ groups.webserver[0] }}" env=ISOPTIONS
+
     </Directory>
     ErrorLog {{ mscan_rest_log_dir }}/error.log
     LogLevel debug

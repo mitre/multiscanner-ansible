@@ -150,14 +150,16 @@ You'll need the project source on the Ansible Controller. All the resources shou
 Certain resources are not hosted in the standard repositories and so must be downloaded. This should be done on the Ansible Controller before trying to run the Ansible plays. The script **download_resources.sh** will download these dependencies to the **resources/** directory, and the Ansible tasks will copy them to the managed systems as necessary. You can change the file versions of the resources in the download script; however, since this will change the file names, you will also need to update the references to the files in the appropriate Ansible files. Comments in the script indicate exactly what will need to be changed for each item.
 
 To run the downloader script:
-1. Ensure that the Ansible Controller is connected to the internet
-2. Log in to the Ansible Controller as the **ansible** user
+1. Install the prerequisites (`yum install yum-utils`)
+2. Ensure that the Ansible Controller is connected to the internet
+3. Log in to the Ansible Controller as the **ansible** user
 4. Go to the root folder of the project: `cd <path>/multiscanner-ansible` (i.e., `cd /home/ansible/multiscanner-ansible`)
-3. Run the command: `sh download_resources.sh` 
+5. Run the command: `sh download_resources.sh` 
 
 ### Install Ansible
 You'll need to install Ansible on the Ansible Controller if it isn't already there:
 1. Run the command: `sudo pip install ansible`
+    - You may also need to `sudo yum install gcc` before this step
 
 ### Running the Plays
 Running the plays is easy!

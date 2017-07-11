@@ -1,4 +1,3 @@
 ---
-
 - include: configure_mscan_rest.yml
 - include: setup_firewall_rules.yml

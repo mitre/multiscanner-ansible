@@ -49,41 +49,6 @@
   become: yes
   become_user: root
 
-
-
-#- name: yara build - bootstrap
-#  shell: ./bootstrap.sh
-#  args:
-#    chdir: "{{remote_resource_prefix}}/yara-python/yara"
-#  become: yes
-#  become_user: root
-##  when: yara_lib_file.stat.exists == False
-#
-#- name: yara build - configure
-#  shell: ./configure --prefix=/usr --enable-magic --enable-cuckoo --with-crypto
-#  args:
-#    chdir: "{{remote_resource_prefix}}/yara-python/yara"
-#  become: yes
-#  become_user: root
-##  when: yara_lib_file.stat.exists == False
-#
-#- name: yara build - make
-#  shell: make && make install
-#  args:
-#    chdir: "{{remote_resource_prefix}}/yara-python/yara"
-#  become: yes
-#  become_user: root
-##  when: yara_lib_file.stat.exists == False
-#
-#- name: yara python - build
-#  shell: "{{ python_install_prefix }}/bin/python"
-#  args:
-#    chdir: "{{remote_resource_prefix}}/yara-python/yara"
-#  become: yes
-#  become_user: root
-##  when: yara_lib_file.stat.exists == False
-
-#--------------------------------------------
 - name: symlink yara
   file:
     src: "{{ yara_lib }}"

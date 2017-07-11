@@ -1,0 +1,111 @@
+---
+
+- name: check whether yara already present
+  stat:
+    path: "{{ yara_lib }}"
+  register: yara_lib_file
+
+- name: install yara system dependencies
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - file-devel
+  become: yes
+  become_user: root
+
+- name: copy yara source
+  copy:
+    src: "../../{{local_resource_prefix}}/yara-python.tgz"
+    dest: "{{ remote_resource_prefix }}"
+  become: yes
+  become_user: root
+
+- name: unzip yara source
+  unarchive:
+    src: "{{ remote_resource_prefix }}/yara-python.tgz"
+    dest: "{{ remote_resource_prefix }}"
+    remote_src: yes
+  become: yes
+  become_user: root
+
+
+- name: configure and build yara
+  shell: |
+    ./bootstrap.sh
+    ./configure --prefix=/usr --enable-magic --enable-cuckoo --with-crypto
+    make && make install
+  args:
+    chdir: "{{remote_resource_prefix}}/yara-python/yara"
+  become: yes
+  become_user: root
+
+- name: build and install yara-python
+  shell: |
+    "{{ python_install_prefix }}/bin/python" setup.py build --dynamic-linking
+    "{{ python_install_prefix }}/bin/python" setup.py install
+  args:
+    chdir: "{{remote_resource_prefix}}/yara-python"
+  become: yes
+  become_user: root
+
+
+
+#- name: yara build - bootstrap
+#  shell: ./bootstrap.sh
+#  args:
+#    chdir: "{{remote_resource_prefix}}/yara-python/yara"
+#  become: yes
+#  become_user: root
+##  when: yara_lib_file.stat.exists == False
+#
+#- name: yara build - configure
+#  shell: ./configure --prefix=/usr --enable-magic --enable-cuckoo --with-crypto
+#  args:
+#    chdir: "{{remote_resource_prefix}}/yara-python/yara"
+#  become: yes
+#  become_user: root
+##  when: yara_lib_file.stat.exists == False
+#
+#- name: yara build - make
+#  shell: make && make install
+#  args:
+#    chdir: "{{remote_resource_prefix}}/yara-python/yara"
+#  become: yes
+#  become_user: root
+##  when: yara_lib_file.stat.exists == False
+#
+#- name: yara python - build
+#  shell: "{{ python_install_prefix }}/bin/python"
+#  args:
+#    chdir: "{{remote_resource_prefix}}/yara-python/yara"
+#  become: yes
+#  become_user: root
+##  when: yara_lib_file.stat.exists == False
+
+#--------------------------------------------
+- name: symlink yara
+  file:
+    src: "{{ yara_lib }}"
+    dest: "{{ yara_symlink_lib }}"
+    owner: root
+    group: root
+    state: link
+    mode: "u+rwx,g+rx,o+rx"
+  become: yes
+  become_user: root
+
+- name: delete yara source directory
+  file:
+    path: "{{remote_resource_prefix}}/yara-python"
+    state: absent
+  become: true
+#  when: yara_lib_file.stat.exists == False
+
+- name: delete yara source archive
+  file:
+    path: "{{remote_resource_prefix}}/yara-python.tgz"
+    state: absent
+  become: true
+
+

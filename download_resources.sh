@@ -1,5 +1,7 @@
 #!/bin/bash
 
+WORKING_DIR=$(pwd)
+
 # Downloads various RPMs and other resources from the Internet.
 # NOTE: if you change the version of any downloaded file, 
 # make sure to change the appropriate Ansible variable. The 
@@ -96,3 +98,26 @@ MULTISCANNER_BRANCH="celery"
 
 git clone -b $MULTISCANNER_BRANCH $MULTISCANNER_URL $RESOURCE_DIR/multiscanner
 tar -cvzf $RESOURCE_DIR/multiscanner.tgz -C $RESOURCE_DIR multiscanner
+
+#--------------------- Yara Libraries ---------------------
+# jansson
+wget https://github.com/akheron/jansson/archive/v2.10.tar.gz --directory-prefix=$RESOURCE_DIR
+mv $RESOURCE_DIR/v2.10.tar.gz $RESOURCE_DIR/jansson-2.10.tar.gz
+
+# yara
+YARA_VER=3.5.0
+git clone -b v$YARA_VER https://github.com/VirusTotal/yara-python.git $RESOURCE_DIR/yara-python
+cd $RESOURCE_DIR/yara-python
+git clone -b v$YARA_VER https://github.com/VirusTotal/yara.git
+cd $WORKING_DIR
+
+# create yara-python.tgz with all the the yara sources to be built on a managed VM
+tar -cvzf $RESOURCE_DIR/yara-python.tgz -C $RESOURCE_DIR yara-python
+
+# yara signatures
+git clone --depth 1 https://github.com/Yara-Rules/rules.git $RESOURCE_DIR/Yara-Rules
+tar -cvzf $RESOURCE_DIR/Yara-Rules.tgz -C $RESOURCE_DIR Yara-Rules
+
+#----------------------- TrID   --------------------------
+curl http://mark0.net/download/trid_linux_64.zip > $RESOURCE_DIR/trid.zip
+curl http://mark0.net/download/triddefs.zip > $RESOURCE_DIR/triddefs.zip

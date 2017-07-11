@@ -24,6 +24,7 @@
     - ssdeep-devel
     - tar
     - git
+    - openssl-devel
   become: yes
   become_user: root
   

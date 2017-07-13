@@ -69,6 +69,24 @@
   become: yes
   become_user: root
 
+#-------------------------------------------------------------------
+# Due to this issue: https://github.com/celery/py-amqp/issues/155
+# we have to manually uninstall the amqp secondary dependency and then
+# reinstall version 2.1.4 manually
+#-------------------------------------------------------------------
+- name: install amqp python lib at explicit version 2.1.4
+  pip:
+    name: amqp
+    version: 2.1.4
+    virtualenv: "{{ multiscanner_venv }}"
+    virtualenv_python: "{{ python_install_prefix }}/bin/python"
+    virtualenv_site_packages: yes
+  become: yes
+  become_user: "{{ ms_user }}"
+
+#-------------------------------------------------------------------
+# End fix for https://github.com/celery/py-amqp/issues/155
+#-------------------------------------------------------------------
 - name: install multiscanner python dependencies from requirements.txt
   pip:
     requirements: "{{ multiscanner_install_prefix }}/multiscanner/requirements.txt"
@@ -77,6 +95,7 @@
     virtualenv_site_packages: yes
   become: yes
   become_user: "{{ ms_user }}"
+
 
 # Copy configs
 - name: copy multiscanner main config

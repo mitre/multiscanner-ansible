@@ -1,0 +1,72 @@
+---
+
+- name: check whether jansson already present
+  stat:
+    path: "{{ jansson_lib }}"
+  register: jansson_lib_file
+
+- name: copy jansson source
+  copy:
+    src: "../../{{local_resource_prefix}}/jansson-2.10.tar.gz"
+    dest: "{{ remote_resource_prefix }}"
+  become: yes
+  become_user: root
+#  when: jansson_lib_file.stat.exists == False
+
+- name: unzip jansson source
+  unarchive:
+    src: "{{ remote_resource_prefix }}/jansson-2.10.tar.gz"
+    dest: "{{ remote_resource_prefix }}"
+    remote_src: yes
+  become: yes
+  become_user: root
+#  when: jansson_lib_file.stat.exists == False
+
+- name: jansson build - autoreconf
+  shell: autoreconf -fi
+  args:
+    chdir: "{{remote_resource_prefix}}/jansson-2.10"
+  become: yes
+  become_user: root
+#  when: jansson_lib_file.stat.exists == False
+
+- name: jansson build - configure
+  shell: ./configure --prefix=/usr
+  args:
+    chdir: "{{remote_resource_prefix}}/jansson-2.10"
+  become: yes
+  become_user: root
+#  when: jansson_lib_file.stat.exists == False
+
+- name: jansson build - install
+  shell: make install
+  args:
+    chdir: "{{remote_resource_prefix}}/jansson-2.10"
+    creates:
+  become: yes
+  become_user: root
+#  when: jansson_lib_file.stat.exists == False
+
+- name: symlink jansson
+  file:
+    src: "{{ jansson_lib }}"
+    dest: "{{ jansson_symlink_lib }}"
+    owner: root
+    group: root
+    state: link
+    mode: "u+rwx,g+rx,o+rx"
+  become: yes
+  become_user: root
+
+- name: delete jansson source directory
+  file:
+    path: "{{remote_resource_prefix}}/jansson-2.10"
+    state: absent
+  become: true
+
+- name: delete jansson source archive
+  file:
+    path: "{{remote_resource_prefix}}/jansson-2.10.tar.gz"
+    state: absent
+  become: true
+

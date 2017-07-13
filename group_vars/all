@@ -77,3 +77,10 @@ apache_sites_enabled_dir: /etc/httpd/sites-enabled
 apache_user: apache
 
 mod_wsgi_system_module: /etc/httpd/modules/mod_wsgi-py36.cpython-36m-x86_64-linux-gnu.so
+
+# Regex to pass to Flask CORS and Apache config to allow cross-origin requests.
+# Example:
+#    ms_api_cors_regex: http(s)?://(myhost1.org(:d+)?|myhost2.org(:d+)?)
+#
+# Defaults to {{ groups.webserver[0] }} if left blank
+ms_api_cors_regex:

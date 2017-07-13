@@ -1,5 +1,9 @@
 ---
 
+- include: install_jansson.yml
+- include: install_yara.yml
+- include: install_trid.yml
+
 # Remove previous service file
 - name: Delete previous service file
   file:
@@ -22,5 +26,36 @@
     name: mscan-worker
   become: yes
   become_user: root
+
+# yara signatures
+- name: create yara signature directory
+  file:
+    path: "{{ multiscanner_install_prefix }}/multiscanner/etc/yarasigs"
+    mode: 0775
+    owner: "{{ ms_user }}"
+    recurse: yes
+    state: directory
+  become: true
+
+- name: copy yara signature archive
+  copy:
+    src: "../../{{local_resource_prefix}}/Yara-Rules.tgz"
+    dest: "{{ remote_resource_prefix }}"
+  become: true
+
+- name: unzip yara signatures
+  unarchive:
+    src: "{{ remote_resource_prefix }}/Yara-Rules.tgz"
+    dest: "{{ multiscanner_install_prefix }}/multiscanner/etc/yarasigs"
+    remote_src: yes
+  become: yes
+  become_user: root
+
+- name: delete yara signature archive
+  file:
+    path: "{{ remote_resource_prefix }}/Yara-Rules.tgz"
+    state: absent
+  become: true
+
 
 

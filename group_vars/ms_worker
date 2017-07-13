@@ -1,0 +1,6 @@
+
+jansson_lib: /usr/lib/libjansson.so.4
+jansson_symlink_lib: /lib64/libjansson.so.4
+
+yara_lib: /usr/lib/libyara.so.3
+yara_symlink_lib: /lib64/libyara.so.3

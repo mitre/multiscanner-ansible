@@ -161,6 +161,32 @@ You'll need to install Ansible on the Ansible Controller if it isn't already the
 1. Run the command: `sudo pip install ansible`
     - You may also need to `sudo yum install gcc` before this step
 
+### Customize the Setup (Optional)
+#### Variables
+In the source code directory, there is a folder called `group_vars`, which contains variable definitions
+for the various hosts. You can edit these variables to change parameters such as installation paths,
+port numbers, user names, and passwords. You do not have to edit these unless you specifically want
+to change something (although we would recommend changing usernames and passwords). The files are named for
+the host categories to which they apply (the file named `all` applies to all categories). Within the
+files, the variable names should be self-explanatory, and there are comments providing additional
+explanations. Some variables that warrant specific mention are as follows:
+- **group_vars/all: ms_api_cors_regex** - this is a regular expression that allows Flask and apache
+to set the allowed-origins header. It is blank by default, in which case the ms_common role will 
+set it to the hostname of the web server. This should be sufficient in most cases, but if it is
+not, then you can provide your own custom regex, such as `http(s)?://(myhost1.org|myhost2.org)`.
+- **group_vars/dfs_server: dfs_replica_count** - the number of replicas to create for a file
+stored in the DFS. The number of DFS server hosts must be a multiple of this number, so if you
+increase **dfs_replica_count** beyond the default of 2, make sure that you add an appropriate 
+number of DFS hosts.
+
+#### Templates
+In most roles, there will be a`templates` folder which holds application configuration 
+files. They have been templated to include values defined in variables, but can be further
+customized depending on your needs. Some files that warrant specific mention are as follows:
+- **ms_common/templates/config.ini.j2**: you will probably want to customize the configuration 
+parameters for the various scanning tools with which MultiScanner will interface. Some tools 
+require API keys, etc., and you might need to enable/disable certain tools.
+
 ### Running the Plays
 Running the plays is easy!
 1. Log in to the Ansible Controller as the **ansible** user 

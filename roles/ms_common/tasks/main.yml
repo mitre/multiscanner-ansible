@@ -1,3 +1,8 @@
 ---
 
+- name: set CORS regex for all MS installations
+  set_fact:
+    ms_api_cors_regex: "https?://{{ groups.webserver[0] }}"
+  when: (ms_api_cors_regex is none) or (ms_api_cors_regex|trim == '')
+
 - include: install_multiscanner.yml

@@ -157,7 +157,7 @@ To run the downloader script:
 5. Run the command: `sh download_resources.sh` 
 
 ### Install Ansible
-You'll need to install Ansible on the Ansible Controller if it isn't already there:
+You'll need to install Ansible version >= 2.3 on the Ansible Controller if it isn't already there:
 1. Run the command: `sudo pip install ansible`
     - You may also need to `sudo yum install gcc` before this step
 

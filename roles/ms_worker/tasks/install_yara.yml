@@ -14,6 +14,19 @@
   become: yes
   become_user: root
 
+# Pre-build - remove any old source directories
+- name: yara pre-build - delete yara source directory
+  file:
+    path: "{{remote_resource_prefix}}/yara-python"
+    state: absent
+  become: true
+
+- name: yara pre-build - delete yara source archive
+  file:
+    path: "{{remote_resource_prefix}}/yara-python.tgz"
+    state: absent
+  become: true
+
 - name: copy yara source
   copy:
     src: "../../{{local_resource_prefix}}/yara-python.tgz"
@@ -29,6 +42,14 @@
   become: yes
   become_user: root
 
+- name: fix yara source for Yara-Rules issue 176
+  lineinfile:
+    path: "{{remote_resource_prefix}}/yara-python/yara/libyara/re.c"
+    state: present
+    regexp: '^#define RE_MAX_SPLIT_ID'
+    line: '#define RE_MAX_SPLIT_ID     255'
+  become: yes
+  become_user: root
 
 - name: configure and build yara
   shell: |
@@ -59,18 +80,3 @@
     mode: "u+rwx,g+rx,o+rx"
   become: yes
   become_user: root
-
-- name: delete yara source directory
-  file:
-    path: "{{remote_resource_prefix}}/yara-python"
-    state: absent
-  become: true
-#  when: yara_lib_file.stat.exists == False
-
-- name: delete yara source archive
-  file:
-    path: "{{remote_resource_prefix}}/yara-python.tgz"
-    state: absent
-  become: true
-
-

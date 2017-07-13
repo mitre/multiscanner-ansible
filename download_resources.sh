@@ -111,12 +111,21 @@ cd $RESOURCE_DIR/yara-python
 git clone -b v$YARA_VER https://github.com/VirusTotal/yara.git
 cd $WORKING_DIR
 
+# clone Androguard Yara module, then copy its modified configs into the yara source...
+git clone https://github.com/Koodous/androguard-yara.git $RESOURCE_DIR/androguard-yara
+LIBYARA_DIR=$RESOURCE_DIR/yara-python/yara/libyara
+cp $RESOURCE_DIR/androguard-yara/androguard.c $LIBYARA_DIR/modules/
+cp -f $RESOURCE_DIR/androguard-yara/dist/yara-$YARA_VER/libyara/modules/module_list $LIBYARA_DIR/modules/
+cp -f $RESOURCE_DIR/androguard-yara/dist/yara-$YARA_VER/libyara/Makefile.am $LIBYARA_DIR/
+
 # create yara-python.tgz with all the the yara sources to be built on a managed VM
 tar -czf $RESOURCE_DIR/yara-python.tgz -C $RESOURCE_DIR yara-python
 
 # yara signatures
 git clone --depth 1 https://github.com/Yara-Rules/rules.git $RESOURCE_DIR/Yara-Rules
 tar -czf $RESOURCE_DIR/Yara-Rules.tgz -C $RESOURCE_DIR Yara-Rules
+
+
 
 #----------------------- TrID   --------------------------
 curl http://mark0.net/download/trid_linux_64.zip > $RESOURCE_DIR/trid.zip

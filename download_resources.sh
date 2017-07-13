@@ -81,8 +81,8 @@ done
 # main gluster RPM is a special case
 mv $RESOURCE_DIR/gluster_client/glusterfs-$GLUSTER_VERSION_MAJOR_MINOR*.rpm $RESOURCE_DIR/gluster_client/glusterfs-$ANSIBLE_VERSION_STR.rpm
 
-tar -cvzf $RESOURCE_DIR/gluster_server.tgz -C $RESOURCE_DIR gluster_server
-tar -cvzf $RESOURCE_DIR/gluster_client.tgz -C $RESOURCE_DIR gluster_client
+tar -czf $RESOURCE_DIR/gluster_server.tgz -C $RESOURCE_DIR gluster_server
+tar -czf $RESOURCE_DIR/gluster_client.tgz -C $RESOURCE_DIR gluster_client
 
 #---------------------- PYTHON 3----------------------
 # ANSIBLE VARIABLE: python_version ANSIBLE FILE: group_vars/all
@@ -112,11 +112,11 @@ git clone -b v$YARA_VER https://github.com/VirusTotal/yara.git
 cd $WORKING_DIR
 
 # create yara-python.tgz with all the the yara sources to be built on a managed VM
-tar -cvzf $RESOURCE_DIR/yara-python.tgz -C $RESOURCE_DIR yara-python
+tar -czf $RESOURCE_DIR/yara-python.tgz -C $RESOURCE_DIR yara-python
 
 # yara signatures
 git clone --depth 1 https://github.com/Yara-Rules/rules.git $RESOURCE_DIR/Yara-Rules
-tar -cvzf $RESOURCE_DIR/Yara-Rules.tgz -C $RESOURCE_DIR Yara-Rules
+tar -czf $RESOURCE_DIR/Yara-Rules.tgz -C $RESOURCE_DIR Yara-Rules
 
 #----------------------- TrID   --------------------------
 curl http://mark0.net/download/trid_linux_64.zip > $RESOURCE_DIR/trid.zip

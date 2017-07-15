@@ -41,7 +41,6 @@
 
 - hosts: webserver
   roles:
-  - role: dfs_client
   - role: python3
   - role: ms_common
   - role: apache

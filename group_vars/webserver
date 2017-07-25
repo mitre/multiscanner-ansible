@@ -1,5 +1,8 @@
+# This is the web server port. If you are using HTTPS, you should use 443 (or 8443 or similar)
 ms_web_port: 80
+
 # This is the IP to which the Flask app will bind
 ms_web_host: 0.0.0.0
 
 mscan_web_log_dir: /var/log/mscanweb
+

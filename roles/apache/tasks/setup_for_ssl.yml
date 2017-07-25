@@ -1,0 +1,27 @@
+---
+
+# These are pre-config steps if we're going to use SSL. The ms_webserver and ms_restserver roles will take care of
+# installing certs etc.
+
+- name: install mod_ssl
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - mod_ssl
+  when: servers_use_ssl|bool == True
+  become: yes
+  become_user: root
+  notify:
+  - restart apache
+
+# Create cert directories (certs will be copied here if user has enabled SSL)
+- name: create web cert directory
+  file: "path={{ apache_cert_folder_root }} state=directory mode=0755 owner={{ ms_user }} group=root recurse=yes"
+  become: yes
+  become_user: root
+
+- name: create web cert key directory
+  file: "path={{ apache_cert_folder_root }}/private state=directory mode=0710 owner={{ ms_user }} group=root recurse=yes"
+  become: yes
+  become_user: root

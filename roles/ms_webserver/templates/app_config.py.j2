@@ -3,7 +3,7 @@ HOST = "{{ ms_web_host }}"
 # Port to bind this server on
 PORT = {{ ms_web_port }}
 # URI for the API server to which we will connect
-API_LOC = "{{ groups.restserver[0] }}:{{ ms_rest_port }}"
+API_LOC = "{% if servers_use_ssl == True %}https{% else %}http{% endif %}://{{ groups.restserver[0] }}:{{ ms_rest_port }}"
 # Set to True to enable debug mode, but DO NOT USE in production
 DEBUG = False
 # List of metadata fields that can be set when submitting a file for scanning

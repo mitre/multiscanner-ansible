@@ -187,6 +187,37 @@ customized depending on your needs. Some files that warrant specific mention are
 parameters for the various scanning tools with which MultiScanner will interface. Some tools 
 require API keys, etc., and you might need to enable/disable certain tools.
 
+#### Enable SSL
+If you want to serve the web and REST services over HTTPS, there are a few modifications you need to make.
+1. You need to provide certificates and their corresponding private key files for both the web server and the REST server.
+Place these files in the `certificates` folder where the placeholder files are. The `.crt` file just needs to be a 
+certificate; it does not have to end in `.crt` (`.pem` or equivalent should be fine as well)
+2. Update the following variables in **group_vars/all**:
+    - `servers_use_ssl: True` (default is `False`)
+    - Set `restserver_cert_file` to be the filename of the certificate for the REST server
+    - Set `restserver_cert_key_file` to be the filename of the private key corresponding to the the REST server's
+    certificate.
+    - Repeat the steps for the `restserver_cert_*` variables with the `webserver_cert_*` variables
+    - Set `ms_rest_port` to an appropriate number, such as 443. If you are hosting the web server and REST server on the
+    same host, and you are using 443 as the web server's port, then `ms_rest_port` needs to be something else (such as 8443) 
+3. Update the following variables in **group_vars/webserver**:
+    - Set `ms_web_port` to an appropriate number, such as 443
+4. If your certificates are not trusted by your browser (as can happen when using self-signed certificates for testing
+purposes), you need to tell your browser to trust or allow a security exception for the certificates. You can install the
+certificates locally, or just browse to **both a webserver and a REST server URL** and tell your browser to create an
+exception when prompted
+    - For the web server, just browse to the main URL, i.e., `https://webserver-host.yourdomain`
+    - For the REST server, browse to the REST server's hostname and use the `/api/v1/tasks/list/` path, i.e.,
+    `https://restserver-host.yourdomain/api/v1/tasks/list/`
+    - (Don't forget to include port numbers in the URLS if you're using something other than 443)
+
+NOTE: if you need to generate self-signed certificates for testing (and only for testing), you can do that (on CentOS) 
+by running:
+- `openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout rest_cert.key -out rest_cert.crt`
+- `openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout web_cert.key -out web_cert.crt`
+
+directly in the certificates directory.
+
 ### Running the Plays
 Running the plays is easy!
 1. Log in to the Ansible Controller as the **ansible** user 

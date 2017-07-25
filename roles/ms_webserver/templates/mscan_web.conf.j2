@@ -1,5 +1,13 @@
 <VirtualHost *:{{ ms_web_port }}>
-    ServerName {{ ms_web_host }}
+    #ServerName {{ ms_web_host }}
+    ServerName {{ groups['webserver'][0] }}
+
+{% if servers_use_ssl == True %}
+    LoadModule ssl_module {{ mod_ssl_system_module }}
+    SSLEngine on
+    SSLCertificateFile "{{ apache_cert_folder_root }}/{{ webserver_cert_file }}"
+    SSLCertificateKeyFile "{{ apache_cert_folder_root }}/private/{{ webserver_cert_key_file }}"
+{% endif %}
 
     LoadModule wsgi_module {{ mod_wsgi_system_module }}
     WSGIDaemonProcess mscan_web user={{ ms_user }} group=root threads=5 python-home={{ multiscanner_venv }} python-path={{ multiscanner_install_prefix }}/multiscanner/web

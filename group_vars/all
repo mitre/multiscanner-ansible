@@ -70,6 +70,8 @@ rabbit_task_primary_vhost: ms_task
 ms_firewall_zone: public
 # This is the IP to which the REST service will bind
 ms_rest_host: 0.0.0.0
+
+# This is the port that the REST service will use. Set it to 443, 8443, or something similar if using HTTPS
 ms_rest_port: 8080
 
 apache_sites_available_dir: /etc/httpd/sites-available
@@ -77,6 +79,7 @@ apache_sites_enabled_dir: /etc/httpd/sites-enabled
 apache_user: apache
 
 mod_wsgi_system_module: /etc/httpd/modules/mod_wsgi-py36.cpython-36m-x86_64-linux-gnu.so
+mod_ssl_system_module: /etc/httpd/modules/mod_ssl.so
 
 # Regex to pass to Flask CORS and Apache config to allow cross-origin requests.
 # Example:
@@ -84,3 +87,24 @@ mod_wsgi_system_module: /etc/httpd/modules/mod_wsgi-py36.cpython-36m-x86_64-linu
 #
 # Defaults to {{ groups.webserver[0] }} if left blank
 ms_api_cors_regex:
+
+#----------------------------------------------
+# SSL related
+#----------------------------------------------
+# If you want to use SSL on the web and REST servers, set this to True. Otherwise, set it to False (case matters)
+servers_use_ssl: False
+
+# This is the root folder where certs will be stored.
+apache_cert_folder_root: /etc/httpd/ssl
+
+# This is the name of the public certificate file for the REST server. Replace this with your actual cert filename!
+restserver_cert_file: rest_cert.crt
+
+# This is the name of the key file for the REST server. Replace this with your actual cert key filename!
+restserver_cert_key_file: rest_cert.key
+
+# This is the name of the public certificate file for the Web server. Replace this with your actual cert filename!
+webserver_cert_file: web_cert.crt
+
+# This is the name of the key file for the Web server. Replace this with your actual cert key filename!
+webserver_cert_key_file: web_cert.key

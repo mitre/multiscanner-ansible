@@ -6,3 +6,4 @@
   when: (ms_api_cors_regex is none) or (ms_api_cors_regex|trim == '')
 
 - include: install_multiscanner.yml
+  tags: [ms_common]

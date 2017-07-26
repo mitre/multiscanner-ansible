@@ -47,8 +47,13 @@ API key =
 apikey = None
 ENABLED = False
 
+[Tika]
+ENABLED = False
+remove-entry = X-TIKA:parse_time_millis
+
 [Cuckoo]
 ENABLED = False
+maec = False
 API URL = http://cuckoo:8090/
 timeout = 360
 running timeout = 120

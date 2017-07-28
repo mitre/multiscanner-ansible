@@ -224,7 +224,7 @@ Running the plays is easy!
 2. Go to the root folder of the project: `cd <path>/multiscanner-ansible` (i.e., `cd /home/ansible/multiscanner-ansible`)
 3. (Optional) We'd recommend running the command to update packages on all hosts before running the playbook itself: `ansible all -i hosts -a "yum update -y" --become`</br>
 4. Run the command: `ansible-playbook -i hosts site.yml --module-path custom_ansible_modules`</br>
-(The process will take several minutes)<br/>
+(Go grab a coffee. The process will take a while... less than 30 minutes, probably)<br/>
 Note that the `--module-path custom_ansible_modules` flag is needed to tell Ansible to use the 
 custom module defined for this project (one that compiles and installs an SELinux policy), which
 is located in the `<project root>/custom_ansible_modules` directory. 

@@ -29,7 +29,7 @@
         RewriteEngine On
         RewriteCond %{REQUEST_METHOD} OPTIONS
         RewriteRule ^(.*)$ $1 [R=200,L,ENV=ISOPTIONS:true]
-        SetEnvIf Origin "{{ ms_api_cors_regex }}" AccessControlAllowOrigin=$0$1
+        SetEnvIf Origin "{{ ms_api_cors_regex }}" AccessControlAllowOrigin=$0
         # Set the access-control-origin-allow only on OPTIONS requests; api.py adds the header to everything that gets
         # past the OPTIONS step
         Header always set Access-Control-Allow-Origin %{AccessControlAllowOrigin}e  env=ISOPTIONS

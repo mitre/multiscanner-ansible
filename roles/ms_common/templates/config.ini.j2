@@ -100,7 +100,7 @@ remove-entry = ['ExifTool Version Number', 'File Name', 'Directory', 'File Modif
 ENABLED = False
 
 [PEFile]
-ENABLED = True
+ENABLED = False 
 
 [TrID]
 path = C:\TrID\trid.exe
@@ -112,7 +112,7 @@ replacement path = X:\
 
 [libmagic]
 magicfile = None
-ENABLED = False
+ENABLED = True
 
 [pdfinfo]
 ENABLED = True
@@ -129,3 +129,4 @@ copyfilesto = False
 group-types = ['Antivirus']
 storage-config = {{ multiscanner_install_prefix }}/multiscanner/storage.ini
 api-config = {{ multiscanner_install_prefix }}/multiscanner/api_config.ini
+web-config = {{ multiscanner_install_prefix }}/multiscanner/web_config.ini

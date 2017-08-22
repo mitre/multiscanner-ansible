@@ -6,6 +6,13 @@ elasticsearch_rpm: elasticsearch-5.2.1.rpm
 kibana_rpm: kibana-5.2.1-x86_64.rpm
 
 ###################################################
+# SYSTEM SETTINGS
+###################################################
+# This variable should be set to half of the RAM
+# available on the ES node
+ES_HEAP_SIZE: 16g
+
+###################################################
 # FIREWALL
 ###################################################
 elasticsearch_ports:

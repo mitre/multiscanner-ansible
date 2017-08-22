@@ -123,6 +123,9 @@ tar -czf $RESOURCE_DIR/yara-python.tgz -C $RESOURCE_DIR yara-python
 
 # yara signatures
 git clone --depth 1 https://github.com/Yara-Rules/rules.git $RESOURCE_DIR/Yara-Rules
+# Multiscanner's YaraScan module will automatically recurse to find rules in
+# subdirectories. Don't need the index files.
+rm $RESOURCE_DIR/Yara-Rules/*index.yar
 tar -czf $RESOURCE_DIR/Yara-Rules.tgz -C $RESOURCE_DIR Yara-Rules
 
 

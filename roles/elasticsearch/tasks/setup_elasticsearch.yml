@@ -6,6 +6,29 @@
     src: "../../{{local_resource_prefix}}/{{elasticsearch_rpm}}"
     dest: "{{remote_resource_prefix}}/{{elasticsearch_rpm}}"
 
+- name: Remove ES heap size default initial
+  lineinfile:
+    path: /etc/elasticsearch/jvm.options
+    line: "-Xms2g"
+    state: absent
+  become: yes
+  become_user: root
+  
+- name: Remove ES heap size default max
+  lineinfile:
+    path: /etc/elasticsearch/jvm.options
+    line: "-Xmx2g"
+    state: absent
+  become: yes
+  become_user: root
+
+- name: Set ES heap size
+  lineinfile:
+    path: /etc/elasticsearch/jvm.options
+    line: "-Xms{{ ES_HEAP_SIZE }}\n-Xmx{{ ES_HEAP_SIZE }}"
+  become: yes
+  become_user: root
+
 - name: install the copied Elasticsearch RPM
   yum:
     name: "{{remote_resource_prefix}}/{{elasticsearch_rpm}}"

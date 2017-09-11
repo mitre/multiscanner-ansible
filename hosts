@@ -1,42 +1,39 @@
 # Ansible controller
 [controller]
-ms-ansible.dev.xbis
+ansible-controller.yourdomain.com
 
 # UI. There should only be 1 host
 [webserver]
-ms-web.dev.xbis
+webserver.yourdomain.com
 
 # ReST service. There should only be 1 host, and it can be the same as the webserver
 [restserver]
-ms-rest.dev.xbis
+restserver.yourdomain.com
 
 # RabbitMQ message server for queueing/distributing tasks. There should only be 1 host
 [task_broker]
-ms-broker.dev.xbis
+task-broker.yourdomain.com
 
 # Elasticsearch cluster. At least 1 host, more is preferred
 [elasticsearch]
-ms-es1.dev.xbis
-ms-es2.dev.xbis
+elastic-1.yourdomain.com
+elastic-2.yourdomain.com
 
 # Kibana. Optional. If implemeted, specify one or more hosts.
-# [kibana]
-# kibana.dev.xbis
+[kibana]
+kibana.yourdomain.com
 
 # PostgreSQL DB for storing task info. There should only be 1 host
 [task_db]
-ms-task-db.dev.xbis
+taskdb.yourdomain.com
 
 # MultiScanner distributed workers. At least 1 host, more is preferred
 [ms_worker]
-ms-worker1.dev.xbis
-ms-worker2.dev.xbis
-ms-worker3.dev.xbis
-ms-worker4.dev.xbis
+mscan-worker-1.yourdomain.com
+mscan-worker-2.yourdomain.com
+mscan-worker-3.yourdomain.com
 
 # DFS host. You need at least 2 hosts here
 [dfs_server]
-ms-worker1.dev.xbis
-ms-worker2.dev.xbis
-ms-worker3.dev.xbis
-ms-worker4.dev.xbis
+gluster-dfs1.yourdomain.com
+gluster-dfs2.yourdomain.com

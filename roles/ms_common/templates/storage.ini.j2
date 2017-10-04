@@ -4,7 +4,7 @@ host = {% for es_host in groups['elasticsearch'] %}{{ es_host }}{% if not loop.l
 
 port = 9200
 index = multiscanner_reports
-doc_type = reports
+doc_type = report
 
 [File]
 ENABLED = False

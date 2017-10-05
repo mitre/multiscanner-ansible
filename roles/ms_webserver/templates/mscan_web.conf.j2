@@ -36,6 +36,14 @@
             Require all granted
     </Directory>
 
+    <IfModule mod_deflate>
+    # Compress with gzip for faster loading
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE application/json
+    </IfModule>
+
     ErrorLog {{ mscan_web_log_dir }}/error.log
     LogLevel debug
     CustomLog {{ mscan_web_log_dir }}/access.log combined

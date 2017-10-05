@@ -2,26 +2,21 @@
 Ansible configurations for distributed MultiScanner installations.
 
 ## Purpose
-This project exists to facilitate configuring the [MultiScanner](https://github.com/MITRECND/multiscanner) file analysis framework in a distributed setting. It defines [Ansible](https://www.ansible.com/get-started) configurations to enable automated configuration management of machines in a MultiScanner setup. 
+This project exists to facilitate configuring the [MultiScanner](https://github.com/MITRECND/multiscanner) file analysis framework in a distributed setting. It defines [Ansible](https://www.ansible.com/get-started) configurations to enable automated configuration management of machines in a MultiScanner setup.
 
 
 ## MultiScanner Distributed Setup
-Distributed MultiScanner (as you would expect) makes use of applications running on several machines. There is a web server (role: webserver) that hosts the web UI and ReSTful services to provide a single point for user interaction. As files are submitted through the web UI or ReST services, they are stored to a distributed file system (DFS) and tasks are created. The tasks are logged to a database (role: task_db) for tracking purposes, and then sent via Celery through a RabbitMQ message broker (role: task_broker) to worker nodes. The worker nodes (role: ms_worker) fetch the file(s) specified in the task from the DFS and process them in MultiScanner. When processing completes, the worker nodes post the analysis results to the Elasticsearch data store (role: elasticsearch) and update the task status in the task tracker database. Then the user can access the reports from the data store. 
+Distributed MultiScanner (as you would expect) makes use of applications running on several machines. There is a web server (role: webserver) that hosts the web UI and ReSTful services to provide a single point for user interaction. As files are submitted through the web UI or ReST services, they are stored to a distributed file system (DFS) and tasks are created. The tasks are logged to a database (role: task_db) for tracking purposes, and then sent via Celery through a RabbitMQ message broker (role: task_broker) to worker nodes. The worker nodes (role: ms_worker) fetch the file(s) specified in the task from the DFS and process them in MultiScanner. When processing completes, the worker nodes post the analysis results to the Elasticsearch data store (role: elasticsearch) and update the task status in the task tracker database. Then the user can access the reports from the data store.
 
 
 ## Roles
-This section describes the Ansible roles. Each role has its own folder under **roles/**, and defines tasks to be executed for all hosts in the category(ies) associated with that role.  
+This section describes the Ansible roles. Each role has its own folder under **roles/**, and defines tasks to be executed for all hosts in the category(ies) associated with that role.
 
 ### common
 **Applies to host category**: all<br/>
-**Purpose**: 
+**Purpose**:
  * Establishes settings common to all machines in the setup, such as setting up the "multiscanner" user that will be used to run various tasks and services.
 
-### apache
-**Applies to host category**: restserver, webserver<br/>
-**Purpose**:
- * Installs and configures the Apache web server
- 
 ### ms_common
 **Applies to host category**: ms_worker, restserver, webserver<br/>
 **Purpose**:
@@ -30,25 +25,26 @@ This section describes the Ansible roles. Each role has its own folder under **r
 ### apache
 **Applies to host category**: restserver, webserver<br/>
 **Purpose**:
- * Installs and configures an instance of Apache
- 
+ * Installs and configures an instance of the Apache web server
+
 ### ms_webserver
 **Applies to host category**: webserver<br/>
 **Purpose**:
  * Installs and configures the web server for hosting the MultiScanner UI. Note: requires the **ms_common** role to
  be run first (make sure to place it AFTER the ms_common role in the playbook)
- 
+
 ### ms_restserver
 **Applies to host category**: restserver<br/>
 **Purpose**:
- * Installs and configures the Multiscanner REST server. * Installs and configures the web server for hosting the MultiScanner UI. Note: requires the **ms_common** role to
+ * Installs and configures the Multiscanner REST server.
+ * Installs and configures the web server for hosting the MultiScanner UI. Note: requires the **ms_common** role to
  be run first (make sure to place it AFTER the ms_common role in the playbook) 
 
 ### ms_worker
 **Applies to host category**: ms_worker<br/>
 **Purpose**:
  * Installs and configures the MultiScanner Celery Worker service
- 
+
 ### elasticsearch
 **Applies to host category**: elasticsearch<br/>
 **Purpose**:
@@ -65,18 +61,18 @@ This section describes the Ansible roles. Each role has its own folder under **r
 **Applies to host category**: task_broker<br/>
 **Purpose**:
  * Installs and configures RabbitMQ Server, including the management plugin
- 
+
 ### task_db
 **Applies to host category**: task_db<br/>
 **Purpose**:
  * Installs and configures a PostgreSQL database
- 
+
 ### dfs_server
 **Applies to host category**: dfs_server<br/>
 **Purpose**:
  * Installs Gluster FS
  * Creates a Gluster shared volume
- 
+
 ### dfs_client
 **Applies to host category**: ms_worker, webserver, restserver<br/>
 **Purpose**:
@@ -118,14 +114,14 @@ Hosts the PostgreSQL database for storing task information.
 
 ### ms_worker
 **Required number of hosts in category**: 1 - many<br/>
-Hosts the Multiscanner Celery Worker service. To achieve the maximum benefit of using MultiScanner's distributed feature, 
+Hosts the Multiscanner Celery Worker service. To achieve the maximum benefit of using MultiScanner's distributed feature,
 we recommend adding at least 2 hosts to this category. Furthermore, to maximize speed of file storage and
 retrieval, we recommend listing the hosts in this category in the dfs_server category as well (just be sure
 to adhere to the requirements for the number of hosts in the dfs_server category, see below).
 
 ### dfs_server
 **Required number of hosts in category**: 2 - many<br/>
-Hosts the Gluster shared volume for submitted file storage. Note that a minimum of 2 hosts is required; add more hosts for better redundancy. 
+Hosts the Gluster shared volume for submitted file storage. Note that a minimum of 2 hosts is required; add more hosts for better redundancy.
 *The number of hosts must be a multiple of the number of replicas defined in the `dfs_replica_count` variable
 in **group_vars/dfs_server**!*
 
@@ -154,7 +150,7 @@ To run the downloader script:
 2. Ensure that the Ansible Controller is connected to the internet
 3. Log in to the Ansible Controller as the **ansible** user
 4. Go to the root folder of the project: `cd <path>/multiscanner-ansible` (i.e., `cd /home/ansible/multiscanner-ansible`)
-5. Run the command: `sh download_resources.sh` 
+5. Run the command: `sh download_resources.sh`
 
 ### Install Ansible
 You'll need to install Ansible version >= 2.3 on the Ansible Controller if it isn't already there:
@@ -171,26 +167,26 @@ the host categories to which they apply (the file named `all` applies to all cat
 files, the variable names should be self-explanatory, and there are comments providing additional
 explanations. Some variables that warrant specific mention are as follows:
 - **group_vars/all: ms_api_cors_regex** - this is a regular expression that allows Flask and apache
-to set the allowed-origins header. It is blank by default, in which case the ms_common role will 
+to set the allowed-origins header. It is blank by default, in which case the ms_common role will
 set it to the hostname of the web server. This should be sufficient in most cases, but if it is
 not, then you can provide your own custom regex, such as `http(s)?://(myhost1.org|myhost2.org)`.
 - **group_vars/dfs_server: dfs_replica_count** - the number of replicas to create for a file
 stored in the DFS. The number of DFS server hosts must be a multiple of this number, so if you
-increase **dfs_replica_count** beyond the default of 2, make sure that you add an appropriate 
+increase **dfs_replica_count** beyond the default of 2, make sure that you add an appropriate
 number of DFS hosts.
 
 #### Templates
-In most roles, there will be a`templates` folder which holds application configuration 
+In most roles, there will be a`templates` folder which holds application configuration
 files. They have been templated to include values defined in variables, but can be further
 customized depending on your needs. Some files that warrant specific mention are as follows:
-- **ms_common/templates/config.ini.j2**: you will probably want to customize the configuration 
-parameters for the various scanning tools with which MultiScanner will interface. Some tools 
+- **ms_common/templates/config.ini.j2**: you will probably want to customize the configuration
+parameters for the various scanning tools with which MultiScanner will interface. Some tools
 require API keys, etc., and you might need to enable/disable certain tools.
 
 #### Enable SSL
 If you want to serve the web and REST services over HTTPS, there are a few modifications you need to make.
 1. You need to provide certificates and their corresponding private key files for both the web server and the REST server.
-Place these files in the `certificates` folder where the placeholder files are. The `.crt` file just needs to be a 
+Place these files in the `certificates` folder where the placeholder files are. The `.crt` file just needs to be a
 certificate; it does not have to end in `.crt` (`.pem` or equivalent should be fine as well)
 2. Update the following variables in **group_vars/all**:
     - `servers_use_ssl: True` (default is `False`)
@@ -199,7 +195,7 @@ certificate; it does not have to end in `.crt` (`.pem` or equivalent should be f
     certificate.
     - Repeat the steps for the `restserver_cert_*` variables with the `webserver_cert_*` variables
     - Set `ms_rest_port` to an appropriate number, such as 443. If you are hosting the web server and REST server on the
-    same host, and you are using 443 as the web server's port, then `ms_rest_port` needs to be something else (such as 8443) 
+    same host, and you are using 443 as the web server's port, then `ms_rest_port` needs to be something else (such as 8443)
 3. Update the following variables in **group_vars/webserver**:
     - Set `ms_web_port` to an appropriate number, such as 443
 4. If your certificates are not trusted by your browser (as can happen when using self-signed certificates for testing
@@ -225,9 +221,9 @@ Running the plays is easy!
 3. (Optional) We'd recommend running the command to update packages on all hosts before running the playbook itself: `ansible all -i hosts -a "yum update -y" --become`</br>
 4. Run the command: `ansible-playbook -i hosts site.yml --module-path custom_ansible_modules`</br>
 (Go grab a coffee. The process will take a while... less than 30 minutes, probably)<br/>
-Note that the `--module-path custom_ansible_modules` flag is needed to tell Ansible to use the 
+Note that the `--module-path custom_ansible_modules` flag is needed to tell Ansible to use the
 custom module defined for this project (one that compiles and installs an SELinux policy), which
-is located in the `<project root>/custom_ansible_modules` directory. 
+is located in the `<project root>/custom_ansible_modules` directory.
 
 
 ## Scaling

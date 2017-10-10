@@ -11,7 +11,6 @@ port = {{ ms_rest_port }}
 upload_folder = {{ dfs_mount_dir }}
 distributed = True
 web_loc = "{% if servers_use_ssl == True %}https{% else %}http{% endif %}://{{ ms_web_host }}:{{ ms_web_port }}"
-
 cors = "{{ ms_api_cors_regex }}(:d+)?"
 batch_size = 100
 batch_interval = 10

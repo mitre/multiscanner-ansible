@@ -72,6 +72,11 @@ analysis type = 0
 application id = 0
 ENABLED = False
 
+[flarefloss]
+ENABLED = True
+path = /opt/floss
+cmdline = ['--show-metainfo']
+
 [FireeyeScan]
 fireeye images = ['win7-sp1', 'win7x64-sp1', 'winxp-sp2', 'winxp-sp3']
 ENABLED = False
@@ -82,6 +87,7 @@ src path = src
 
 [VxStream]
 ENABLED = False
+BASE URL = http://localhost/
 API URL = http://localhost/api/
 API key =
 API secret =

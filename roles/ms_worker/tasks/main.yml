@@ -3,6 +3,7 @@
 - include: install_jansson.yml
 - include: install_yara.yml
 - include: install_trid.yml
+- include: install_floss.yml
 
 # Remove previous service file
 - name: Delete previous service file

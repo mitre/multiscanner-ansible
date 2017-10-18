@@ -36,14 +36,6 @@
         Header always set Access-Control-Allow-Origin %{AccessControlAllowOrigin}e  env=ISOPTIONS
     </Directory>
 
-    <IfModule mod_deflate>
-    # Compress with gzip for faster loading
-    AddOutputFilterByType DEFLATE text/html
-    AddOutputFilterByType DEFLATE application/javascript
-    AddOutputFilterByType DEFLATE text/css
-    AddOutputFilterByType DEFLATE application/json
-    </IfModule>
-
     ErrorLog {{ mscan_rest_log_dir }}/error.log
     LogLevel debug
     CustomLog {{ mscan_rest_log_dir }}/access.log combined

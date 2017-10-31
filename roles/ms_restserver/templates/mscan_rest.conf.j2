@@ -13,9 +13,10 @@
     WSGIDaemonProcess mscan_rest user={{ ms_user }} group=root threads=5 python-home={{ multiscanner_venv }} python-path={{ multiscanner_install_prefix }}/multiscanner/utils
     WSGIScriptAlias / {{ multiscanner_install_prefix }}/multiscanner/utils/mscan_rest.wsgi
 
-    Header always set Access-Control-Max-Age "1000"
+    Header always set Access-Control-Max-Age "3600"
     Header always set Access-Control-Allow-Headers "X-Requested-With, Content-Type, Origin, Authorization, Accept, Client-Security-Token, Accept-Encoding"
     Header always set Access-Control-Allow-Methods "POST, GET, OPTIONS, DELETE, PUT"
+    Header always set Access-Control-Expose-Headers "Etag"
 
     <Directory {{ multiscanner_install_prefix }}/multiscanner>
         WSGIProcessGroup mscan_rest
@@ -34,6 +35,7 @@
         # past the OPTIONS step
         Header always set Access-Control-Allow-Origin %{AccessControlAllowOrigin}e  env=ISOPTIONS
     </Directory>
+
     ErrorLog {{ mscan_rest_log_dir }}/error.log
     LogLevel debug
     CustomLog {{ mscan_rest_log_dir }}/access.log combined

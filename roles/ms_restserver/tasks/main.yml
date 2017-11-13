@@ -7,4 +7,5 @@
   when: servers_use_ssl|bool == True
 
 - include: configure_mscan_rest.yml
+- include: configure_mscan_rest_celery.yml
 - include: setup_firewall_rules.yml

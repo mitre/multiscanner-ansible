@@ -18,7 +18,7 @@
 # However, we don't want the systemd setup to happen until the config files
 # have been copied, or MS won't start. Hence this awkward placement...
 - name: restart ms-rest-celery-beat if any configs changed
-  systemd: state=restarted name=mscan-worker
+  systemd: state=restarted name=mscan-rest-celery-beat
   when: restart_ms_celery_beat_svc | changed
   become: yes
   become_user: root

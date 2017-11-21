@@ -5,6 +5,25 @@
 - include: install_trid.yml
 - include: install_floss.yml
 
+# Setup log directories
+- name: Create celery log path
+  file:
+    path: "{{ celery_log_path }}"
+    state: directory
+    mode: 0775
+    owner: "{{ ms_user }}"
+  become: yes
+  become_user: root
+
+- name: Create celery pid path
+  file:
+    path: "{{ celery_pid_path }}"
+    state: directory
+    mode: 0775
+    owner: "{{ ms_user }}"
+  become: yes
+  become_user: root
+
 # Remove previous service file
 - name: Delete previous service file
   file:

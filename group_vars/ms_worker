@@ -1,4 +1,15 @@
+#----------------------------------------------
+# Celery logging 
+#----------------------------------------------
+celery_pid_path: /var/run/celery/
+celery_pid_file: /var/run/celery/%h.pid
+celery_log_path: /var/log/celery/
+celery_log_file: /var/log/celery/%h-%i.log
+celery_log_level: INFO
 
+#----------------------------------------------
+# Yara related 
+#----------------------------------------------
 jansson_lib: /usr/lib/libjansson.so.4
 jansson_symlink_lib: /lib64/libjansson.so.4
 

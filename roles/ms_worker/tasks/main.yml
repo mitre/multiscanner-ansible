@@ -39,6 +39,8 @@
   notify:
     - restart multiscanner-celery
 
+- meta: flush_handlers
+
 - name: enable multiscanner worker to start on boot (RHEL/CentOS 7)
   systemd:
     state: started

@@ -124,11 +124,17 @@ ENABLED = True
 ENABLED = True
 fast = False
 
+[pehasher]
+ENABLED = True
+
 [YaraScan]
 ruledir = {{ multiscanner_install_prefix }}/multiscanner/etc/yarasigs
 fileextensions = ['.yar', '.yara', '.sig']
 ignore-tags = ['TLPRED']
 ENABLED = True
+
+[NSRL]
+ENABLED = False
 
 [main]
 copyfilesto = False

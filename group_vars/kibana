@@ -12,3 +12,8 @@ kibana_ports:
   - 5601/tcp
   
 kibana_firewall_zone: public
+
+###################################################
+# METRICBEAT INSTALLATION
+###################################################
+metricbeat_dashboards: beats-dashboards-5.2.1.zip

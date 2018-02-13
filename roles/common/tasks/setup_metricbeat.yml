@@ -1,0 +1,29 @@
+---
+
+# Metricbeat installation
+- name: copy Metricbeat RPM
+  copy:
+    src: "../../{{ local_resource_prefix }}/{{ metricbeat_rpm }}"
+    dst: "{{ remote_resource_prefix }}/{{ metricbeat_rpm }}"
+
+- name: install the copied Metricbeat RPM
+  yum:
+    name: "{{ remote_resource_prefix }}/{{ metricbeat_rpm }}"
+    state: present
+  become: yes
+  become_user: root
+
+- name: copy Metricbeat configuration
+  template: src=metricbeat.yml.j2 dest=/etc/metricbeat/metricbeat.yml mode=0644 owner=root group=root
+  become: yes
+  become_user: root
+  notify:
+  - restart Metricbeat
+
+- name: enable Metricbeat to start on boot (RHEL/CentOS 7)
+  systemd:
+    state: started
+    enabled: yes
+    name: metricbeat
+  become: yes
+  become_user: root

@@ -14,18 +14,27 @@ rm -rf $RESOURCE_DIR/*
 
 #----------------------- ELASTICSEARCH -----------------------
 
+ELASTIC_VERSION=5.2.1
+
 # ANSIBLE VARIABLE: elasticsearch_rpm ANSIBLE FILE: group_vars/elasticsearch
-ELASTICSEARCH_RPM=elasticsearch-5.2.1.rpm
+ELASTICSEARCH_RPM=elasticsearch-${ELASTIC_VERSION}.rpm
 
 # ANSIBLE VARIABLE: kibana_rpm ANSIBLE FILE: group_vars/elasticsearch
-KIBANA_RPM=kibana-5.2.1-x86_64.rpm
+KIBANA_RPM=kibana-${ELASTIC_VERSION}-x86_64.rpm
+
+# ANSIBLE VARIABLE: metricbeat_rpm ANSIBLE_FILE: group_vars/all
+METRICBEAT_RPM=metricbeat-${ELASTIC_VERSION}-x86_64.rpm
+
+# ANSIBLE VARIABLE: metricbeat_dashboards ANSIBLE_FILE: group_vars/kibana
+METRICBEAT_DASHBOARDS=beats-dashboards-${ELASTIC_VERSION}.zip
 
 # ANSIBLE VARIABLE: elasticco_gpg_key ANSIBLE FILE: group_vars/all
 ELASTICCO_GPG_KEY=GPG-KEY-elasticsearch
 
-
 wget "https://artifacts.elastic.co/downloads/elasticsearch/$ELASTICSEARCH_RPM" --directory-prefix=$RESOURCE_DIR
 wget "https://artifacts.elastic.co/downloads/kibana/$KIBANA_RPM" --directory-prefix=$RESOURCE_DIR
+wget "https://artifacts.elastic.co/downloads/beats/metricbeat/$METRICBEAT_RPM" --directory-prefix=$RESOURCE_DIR
+wget "https://artifacts.elastic.co/downloads/beats/beats-dashboards/$METRICBEAT_DASHBOARDS" --directory-prefix=$RESOURCE_DIR
 wget "https://artifacts.elastic.co/$ELASTICCO_GPG_KEY" --directory-prefix=$RESOURCE_DIR
 
 #----------------------- RABBITMQ -----------------------

@@ -19,7 +19,7 @@ task-broker.yourdomain.com
 elastic-1.yourdomain.com
 elastic-2.yourdomain.com
 
-# Kibana. Optional. If implemeted, specify one or more hosts.
+# Kibana. Specify one or more hosts.
 [kibana]
 kibana.yourdomain.com
 

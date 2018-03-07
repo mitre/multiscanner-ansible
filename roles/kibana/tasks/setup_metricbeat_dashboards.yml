@@ -1,0 +1,9 @@
+---
+
+- name: copy Metricbeat dashboards
+  copy:
+    src: "../../{{ local_resource_prefix }}/{{ metricbeat_dashboards }}"
+    dest: "{{ remote_resource_prefix }}/{{ metricbeat_dashboards }}"
+
+- name: install the copied Metricbeat dashboards
+  command: /usr/share/metricbeat/scripts/import_dashboards -es "http://{{ groups['elasticsearch'][0] }}:9200" -file "{{ remote_resource_prefix }}/{{ metricbeat_dashboards }}"

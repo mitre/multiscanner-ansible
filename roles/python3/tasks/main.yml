@@ -1,5 +1,14 @@
 ---
 
+- name: get python version
+  tags: [python]
+  command: "python --version"
+  register: result
+
+- debug:
+    var: result
+
 - include: install_python3.yml
   tags: [python]
+  when: "python_version | search(result.stdout)"
 

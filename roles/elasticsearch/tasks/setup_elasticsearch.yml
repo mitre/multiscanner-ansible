@@ -22,10 +22,17 @@
   become: yes
   become_user: root
 
-- name: Set ES heap size
+- name: Set ES min heap size
   lineinfile:
     path: /etc/elasticsearch/jvm.options
-    line: "-Xms{{ ES_HEAP_SIZE }}\n-Xmx{{ ES_HEAP_SIZE }}"
+    line: "-Xms{{ ES_HEAP_SIZE }}"
+  become: yes
+  become_user: root
+
+- name: Set ES max heap size
+  lineinfile:
+    path: /etc/elasticsearch/jvm.options
+    line: "-Xmx{{ ES_HEAP_SIZE }}"
   become: yes
   become_user: root
 

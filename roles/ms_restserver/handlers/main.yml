@@ -1,6 +1,10 @@
 ---
-
 - name: restart apache
   systemd: state=restarted name=httpd
+  become: yes
+  become_user: root
+
+- name: restart celery beat
+  systemd: state=restarted name=mscan-rest-celery-beat daemon_reload=yes
   become: yes
   become_user: root

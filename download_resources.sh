@@ -103,7 +103,7 @@ wget https://bootstrap.pypa.io/get-pip.py --directory-prefix=$RESOURCE_DIR
 
 #---------------------- MULTISCANNER ----------------------
 MULTISCANNER_URL="https://github.com/mitre/multiscanner.git"
-MULTISCANNER_BRANCH="feature-celery"
+MULTISCANNER_BRANCH="master"
 
 git clone -b $MULTISCANNER_BRANCH $MULTISCANNER_URL $RESOURCE_DIR/multiscanner
 tar -czf $RESOURCE_DIR/multiscanner.tgz -C $RESOURCE_DIR multiscanner

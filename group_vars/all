@@ -25,6 +25,9 @@ python_install_prefix: /usr/local
 multiscanner_install_prefix: /opt
 multiscanner_venv: /opt/venv_multiscanner
 
+# Create a virtualenv for flower
+flower_venv: /opt/venv_flower
+
 #---------------------------------------------
 # ELK-related
 #---------------------------------------------

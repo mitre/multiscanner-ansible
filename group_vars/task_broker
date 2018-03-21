@@ -15,3 +15,8 @@ rabbit_mq_ports:
   - 4369/tcp
 
 rabbit_mq_firewall_zone: public
+
+###################################################
+# FLOWER INSTALLATION
+###################################################
+flower_port: 5555

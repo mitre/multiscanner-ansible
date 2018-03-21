@@ -25,9 +25,6 @@ python_install_prefix: /usr/local
 multiscanner_install_prefix: /opt
 multiscanner_venv: /opt/venv_multiscanner
 
-# Create a virtualenv for flower
-flower_venv: /opt/venv_flower
-
 #---------------------------------------------
 # ELK-related
 #---------------------------------------------
@@ -67,6 +64,10 @@ ms_rabbit_password: CHANGE_THIS_PASSWORD
 
 # Task queue vhost
 rabbit_task_primary_vhost: ms_task
+
+# Create a virtualenv for flower
+flower_venv: /opt/venv_flower
+flower_port: 5555
 
 #---------------------------------------------
 # API related

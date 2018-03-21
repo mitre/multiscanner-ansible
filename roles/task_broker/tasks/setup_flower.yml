@@ -11,7 +11,7 @@
   become: yes
   become_user: root
 
-- name: install flower to venv created by multiscanner
+- name: install flower to venv
   pip:
     name: flower
     virtualenv: "{{ flower_venv }}"

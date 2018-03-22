@@ -5,3 +5,9 @@
   with_items: "{{ rabbit_mq_ports }}"
   become: yes
   become_user: root
+
+- name: allow Flower web port
+  firewalld: port={{ item }} permanent=true zone={{ flower_firewall_zone }} state=enabled immediate=true
+  with_items: "{{ flower_port }}"
+  become: yes
+  become_user: root

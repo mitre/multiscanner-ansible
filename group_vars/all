@@ -65,8 +65,9 @@ ms_rabbit_password: CHANGE_THIS_PASSWORD
 # Task queue vhost
 rabbit_task_primary_vhost: ms_task
 
-# Create a virtualenv for flower
+# Flower stuff
 flower_venv: /opt/venv_flower
+flower_firewall_zone: public
 flower_port: 5555
 
 #---------------------------------------------

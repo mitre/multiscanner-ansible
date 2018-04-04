@@ -6,6 +6,7 @@
 
 - hosts: task_broker
   roles:
+  - role: python3
   - role: task_broker
 
 - hosts: elasticsearch

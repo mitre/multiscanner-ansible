@@ -1,4 +1,6 @@
 ---
 - include: setup_rabbitmq.yml
 
+- include: setup_flower.yml
+
 - include: setup_firewall_rules.yml

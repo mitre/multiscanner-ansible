@@ -8,6 +8,6 @@
 
 - name: allow Flower web port
   firewalld: port={{ item }} permanent=true zone={{ flower_firewall_zone }} state=enabled immediate=true
-  with_items: "{{ flower_port }}"
+  with_items: "{{ flower_port }}/tcp"
   become: yes
   become_user: root

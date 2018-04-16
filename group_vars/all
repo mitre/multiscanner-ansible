@@ -30,7 +30,13 @@ multiscanner_venv: /opt/venv_multiscanner
 #---------------------------------------------
 elasticco_gpg_key: GPG-KEY-elasticsearch
 elasticsearch_cluster: multiscanner_es_cluster
+
+#---------------------------------------------
+# System Monitoring related
+#---------------------------------------------
 metricbeat_rpm: metricbeat-5.2.1-x86_64.rpm
+metricbeat_enabled: True
+metricbeat_rollover_days: 7
 
 #---------------------------------------------
 # DFS related

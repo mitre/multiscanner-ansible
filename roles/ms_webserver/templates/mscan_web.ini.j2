@@ -7,6 +7,8 @@ PORT = {{ ms_web_port }}
 API_LOC = "{% if servers_use_ssl == True %}https{% else %}http{% endif %}://{{ groups.restserver[0] }}:{{ ms_rest_port }}"
 ; URI for the Flower server
 FLOWER_LOC = "http://{{ groups.task_broker[0] }}:{{ flower_port }}"
+; URI for the kibana service
+KIBANA_LOC = "{{ groups.kibana[0] }}:5601"
 
 ; Set to True to enable debug mode, but DO NOT USE in production
 DEBUG = False

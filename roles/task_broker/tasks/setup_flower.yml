@@ -27,3 +27,11 @@
   become_user: root
   notify:
   - restart flower
+
+- name: enable flower to start on boot (RHEL/CentOS 7)
+  systemd:
+    state: started
+    enabled: yes 
+    name: flower
+  become: yes 
+  become_user: root

@@ -5,7 +5,7 @@ After=network.target
 [Service]
 Type=simple
 User={{ ms_user }}
-ExecStart={{ flower_venv }}/bin/flower --address=0.0.0.0 --port={{ flower_port }} --broker=amqp://{{ ms_rabbit_user }}:{{ ms_rabbit_password }}@localhost:5672/{{ rabbit_task_primary_vhost }}
+ExecStart={{ python_install_prefix }}/bin/flower --address=0.0.0.0 --port={{ flower_port }} --broker=amqp://{{ ms_rabbit_user }}:{{ ms_rabbit_password }}@localhost:5672/{{ rabbit_task_primary_vhost }}
 Restart=on-abort
 
 

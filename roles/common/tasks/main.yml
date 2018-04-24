@@ -21,3 +21,4 @@
 
 - include: setup_metricbeat.yml
   tags: [ 'metricbeat' ]
+  when: metricbeat_enabled

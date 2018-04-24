@@ -1,0 +1,33 @@
+---
+
+- name: create ssl dir for key
+  file:
+    path: {{ kibana_cert_folder_root }}
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: copy kibana web cert file
+  copy:
+    src: "../../certificates/{{ kibana_cert_file }}"
+    dest: "{{ kibana_cert_folder_root }}"
+    mode: 0644
+  become: yes
+  become_user: root
+
+- name: create private dir for key file
+  file:
+    path: {{ kibana_cert_folder_root }}/private
+    state: directory
+    owner: root
+    group: root
+    mode: 0700
+
+- name: copy kibana cert key file
+  copy:
+    src: "../../certificates/{{ kibana_cert_key_file }}"
+    dest: "{{ kibana_cert_folder_root }}/private"
+    mode: 0640
+  become: yes
+become_user: root

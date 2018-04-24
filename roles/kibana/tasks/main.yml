@@ -9,5 +9,9 @@
 - include: ../../elasticsearch/tasks/import_elastic_gpg_key.yml
 - include: setup_kibana.yml
 - include: setup_firewall_rules.yml
+
+- include: install_certs.yml
+  when: servers_use_ssl|bool == True
+
 - include: setup_metricbeat_dashboards.yml
   tags: [ "metricbeat", "metricbeat.dashboards" ]

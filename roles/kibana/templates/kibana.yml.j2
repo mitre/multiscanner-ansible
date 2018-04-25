@@ -32,7 +32,7 @@ elasticsearch.url: "http://{{ hostvars[groups['elasticsearch'][0]]['ansible_defa
 #elasticsearch.preserveHost: true
 
 # Kibana uses an index in Elasticsearch to store saved searches, visualizations and
-# dashboards. Kibana creates a new index if the index doesn’t already exist.
+# dashboards. Kibana creates a new index if the index doesn't already exist.
 #kibana.index: ".kibana"
 
 # The default application to load.
@@ -68,7 +68,7 @@ server.ssl.key: {{ kibana_cert_folder_root }}/private/{{ kibana_cert_key_file }}
 # authority for your Elasticsearch instance.
 #elasticsearch.ssl.ca: /path/to/your/CA.pem
 
-# To disregard the validity of SSL certificates, change this setting’s value to false.
+# To disregard the validity of SSL certificates, change this setting's value to false.
 #elasticsearch.ssl.verify: true
 
 # Time in milliseconds to wait for Elasticsearch to respond to pings. Defaults to the value of

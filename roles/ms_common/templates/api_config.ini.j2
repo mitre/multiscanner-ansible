@@ -12,8 +12,6 @@ upload_folder = {{ dfs_mount_dir }}
 distributed = True
 web_loc = "{% if servers_use_ssl == True %}https{% else %}http{% endif %}://{{ groups.webserver[0] }}"
 cors = "{{ ms_api_cors_regex }}(:d+)?"
-batch_size = 100
-batch_interval = 10
 wait_seconds = 60
 
 

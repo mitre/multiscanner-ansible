@@ -27,6 +27,7 @@ Once the Ansible user has been added to all machines, it needs to be able to acq
 3. Open the sudoers file: ```visudo```
 4. Enter Edit mode: ```i```
 5. Add the following line at the end of the file: ```ansible ALL=(ALL) NOPASSWD: ALL```
+5. You also need to edit the secure_path directive to include /usr/local/bin, the line should read: ```Defaults secure_path = /usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin```
 6. Save and close the file: ```[Esc]:wq```
 
 ## Copy SSH Keys

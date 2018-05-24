@@ -10,5 +10,5 @@
 
 - include: install_python3.yml
   tags: [python]
-  when: "python_version | search(result.stdout)"
+  # when: "python_version | search(result.stdout)"
 

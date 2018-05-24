@@ -76,17 +76,6 @@
   become: yes
   become_user: root
 
-- name: set pip 3 to be default pip
-  file:
-    src: "{{ python_install_prefix }}/bin/pip{{ python_version_major_minor }}"
-    dest: "{{ python_install_prefix }}/bin/pip"
-    owner: root
-    group: root
-    state: link
-    mode: "u+rwx,g+rx,o+rx"
-  become: yes
-  become_user: root
-
 - name: install virtualenv
   pip:
     name: virtualenv

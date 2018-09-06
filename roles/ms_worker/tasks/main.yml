@@ -5,24 +5,12 @@
 - include: install_trid.yml
 - include: install_floss.yml
 
-# Setup log directories
-- name: Create celery log path
-  file:
-    path: "{{ celery_log_path }}"
-    state: directory
-    mode: 0775
-    owner: "{{ ms_user }}"
+- name: Setup systemd-tmpfiles
+  template: src=mscan-worker.conf.j2 dest=/etc/tmpfiles.d/mscan-worker.conf mode=755 owner={{ ms_user }} group=root
   become: yes
   become_user: root
-
-- name: Create celery pid path
-  file:
-    path: "{{ celery_pid_path }}"
-    state: directory
-    mode: 0775
-    owner: "{{ ms_user }}"
-  become: yes
-  become_user: root
+  notify:
+    - run systemd-tmpfiles
 
 # Remove previous service file
 - name: Delete previous service file
@@ -33,7 +21,7 @@
 
 # Service setup
 - name: copy multiscanner systemd config
-  template: src=mscan-worker.service.j2 dest=/etc/systemd/system/mscan-worker.service mode=755 owner=multiscanner group=root
+  template: src=mscan-worker.service.j2 dest=/etc/systemd/system/mscan-worker.service mode=755 owner={{ ms_user }} group=root
   become: yes
   become_user: root
   notify:

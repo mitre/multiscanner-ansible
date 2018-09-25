@@ -10,8 +10,8 @@
 {% endif %}
 
     LoadModule wsgi_module {{ mod_wsgi_system_module }}
-    WSGIDaemonProcess mscan_web user={{ ms_user }} group=root threads=5 python-home={{ multiscanner_venv }} python-path={{ multiscanner_install_prefix }}/multiscanner/web
-    WSGIScriptAlias / {{ multiscanner_install_prefix }}/multiscanner/web/mscan_web.wsgi
+    WSGIDaemonProcess mscan_web user={{ ms_user }} group=root threads=5 python-home={{ multiscanner_venv }} python-path={{ multiscanner_install_prefix }}/multiscanner/multiscanner/web
+    WSGIScriptAlias / {{ multiscanner_install_prefix }}/multiscanner/multiscanner/web/mscan_web.wsgi
 
     <Directory {{ multiscanner_install_prefix }}/multiscanner>
         WSGIProcessGroup mscan_web
@@ -22,15 +22,15 @@
         Require all granted
     </Directory>
 
-    Alias /static/ {{ multiscanner_install_prefix }}/multiscanner/web/static/
-    <Directory {{ multiscanner_install_prefix }}/multiscanner/web/static>
+    Alias /static/ {{ multiscanner_install_prefix }}/multiscanner/multiscanner/web/static/
+    <Directory {{ multiscanner_install_prefix }}/multiscanner/multiscanner/web/static>
             Order allow,deny
             Allow from all
             Require all granted
     </Directory>
 
-    Alias /templates/ /opt/multiscanner/web/templates/
-    <Directory /opt/multiscanner/web/templates>
+    Alias /templates/ /opt/multiscanner/multiscanner/web/templates/
+    <Directory /opt/multiscanner/multiscanner/web/templates>
             Order allow,deny
             Allow from all
             Require all granted

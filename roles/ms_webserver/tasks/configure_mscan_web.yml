@@ -42,7 +42,7 @@
   become_user: multiscanner
 
 - name: copy multiscanner web mod_wsgi
-  template: src=mscan_web.wsgi.j2 dest={{ multiscanner_install_prefix }}/multiscanner/web/mscan_web.wsgi mode=755 owner={{ ms_user }} group=root
+  template: src=mscan_web.wsgi.j2 dest={{ multiscanner_install_prefix }}/multiscanner/multiscanner/web/mscan_web.wsgi mode=755 owner={{ ms_user }} group=root
   become: yes
   become_user: root
   notify:

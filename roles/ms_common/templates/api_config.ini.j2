@@ -21,3 +21,4 @@ host = {{ groups.task_broker[0] }}
 user = {{ ms_rabbit_user }}
 password = {{ ms_rabbit_password }}
 vhost = {{ rabbit_task_primary_vhost }}
+broker_pool_limit = None

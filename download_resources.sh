@@ -95,7 +95,7 @@ tar -czf $RESOURCE_DIR/gluster_client.tgz -C $RESOURCE_DIR gluster_client
 
 #---------------------- PYTHON 3----------------------
 # ANSIBLE VARIABLE: python_version ANSIBLE FILE: group_vars/all
-PYTHON_VERSION=3.6.0
+PYTHON_VERSION=3.6.6
 
 wget https://www.python.org/ftp/python/$PYTHON_VERSION/Python-$PYTHON_VERSION.tgz --directory-prefix=$RESOURCE_DIR
 

@@ -35,7 +35,7 @@ elasticsearch_cluster: multiscanner_es_cluster
 # System Monitoring related
 #---------------------------------------------
 metricbeat_rpm: metricbeat-5.2.1-x86_64.rpm
-metricbeat_enabled: True
+metricbeat_enabled: False
 metricbeat_rollover_days: 7
 
 #---------------------------------------------

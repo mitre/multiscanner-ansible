@@ -16,6 +16,16 @@ node.name: {{ ansible_hostname }}
 # Use a descriptive name for your cluster:
 cluster.name: {{ elasticsearch_cluster }}
 
+# ----------------------------------- Paths ------------------------------------
+#
+# Path to directory where to store the data (separate multiple locations by comma):
+#
+path.data: /var/lib/elasticsearch
+#
+# Path to log files:
+#
+path.logs: /var/log/elasticsearch
+
 # ---------------------------------- Network -----------------------------------
 #
 # Set the bind address to a specific IP (IPv4 or IPv6):

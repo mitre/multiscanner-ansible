@@ -16,7 +16,7 @@ remote_resource_prefix: /tmp
 #---------------------------------------------
 # Python 3
 #---------------------------------------------
-python_version: 3.6.0
+python_version: 3.6.6
 python_version_major_minor: 3.6
 python_mod_wsgi_version: 36
 python_install_prefix: /usr/local

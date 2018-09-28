@@ -120,3 +120,12 @@ webserver_cert_file: web_cert.crt
 
 # This is the name of the key file for the Web server. Replace this with your actual cert key filename!
 webserver_cert_key_file: web_cert.key
+
+# This is the root folder where Kibana certs will be stored.
+kibana_cert_folder_root: /etc/kibana/ssl
+
+# This is the name of the public certificate file for the kibana server. Replace this with your actual cert filename!
+kibana_cert_file: kibana_cert.crt
+
+# This is the name of the key file for the kibana server. Replace this with your actual cert key filename!
+kibana_cert_key_file: kibana_cert.key

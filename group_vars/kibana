@@ -1,7 +1,7 @@
 ###################################################
 # KIBANA INSTALLATION
 ###################################################
-kibana_rpm: kibana-5.2.1-x86_64.rpm
+kibana_rpm: kibana-6.3.2-x86_64.rpm
 
 
 ###################################################
@@ -16,4 +16,4 @@ kibana_firewall_zone: public
 ###################################################
 # METRICBEAT INSTALLATION
 ###################################################
-metricbeat_dashboards: beats-dashboards-5.2.1.zip
+metricbeat_dashboards: beats-dashboards-6.3.2.zip

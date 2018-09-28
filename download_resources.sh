@@ -14,7 +14,7 @@ rm -rf $RESOURCE_DIR/*
 
 #----------------------- ELASTICSEARCH -----------------------
 
-ELASTIC_VERSION=5.2.1
+ELASTIC_VERSION=6.3.2
 
 # ANSIBLE VARIABLE: elasticsearch_rpm ANSIBLE FILE: group_vars/elasticsearch
 ELASTICSEARCH_RPM=elasticsearch-${ELASTIC_VERSION}.rpm

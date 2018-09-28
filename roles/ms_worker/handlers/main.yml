@@ -4,4 +4,7 @@
   become: yes
   become_user: root
 
-
+- name: run systemd-tmpfiles
+  shell: systemd-tmpfiles --create /etc/tmpfiles.d/mscan-worker.conf
+  become: yes
+  become_user: root

@@ -1,13 +1,33 @@
 ---
 
-# Service setup
-- name: copy multiscanner systemd config
-  template: src=mscan-worker.service.j2 dest=/etc/systemd/system/mscan-worker.service mode=755 owner=multiscanner group=root
+- include: install_jansson.yml
+- include: install_yara.yml
+- include: install_trid.yml
+- include: install_floss.yml
+
+- name: Setup systemd-tmpfiles
+  template: src=mscan-worker.conf.j2 dest=/etc/tmpfiles.d/mscan-worker.conf mode=755 owner={{ ms_user }} group=root
   become: yes
   become_user: root
   notify:
-    - reload systemd
+    - run systemd-tmpfiles
+
+# Remove previous service file
+- name: Delete previous service file
+  file:
+    path: /etc/systemd/system/mscan-worker.service
+    state: absent
+  become: true
+
+# Service setup
+- name: copy multiscanner systemd config
+  template: src=mscan-worker.service.j2 dest=/etc/systemd/system/mscan-worker.service mode=755 owner={{ ms_user }} group=root
+  become: yes
+  become_user: root
+  notify:
     - restart multiscanner-celery
+
+- meta: flush_handlers
 
 - name: enable multiscanner worker to start on boot (RHEL/CentOS 7)
   systemd:
@@ -16,5 +36,36 @@
     name: mscan-worker
   become: yes
   become_user: root
+
+# yara signatures
+- name: create yara signature directory
+  file:
+    path: "{{ multiscanner_install_prefix }}/multiscanner/etc/yarasigs"
+    mode: 0775
+    owner: "{{ ms_user }}"
+    recurse: yes
+    state: directory
+  become: true
+
+- name: copy yara signature archive
+  copy:
+    src: "../../{{local_resource_prefix}}/Yara-Rules.tgz"
+    dest: "{{ remote_resource_prefix }}"
+  become: true
+
+- name: unzip yara signatures
+  unarchive:
+    src: "{{ remote_resource_prefix }}/Yara-Rules.tgz"
+    dest: "{{ multiscanner_install_prefix }}/multiscanner/etc/yarasigs"
+    remote_src: yes
+  become: yes
+  become_user: root
+
+- name: delete yara signature archive
+  file:
+    path: "{{ remote_resource_prefix }}/Yara-Rules.tgz"
+    state: absent
+  become: true
+
 
 

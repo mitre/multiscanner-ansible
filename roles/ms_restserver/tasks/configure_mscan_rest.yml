@@ -36,4 +36,3 @@
   become_user: root
   notify:
     - restart apache
-

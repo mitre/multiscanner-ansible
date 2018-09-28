@@ -4,3 +4,8 @@
   systemd: state=restarted name=kibana
   become: yes
   become_user: root
+
+- name: restart Metricbeat
+  systemd: state=restarted name=metricbeat
+  become: yes
+  become_user: root

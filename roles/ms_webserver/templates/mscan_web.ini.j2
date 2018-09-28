@@ -1,0 +1,27 @@
+[web]
+; Host to bind this server on
+HOST = "{{ ms_web_host }}"
+; Port to bind this server on
+PORT = {{ ms_web_port }}
+; URI for the API server to which we will connect. Make sure to include the http:// or https://
+API_LOC = "{% if servers_use_ssl == True %}https{% else %}http{% endif %}://{{ groups.restserver[0] }}:{{ ms_rest_port }}"
+; URI for the Flower server
+FLOWER_LOC = "http://{{ groups.task_broker[0] }}:{{ flower_port }}"
+; URI for the kibana service
+KIBANA_LOC = "http://{{ groups.kibana[0] }}:5601"
+
+; Set to True to enable debug mode, but DO NOT USE in production
+DEBUG = False
+; List of metadata fields that can be set when submitting a file for scanning
+METADATA_FIELDS = [
+    "Submitter Name",
+    "Submission Description",
+    "Submitter Email",
+    "Submitter Organization",
+    "Submitter Phone"
+    ]
+
+TAGS = [
+    "Malware",
+    "Benign"
+    ]

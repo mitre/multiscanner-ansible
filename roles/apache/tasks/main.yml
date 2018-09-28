@@ -23,6 +23,7 @@
   become: yes
   become_user: root
 
+
 - name: enable apache to start on boot (RHEL/CentOS 7)
   systemd:
     state: started
@@ -45,6 +46,7 @@
   lineinfile:
     dest: /etc/httpd/conf/httpd.conf
     regexp: '^User apache$'
+    backrefs: yes
     line: 'User {{ ms_user }}'
   become: yes
   become_user: root
@@ -55,13 +57,53 @@
   lineinfile:
     dest: /etc/httpd/conf/httpd.conf
     regexp: '^Group apache$'
+    backrefs: yes
     line: 'Group root'
   become: yes
   become_user: root
   notify:
   - restart apache
 
+# If we include the default SSL config when using SSL, things don't work so we want to NOT load all these random configs
+- name: do not load default modules under conf.d
+  lineinfile:
+    path: /etc/httpd/conf/httpd.conf
+    state: absent
+    regexp: '^IncludeOptional\s+conf\.d/\*\.conf'
+  become: yes
+  become_user: root
+  notify:
+  - restart apache
+
+#----------- SE Linux Stuff ------------
 - name: selinux-allow apache processes to connect to external services
   command: "setsebool -P httpd_can_network_connect on"
   become: yes
   become_user: root
+
+- name: copy selinux TE file
+  template: src=mscan_httpd.te.j2 dest=/tmp/mscan_httpd.te mode=755 owner=root group=root
+  become: yes
+  become_user: root
+
+- name: install policycoreutils-python
+  yum:
+    name: policycoreutils-python
+    state: present
+  become: yes
+  become_user: root
+
+- name: create SELinux policy
+  semodule:
+    te_file: /tmp/mscan_httpd.te
+    module_name: mscan_httpd
+    module_version: 1.0
+  become: yes
+  become_user: root
+
+#----------- Set groundwork for SSL if user wants it -----------
+- name: DEBUG-is web ssl enabled
+  debug: var=servers_use_ssl
+
+- include: setup_for_ssl.yml
+  when: servers_use_ssl|bool == True

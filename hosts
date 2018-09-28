@@ -1,3 +1,7 @@
+# Ansible controller
+[controller]
+ansible-controller.yourdomain.com
+
 # UI. There should only be 1 host
 [webserver]
 webserver.yourdomain.com
@@ -15,7 +19,7 @@ task-broker.yourdomain.com
 elastic-1.yourdomain.com
 elastic-2.yourdomain.com
 
-# Kibana. Optional. If implemeted, specify one or more hosts.
+# Kibana. Specify one or more hosts.
 [kibana]
 kibana.yourdomain.com
 
@@ -33,4 +37,3 @@ mscan-worker-3.yourdomain.com
 [dfs_server]
 gluster-dfs1.yourdomain.com
 gluster-dfs2.yourdomain.com
-

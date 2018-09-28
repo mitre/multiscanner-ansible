@@ -6,6 +6,7 @@
 
 - hosts: task_broker
   roles:
+  - role: python3
   - role: task_broker
 
 - hosts: elasticsearch
@@ -41,7 +42,6 @@
 
 - hosts: webserver
   roles:
-  - role: dfs_client
   - role: python3
   - role: ms_common
   - role: apache

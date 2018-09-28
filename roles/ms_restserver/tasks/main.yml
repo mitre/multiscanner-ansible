@@ -1,5 +1,11 @@
 ---
 
-- include: configure_selinux.yml
+- name: DEBUG-is web ssl enabled
+  debug: var=servers_use_ssl
+
+- include: install_certs.yml
+  when: servers_use_ssl|bool == True
+
 - include: configure_mscan_rest.yml
+- include: configure_mscan_rest_celery.yml
 - include: setup_firewall_rules.yml

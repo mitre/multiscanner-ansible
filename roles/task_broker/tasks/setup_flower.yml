@@ -1,0 +1,37 @@
+# This file handles the installation and customization of Flower
+
+- name: Delete previous copies of flower vitrualenv
+  file:
+    path: "{{ flower_venv }}/"
+    state: absent
+  become: true
+
+- name: create flower virtualenv directory and set permissions
+  file: "path={{ flower_venv }} state=directory mode=0700 owner={{ ms_user }} recurse=yes"
+  become: yes
+  become_user: root
+
+- name: install flower to venv
+  pip:
+    name: flower
+    virtualenv: "{{ flower_venv }}"
+    virtualenv_python: "{{ python_install_prefix }}/bin/python"
+    virtualenv_site_packages: yes
+  become: yes
+  become_user: "{{ ms_user }}"
+
+# Copy service config
+- name: copy flower systemd config
+  template: src=flower.service.j2 dest=/etc/systemd/system/flower.service mode=755 owner=multiscanner group=root
+  become: yes
+  become_user: root
+  notify:
+  - restart flower
+
+- name: enable flower to start on boot (RHEL/CentOS 7)
+  systemd:
+    state: started
+    enabled: yes 
+    name: flower
+  become: yes 
+  become_user: root

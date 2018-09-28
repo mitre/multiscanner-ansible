@@ -1,0 +1,36 @@
+---
+# Setup log directories
+- name: Create celery log path
+  file:
+    path: "{{ celery_log_path }}"
+    state: directory
+    mode: 0775
+    owner: "{{ ms_user }}"
+  become: yes
+  become_user: root
+
+- name: Create celery pid path
+  file:
+    path: "{{ celery_pid_path }}"
+    state: directory
+    mode: 0775
+    owner: "{{ ms_user }}"
+  become: yes
+  become_user: root
+
+# Service setup
+- name: copy multiscanner systemd config
+  template: src=mscan-rest-celery-beat.service.j2 dest=/etc/systemd/system/mscan-rest-celery-beat.service mode=755 owner=multiscanner group=root
+  register: restart_ms_celery_beat_svc
+  become: yes
+  become_user: root
+  notify:
+    - restart celery beat
+
+- name: enable celery beat to start on boot (RHEL/CentOS 7)
+  systemd:
+    state: started
+    enabled: yes
+    name: mscan-rest-celery-beat
+  become: yes
+  become_user: root

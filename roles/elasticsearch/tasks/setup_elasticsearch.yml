@@ -13,6 +13,36 @@
   become: yes
   become_user: root
 
+- name: Remove ES heap size default initial
+  lineinfile:
+    path: /etc/elasticsearch/jvm.options
+    line: "-Xms2g"
+    state: absent
+  become: yes
+  become_user: root
+  
+- name: Remove ES heap size default max
+  lineinfile:
+    path: /etc/elasticsearch/jvm.options
+    line: "-Xmx2g"
+    state: absent
+  become: yes
+  become_user: root
+
+- name: Set ES min heap size
+  lineinfile:
+    path: /etc/elasticsearch/jvm.options
+    line: "-Xms{{ ES_HEAP_SIZE }}"
+  become: yes
+  become_user: root
+
+- name: Set ES max heap size
+  lineinfile:
+    path: /etc/elasticsearch/jvm.options
+    line: "-Xmx{{ ES_HEAP_SIZE }}"
+  become: yes
+  become_user: root
+
 - name: copy Elasticsearch configuration
   template: src=elasticsearch.yml.j2 dest=/etc/elasticsearch/elasticsearch.yml mode=750 owner=root group=elasticsearch
   become: yes

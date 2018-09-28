@@ -1,3 +1,12 @@
 
 ms_rest_host: 0.0.0.0
 mscan_rest_log_dir: /var/log/mscanrest
+
+#----------------------------------------------
+# Celery logging 
+#----------------------------------------------
+celery_pid_path: /var/run/celery/
+celery_pid_file: /var/run/celery/celery_beat.pid
+celery_log_path: /var/log/celery/
+celery_log_file: /var/log/celery/celery_beat.log
+celery_log_level: INFO

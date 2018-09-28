@@ -1,0 +1,7 @@
+- name: copy floss binary
+  copy:
+    src: floss
+    dest: /opt/floss
+    mode: 0755
+    owner: '{{ ms_user }}'
+  become: true

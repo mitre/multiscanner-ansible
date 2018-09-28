@@ -1,0 +1,17 @@
+---
+
+- name: copy public web cert file
+  copy:
+    src: "../../certificates/{{ webserver_cert_file }}"
+    dest: "{{ apache_cert_folder_root }}"
+    mode: 0644
+  become: yes
+  become_user: root
+
+- name: copy web cert key file
+  copy:
+    src: "../../certificates/{{ webserver_cert_key_file }}"
+    dest: "{{ apache_cert_folder_root }}/private"
+    mode: 0640
+  become: yes
+  become_user: root

@@ -1,0 +1,57 @@
+---
+
+#- name: check whether TrID already present
+#  stat:
+#    path: /opt/trid
+#  register: trid_present
+
+- name: create TrID install dir
+  file:
+    path: /opt/trid
+    mode: 0775
+    recurse: yes
+    state: directory
+  become: true
+
+- name: copy TrID source
+  copy:
+    src: "../../{{local_resource_prefix}}/trid.zip"
+    dest: "{{ remote_resource_prefix }}"
+  become: yes
+  become_user: root
+
+- name: unzip TrID source
+  unarchive:
+    src: "{{ remote_resource_prefix }}/trid.zip"
+    dest: /opt/trid
+    remote_src: yes
+  become: yes
+  become_user: root
+
+- name: delete TrID source archive
+  file:
+    path: "{{ remote_resource_prefix }}/trid.zip"
+    state: absent
+  become: true
+
+
+- name: copy TrID Defs source
+  copy:
+    src: "../../{{local_resource_prefix}}/triddefs.zip"
+    dest: "{{ remote_resource_prefix }}"
+  become: yes
+  become_user: root
+
+- name: unzip TrID Defs source
+  unarchive:
+    src: "{{ remote_resource_prefix }}/triddefs.zip"
+    dest: /opt/trid
+    remote_src: yes
+  become: yes
+  become_user: root
+
+- name: delete TrID Defs source archive
+  file:
+    path: "{{ remote_resource_prefix }}/triddefs.zip"
+    state: absent
+  become: true

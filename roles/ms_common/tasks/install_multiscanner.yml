@@ -24,24 +24,32 @@
     - ssdeep-devel
     - tar
     - git
+    - openssl-devel
   become: yes
   become_user: root
+  
+- name: Delete previous copies of multiscanner source
+  file:
+    path: "{{ multiscanner_install_prefix }}/multiscanner/"
+    state: absent
+  become: true
+
+- name: Delete previous copies of multiscanner vitrualenv
+  file:
+    path: "{{ multiscanner_venv }}/"
+    state: absent
+  become: true
+
+- name: Delete previous copies of multiscanner tarball
+  file:
+    path: "{{ multiscanner_install_prefix }}/multiscanner.tgz"
+    state: absent
+  become: true
 
 - name: create multiscanner virtualenv directory and set permissions
   file: "path={{ multiscanner_venv }} state=directory mode=0700 owner={{ ms_user }} recurse=yes"
   become: yes
   become_user: root
-
-- name: install python deps not covered by multiscanner requirements.txt
-  pip:
-    name: "{{ item }}"
-    virtualenv: "{{ multiscanner_venv }}"
-    virtualenv_python: "{{ python_install_prefix }}/bin/python"
-    virtualenv_site_packages: yes
-  with_items:
-    - psycopg2
-  become: yes
-  become_user: "{{ ms_user }}"
 
 - name: copy multiscanner source
   copy:
@@ -69,6 +77,7 @@
     virtualenv_site_packages: yes
   become: yes
   become_user: "{{ ms_user }}"
+
 
 # Copy configs
 - name: copy multiscanner main config

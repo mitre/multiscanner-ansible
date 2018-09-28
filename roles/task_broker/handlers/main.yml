@@ -5,3 +5,9 @@
   service: name=rabbitmq-server state=restarted
   become: yes
   become_user: root
+
+# Restarts flower service
+- name: restart flower
+  service: name=flower state=restarted
+  become: yes
+  become_user: root

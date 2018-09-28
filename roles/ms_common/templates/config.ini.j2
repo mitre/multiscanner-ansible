@@ -47,9 +47,15 @@ API key =
 apikey = None
 ENABLED = False
 
+[Tika]
+ENABLED = False
+remove-entry = X-TIKA:parse_time_millis
+
 [Cuckoo]
 ENABLED = False
+maec = False
 API URL = http://cuckoo:8090/
+WEB URL = http://cuckoo:80/
 timeout = 360
 running timeout = 120
 delete tasks = False
@@ -66,6 +72,11 @@ analysis type = 0
 application id = 0
 ENABLED = False
 
+[flarefloss]
+ENABLED = True
+path = /opt/floss
+cmdline = ['--show-metainfo']
+
 [FireeyeScan]
 fireeye images = ['win7-sp1', 'win7x64-sp1', 'winxp-sp2', 'winxp-sp3']
 ENABLED = False
@@ -76,6 +87,7 @@ src path = src
 
 [VxStream]
 ENABLED = False
+BASE URL = http://localhost/
 API URL = http://localhost/api/
 API key =
 API secret =
@@ -94,7 +106,7 @@ remove-entry = ['ExifTool Version Number', 'File Name', 'Directory', 'File Modif
 ENABLED = False
 
 [PEFile]
-ENABLED = True
+ENABLED = False 
 
 [TrID]
 path = C:\TrID\trid.exe
@@ -106,20 +118,30 @@ replacement path = X:\
 
 [libmagic]
 magicfile = None
-ENABLED = False
+ENABLED = True
 
 [pdfinfo]
 ENABLED = True
 fast = False
 
+[pehasher]
+ENABLED = True
+
 [YaraScan]
 ruledir = {{ multiscanner_install_prefix }}/multiscanner/etc/yarasigs
 fileextensions = ['.yar', '.yara', '.sig']
 ignore-tags = ['TLPRED']
+ENABLED = True
+
+[NSRL]
 ENABLED = False
+
+[MaliciousMacroBot]
+ENABLED = True
 
 [main]
 copyfilesto = False
 group-types = ['Antivirus']
 storage-config = {{ multiscanner_install_prefix }}/multiscanner/storage.ini
 api-config = {{ multiscanner_install_prefix }}/multiscanner/api_config.ini
+web-config = {{ multiscanner_install_prefix }}/multiscanner/web_config.ini

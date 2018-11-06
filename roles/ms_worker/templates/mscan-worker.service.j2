@@ -9,6 +9,5 @@ ExecStart={{ multiscanner_venv }}/bin/celery -A multiscanner.distributed.celery_
 WorkingDirectory={{ multiscanner_install_prefix }}/multiscanner
 Restart=on-abort
 
-
 [Install]
 WantedBy=multi-user.target

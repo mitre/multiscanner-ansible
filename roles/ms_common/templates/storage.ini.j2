@@ -1,13 +1,21 @@
+[main]
+retry_time = 5
+retry_num = 20
+
+[BasicElasticSearchStorage]
+ENABLED = False
+host = {% for es_host in groups['elasticsearch'] %}{{ es_host }}{% if not loop.last %},{% endif %}{% endfor %}
+port = 9200
+index = multiscanner_reports
+doc_type = reports
+
 [ElasticSearchStorage]
 ENABLED = True
 host = {% for es_host in groups['elasticsearch'] %}{{ es_host }}{% if not loop.last %},{% endif %}{% endfor %}
-
 port = 9200
 index = multiscanner_reports
-doc_type = report
 metricbeat_enabled = {{ metricbeat_enabled }}
 metricbeat_rollover_days = {{ metricbeat_rollover_days }}
-
 
 [File]
 ENABLED = False
@@ -21,6 +29,3 @@ host = localhost
 port = 27017
 database = multiscanner_reports
 collection = reports
-
-[Storage]
-ENABLED = True

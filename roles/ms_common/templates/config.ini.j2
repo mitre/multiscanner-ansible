@@ -9,14 +9,6 @@ ENABLED = False
 [ClamAVScan]
 ENABLED = False
 
-[KasperskyScan]
-path = C:\Program Files\Kaspersky Lab\Kaspersky Anti-Virus 15.0.0\avp.exe
-key = {{ multiscanner_install_prefix }}/multiscanner/etc/id_rsa
-cmdline = ['scan', '/i0', '/fa']
-host = ('MultiScanner', 22, 'User')
-replacement path = X:\
-ENABLED = False
-
 [MSEScan]
 path = C:\Program Files\Microsoft Security Client\MpCmdRun.exe
 key = {{ multiscanner_install_prefix }}/multiscanner/etc/id_rsa
@@ -43,13 +35,20 @@ poll interval seconds = 5
 user agent = user_agent
 API key =
 
+[VFindScan]
+ENABLED = False
+vstk_home = /opt/vstk
+uad_cmdline = []
+vfind_cmdline = []
+
 [vtsearch]
 apikey = None
 ENABLED = False
 
-[Tika]
+[NSRL]
+hash_list = {{ multiscanner_install_prefix }}/multiscanner/etc/nsrl/hash_list
+offsets = {{ multiscanner_install_prefix }}/multiscanner/etc/nsrl/offsets
 ENABLED = False
-remove-entry = X-TIKA:parse_time_millis
 
 [Cuckoo]
 ENABLED = False
@@ -72,11 +71,6 @@ analysis type = 0
 application id = 0
 ENABLED = False
 
-[flarefloss]
-ENABLED = True
-path = /opt/floss
-cmdline = ['--show-metainfo']
-
 [FireeyeScan]
 fireeye images = ['win7-sp1', 'win7x64-sp1', 'winxp-sp2', 'winxp-sp3']
 ENABLED = False
@@ -96,6 +90,13 @@ Verify = False
 timeout = 360
 running timeout = 120
 
+[EndgameEmber]
+ENABLED = False
+path-to-model = {{ multiscanner_install_prefix }}/multiscanner/etc/ember/ember_model_2017.txt
+
+[MaliciousMacroBot]
+ENABLED = False
+
 [ExifToolsScan]
 cmdline = ['-t']
 path = C:\exiftool.exe
@@ -106,18 +107,44 @@ remove-entry = ['ExifTool Version Number', 'File Name', 'Directory', 'File Modif
 ENABLED = False
 
 [PEFile]
-ENABLED = False 
+ENABLED = True
+
+[Tika]
+ENABLED = False
+remove-entry = X-TIKA:parse_time_millis
 
 [TrID]
-path = C:\TrID\trid.exe
+path = /opt/trid/trid
 ENABLED = False
 key = {{ multiscanner_install_prefix }}/multiscanner/etc/id_rsa
 cmdline = ['-r:3']
 host = ('MultiScanner', 22, 'User')
 replacement path = X:\
 
+[UADScan]
+ENABLED = False
+vstk_home = /opt/vstk
+cmdline = []
+
+[entropy]
+ENABLED = True
+
+[fileextensions]
+ENABLED = True
+
+[flarefloss]
+ENABLED = False
+path = /opt/floss
+cmdline = ['--show-metainfo']
+
+[impfuzzy]
+ENABLED = True
+
 [libmagic]
 magicfile = None
+ENABLED = True
+
+[officemeta]
 ENABLED = True
 
 [pdfinfo]
@@ -131,12 +158,7 @@ ENABLED = True
 ruledir = {{ multiscanner_install_prefix }}/multiscanner/etc/yarasigs
 fileextensions = ['.yar', '.yara', '.sig']
 ignore-tags = ['TLPRED']
-ENABLED = True
-
-[NSRL]
-ENABLED = False
-
-[MaliciousMacroBot]
+includes = False
 ENABLED = True
 
 [main]

@@ -1,19 +1,12 @@
-[Database]
-username = {{ postgres_user }}
-password = {{ postgres_user_password }}
-db_type = postgresql
-db_name = {{ task_db_name }}
-host_string ={{ groups.task_db[0] }}
-
 [api]
 host = {{ ms_rest_host }}
 port = {{ ms_rest_port }}
 upload_folder = {{ dfs_mount_dir }}
 distributed = True
 web_loc = "{% if servers_use_ssl == True %}https{% else %}http{% endif %}://{{ groups.webserver[0] }}"
-cors = "{{ ms_api_cors_regex }}(:d+)?"
-wait_seconds = 60
-
+cors = {{ ms_api_cors_regex }}
+batch_size = 100
+batch_interval = 10
 
 [celery]
 protocol = pyamqp
@@ -21,4 +14,14 @@ host = {{ groups.task_broker[0] }}
 user = {{ ms_rabbit_user }}
 password = {{ ms_rabbit_password }}
 vhost = {{ rabbit_task_primary_vhost }}
-broker_pool_limit = None
+flush_every = 100
+flush_interval = 10
+
+[Database]
+username = {{ postgres_user }}
+password = {{ postgres_user_password }}
+db_type = postgresql
+db_name = {{ task_db_name }}
+host_string ={{ groups.task_db[0] }}
+retry_time = 5
+retry_num = 20

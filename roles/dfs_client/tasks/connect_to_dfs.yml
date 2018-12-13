@@ -1,7 +1,7 @@
 ---
 
 - name: create dfs mount directory
-  file: "path={{ dfs_mount_dir }} state=directory mode=0775 owner={{ ms_user }} recurse=yes"
+  file: "path={{ dfs_mount_dir }} state=directory mode=0775 owner={{ ms_user }}"
   become: yes
   become_user: root
 

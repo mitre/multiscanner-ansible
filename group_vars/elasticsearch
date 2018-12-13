@@ -2,8 +2,8 @@
 # ELASTICSEARCH / KIBANA INSTALLATION
 ###################################################
 # RPMs and signing key:
-elasticsearch_rpm: elasticsearch-5.2.1.rpm
-kibana_rpm: kibana-5.2.1-x86_64.rpm
+elasticsearch_rpm: elasticsearch-6.3.2.rpm
+kibana_rpm: kibana-6.3.2-x86_64.rpm
 
 ###################################################
 # SYSTEM SETTINGS

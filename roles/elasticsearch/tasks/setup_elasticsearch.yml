@@ -13,34 +13,27 @@
   become: yes
   become_user: root
 
-- name: Remove ES heap size default initial
-  lineinfile:
-    path: /etc/elasticsearch/jvm.options
-    line: "-Xms2g"
-    state: absent
-  become: yes
-  become_user: root
-  
-- name: Remove ES heap size default max
-  lineinfile:
-    path: /etc/elasticsearch/jvm.options
-    line: "-Xmx2g"
-    state: absent
-  become: yes
+- name: stat | Register jvm.options location
+  stat: path=/etc/elasticsearch/jvm.options
+  register: st
+  become: true
   become_user: root
 
-- name: Set ES min heap size
-  lineinfile:
-    path: /etc/elasticsearch/jvm.options
-    line: "-Xms{{ ES_HEAP_SIZE }}"
-  become: yes
-  become_user: root
-
-- name: Set ES max heap size
-  lineinfile:
-    path: /etc/elasticsearch/jvm.options
-    line: "-Xmx{{ ES_HEAP_SIZE }}"
-  become: yes
+- block:
+    - name: lineinfile | Update ES heap sizes configuration
+      lineinfile:
+        dest: /etc/elasticsearch/jvm.options
+        regexp: "{{ item.regexp }}"
+        line: "{{ item.line }}"
+        state: present
+        backup: yes
+      with_items:
+        - { regexp: "^-Xms.*$", line: "-Xms{{ ES_HEAP_SIZE }}"}
+        - { regexp: "^-Xmx.*$", line: "-Xmx{{ ES_HEAP_SIZE }}"}
+      notify:
+        - restart Elasticsearch
+  when: st.stat.exists and ES_HEAP_SIZE is defined
+  become: true
   become_user: root
 
 - name: copy Elasticsearch configuration

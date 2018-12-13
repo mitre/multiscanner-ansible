@@ -14,7 +14,7 @@ rm -rf $RESOURCE_DIR/*
 
 #----------------------- ELASTICSEARCH -----------------------
 
-ELASTIC_VERSION=5.2.1
+ELASTIC_VERSION=6.3.2
 
 # ANSIBLE VARIABLE: elasticsearch_rpm ANSIBLE FILE: group_vars/elasticsearch
 ELASTICSEARCH_RPM=elasticsearch-${ELASTIC_VERSION}.rpm
@@ -55,18 +55,22 @@ wget "https://www.rabbitmq.com/$RABBITMQ_GPG_KEY" --directory-prefix=$RESOURCE_D
 # ANSIBLE VARIABLE: gluster_version ANSIBLE FILE: group_vars/all
 ANSIBLE_VERSION_STR=NORMALIZED
 
-# Install the CentOS Storage repo to download the Gluster RPMs
-sudo yum install -y centos-release-gluster
+# Keep these aligned to the Gluster version you need to install
+CENTOS_RELEASE_VERSION=41
+GLUSTER_VERSION=4.1.5-1
+GLUSTER_VERSION_MAJOR_MINOR=4.1
 
-GLUSTER_VERSION=3.10.0
-GLUSTER_VERSION_MAJOR_MINOR=3.10
+# Install the CentOS Storage repo to download the Gluster RPMs
+sudo yum install -y centos-release-gluster$CENTOS_RELEASE_VERSION
+
+
 mkdir $RESOURCE_DIR/gluster_server
-yumdownloader glusterfs-server --resolve --destdir $RESOURCE_DIR/gluster_server
+yumdownloader --resolve --arch_list=x86_64 --destdir=$RESOURCE_DIR/gluster_server glusterfs-server-$GLUSTER_VERSION.el7
 
 mkdir $RESOURCE_DIR/gluster_client
-yumdownloader glusterfs-client --resolve --destdir $RESOURCE_DIR/gluster_client
+yumdownloader --resolve --arch_list=x86_64 --destdir=$RESOURCE_DIR/gluster_client glusterfs-client-$GLUSTER_VERSION.el7
 # Download the glusterfs-api package for the client
-yumdownloader glusterfs-api --resolve --destdir $RESOURCE_DIR/gluster_client
+yumdownloader --resolve --arch_list=x86_64 --destdir=$RESOURCE_DIR/gluster_client glusterfs-api-$GLUSTER_VERSION.el7
 
 # Rename all the RPMS so that they work with the Ansible installer. Some RPMs will have
 # slightly different update version (i.e., 3.10.0 and 3.10.1) but this is not consistent
@@ -75,7 +79,7 @@ yumdownloader glusterfs-api --resolve --destdir $RESOURCE_DIR/gluster_client
 SERVER_RPMS=( glusterfs-api- glusterfs-cli-  \
               glusterfs-client-xlators- \
               glusterfs-fuse- glusterfs-libs- glusterfs-server- )
-for sr_ in ${SERVER_RPMS[@]}; do    
+for sr_ in ${SERVER_RPMS[@]}; do
     mv $RESOURCE_DIR/gluster_server/${sr_}*.rpm $RESOURCE_DIR/gluster_server/${sr_}$ANSIBLE_VERSION_STR.rpm      
 done
 # main gluster RPM is a special case
@@ -84,7 +88,7 @@ mv $RESOURCE_DIR/gluster_server/glusterfs-[0-9]*.rpm $RESOURCE_DIR/gluster_serve
 # CLIENT:
 CLIENT_RPMS=( glusterfs-api- glusterfs-client-xlators- \
               glusterfs-fuse- glusterfs-libs- )
-for cr_ in ${CLIENT_RPMS[@]}; do    
+for cr_ in ${CLIENT_RPMS[@]}; do
     mv $RESOURCE_DIR/gluster_client/${cr_}*.rpm $RESOURCE_DIR/gluster_client/${cr_}$ANSIBLE_VERSION_STR.rpm      
 done
 # main gluster RPM is a special case
@@ -95,7 +99,7 @@ tar -czf $RESOURCE_DIR/gluster_client.tgz -C $RESOURCE_DIR gluster_client
 
 #---------------------- PYTHON 3----------------------
 # ANSIBLE VARIABLE: python_version ANSIBLE FILE: group_vars/all
-PYTHON_VERSION=3.6.0
+PYTHON_VERSION=3.6.6
 
 wget https://www.python.org/ftp/python/$PYTHON_VERSION/Python-$PYTHON_VERSION.tgz --directory-prefix=$RESOURCE_DIR
 

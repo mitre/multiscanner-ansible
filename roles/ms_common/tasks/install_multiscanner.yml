@@ -69,9 +69,9 @@
   become: yes
   become_user: root
 
-- name: install multiscanner python dependencies from requirements.txt
+- name: install multiscanner library and dependencies
   pip:
-    requirements: "{{ multiscanner_install_prefix }}/multiscanner/requirements.txt"
+    name: "{{ multiscanner_install_prefix }}/multiscanner"
     virtualenv: "{{ multiscanner_venv }}"
     virtualenv_python: "{{ python_install_prefix }}/bin/python"
     virtualenv_site_packages: yes

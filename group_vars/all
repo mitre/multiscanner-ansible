@@ -16,7 +16,7 @@ remote_resource_prefix: /tmp
 #---------------------------------------------
 # Python 3
 #---------------------------------------------
-python_version: 3.6.0
+python_version: 3.6.6
 python_version_major_minor: 3.6
 python_mod_wsgi_version: 36
 python_install_prefix: /usr/local
@@ -34,9 +34,9 @@ elasticsearch_cluster: multiscanner_es_cluster
 #---------------------------------------------
 # System Monitoring related
 #---------------------------------------------
-metricbeat_rpm: metricbeat-5.2.1-x86_64.rpm
-metricbeat_enabled: True
-metricbeat_rollover_days: 7
+metricbeat_rpm: metricbeat-6.3.2-x86_64.rpm
+metricbeat_enabled: False
+metricbeat_rollover_days: 2
 
 #---------------------------------------------
 # DFS related

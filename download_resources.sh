@@ -65,12 +65,12 @@ sudo yum install -y centos-release-gluster$CENTOS_RELEASE_VERSION
 
 
 mkdir $RESOURCE_DIR/gluster_server
-yumdownloader --resolve --arch_list=x86_64 --destdir=$RESOURCE_DIR/gluster_server glusterfs-server-$GLUSTER_VERSION.el7
+yumdownloader --resolve --archlist=x86_64 --destdir=$RESOURCE_DIR/gluster_server glusterfs-server-$GLUSTER_VERSION.el7
 
 mkdir $RESOURCE_DIR/gluster_client
-yumdownloader --resolve --arch_list=x86_64 --destdir=$RESOURCE_DIR/gluster_client glusterfs-client-$GLUSTER_VERSION.el7
+yumdownloader --resolve --archlist=x86_64 --destdir=$RESOURCE_DIR/gluster_client glusterfs-client-$GLUSTER_VERSION.el7
 # Download the glusterfs-api package for the client
-yumdownloader --resolve --arch_list=x86_64 --destdir=$RESOURCE_DIR/gluster_client glusterfs-api-$GLUSTER_VERSION.el7
+yumdownloader --resolve --archlist=x86_64 --destdir=$RESOURCE_DIR/gluster_client glusterfs-api-$GLUSTER_VERSION.el7
 
 # Rename all the RPMS so that they work with the Ansible installer. Some RPMs will have
 # slightly different update version (i.e., 3.10.0 and 3.10.1) but this is not consistent

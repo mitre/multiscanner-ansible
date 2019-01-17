@@ -107,7 +107,7 @@ wget https://bootstrap.pypa.io/get-pip.py --directory-prefix=$RESOURCE_DIR
 
 #---------------------- MULTISCANNER ----------------------
 MULTISCANNER_URL="https://github.com/mitre/multiscanner.git"
-MULTISCANNER_BRANCH="master"
+MULTISCANNER_BRANCH="release/2.0.0rc1"
 
 git clone -b $MULTISCANNER_BRANCH $MULTISCANNER_URL $RESOURCE_DIR/multiscanner
 tar -czf $RESOURCE_DIR/multiscanner.tgz -C $RESOURCE_DIR multiscanner

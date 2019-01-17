@@ -118,7 +118,7 @@ wget https://github.com/akheron/jansson/archive/v2.10.tar.gz --directory-prefix=
 mv $RESOURCE_DIR/v2.10.tar.gz $RESOURCE_DIR/jansson-2.10.tar.gz
 
 # yara
-YARA_VER=3.5.0
+YARA_VER=3.8.1
 git clone -b v$YARA_VER https://github.com/VirusTotal/yara-python.git $RESOURCE_DIR/yara-python
 cd $RESOURCE_DIR/yara-python
 git clone -b v$YARA_VER https://github.com/VirusTotal/yara.git

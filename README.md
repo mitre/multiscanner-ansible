@@ -1,6 +1,8 @@
 # multiscanner-ansible
 Ansible configurations for distributed MultiScanner installations.
 
+NOTE: These playbooks should be run with MultiScanner v2.0+.
+
 ## Purpose
 This project exists to facilitate configuring the [MultiScanner](https://github.com/MITRECND/multiscanner) file analysis framework in a distributed setting. It defines [Ansible](https://www.ansible.com/get-started) configurations to enable automated configuration management of machines in a MultiScanner setup.
 
